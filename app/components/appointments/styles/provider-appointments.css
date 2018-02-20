@@ -1,0 +1,23 @@
+.statusBorder {
+    height: 10px;
+}
+
+.img-border-offline {
+    border:1px solid grey;
+}
+
+.img-border-online {
+    border:1px solid green;
+}
+
+.offline {
+    background-color: red;
+}
+
+.online {
+    background-color: green;
+}
+
+.bottom {
+    vertical-align: bottom;
+}

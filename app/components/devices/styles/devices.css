@@ -1,0 +1,75 @@
+@import "../../styles/fonts.css";
+
+html,
+body {
+    height: 100%;
+    background:#F5F5F5; //gray_100
+}
+
+.gray_200 {
+    background: #EEEEEE !important;
+}
+
+.container {
+    height:100%;
+}
+
+.fill{
+    height:100%;
+    min-height:100%;
+}
+
+#my-devices {
+    height: 100%;
+    margin-top: -4px;
+}
+
+.list-group .list-group-separator.full-width::before {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    content: "";
+    float: right;
+    width: 100%;
+}
+
+.addDeviceOverlay {
+    height: auto;
+    width: 100%;
+    display: none;
+    background-color:#ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.device-image {
+
+}
+
+.btn.btn-fab.btn-accent {
+    background-color: rgb(124,77,255) !important;
+}
+
+i.accent {
+    color: white !important;
+}
+
+.btn-default {
+    width: auto;
+}
+
+.bottom-container {
+    position: absolute;
+    bottom: 0;
+    padding: 12px 0;
+    right: 12px;
+}
+
+.space_24 {
+    height: 24px;
+}
+
+.col-sm-12 {
+    padding-right: 8px !important;
+    padding-left: 8px !important;
+}

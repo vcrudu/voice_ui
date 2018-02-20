@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Patient Vital Sings</title>
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../resources/js/mobiscroll/mobiscroll.custom-2.17.2.min.css">
+    <link rel="stylesheet" href="../styles/material-design-lite/material.icons.min.css">
+    <link rel="stylesheet" href="../styles/material-design-lite/material.grey-deep_purple.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
+    <link rel="stylesheet" href="../styles/main-material.css">
+    <link rel="stylesheet" href="styles/charts.css">
+</head>
+<body>
+<div class="mdl-layout__container">
+    <div id="patient-vital-sings-progress"></div>
+    <main class="mdl-layout__content vital-signs">
+        <div id="patient-vital-sings-container"></div>
+    </main>
+    <div id="info-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+</div>
+
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
+<script type="text/javascript" src="../lib/d3/d3.min.js"></script>
+<script type="text/javascript" src="../resources/js/modernizr/modernizr.svg.js"></script>
+<script type="text/javascript" src="../resources/js/d3.tip/d3.tip.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/material-design-lite/material.min.js"></script>
+<script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
+<script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
+
+<script type="text/javascript" src="js/patient-vital-sgns.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#patient-vital-sings-container").width($(window).width() - 17);
+
+        var snackbarContainer = document.querySelector("#info-snackbar");
+        componentHandler.upgradeElement(snackbarContainer);
+
+        var closeHandler = function(event) {
+            $("#info-snackbar").hide();
+        };
+
+        var data = {
+            message: 'In order to scroll up/down please hold finger on chart title and move up/down.',
+            timeout: 10000,
+            actionHandler: closeHandler,
+            actionText: 'Close'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
+</script>
+</body>
+</html>

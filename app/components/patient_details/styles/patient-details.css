@@ -1,0 +1,44 @@
+@import "../../styles/fonts.css";
+
+body {
+    background:#fafafa;
+    font-size:24px;
+    font-family: "Roboto-Light";
+}
+
+.header {
+    position:static;
+}
+
+.form-group {
+    position:relative;
+   margin-right:-15px;
+    margin-left:60px;
+}
+
+.form-group > i {
+    position:absolute;
+    left:-60px;
+    width:40px;
+}
+
+.form-group > i.active {
+    color:#00bdd4;
+}
+
+.form-group.is-focused .form-control {
+    background-image:linear-gradient(#00bdd4, #00bdd4), linear-gradient(#00bdd4, #00bdd4);
+}
+
+.form-group.has-error.is-focused .form-control {
+    background-image:linear-gradient(#ff5252, #ff5252), linear-gradient(#ff5252, #ff5252);
+}
+
+.form-group.has-error.is-focused .material-icons {
+    color:#ff5252;
+}
+
+
+.form-group.is-focused .material-icons {
+    color:#00bdd4;
+}

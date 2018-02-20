@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../resources/js/mobiscroll/mobiscroll.custom-2.17.2.min.css">
+    <link rel="stylesheet" href="../styles/material-design-lite/material.icons.min.css">
+    <link rel="stylesheet" href="../styles/material-design-lite/material.grey-deep_purple.min.css">
+    <link rel="stylesheet" href="styles/charts.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
+    <link rel="stylesheet" href="../styles/main-material.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="styles/patient-profile-details.css">
+
+</head>
+<body>
+
+<div id="patient-profile-details-container-wrapper">
+    <div id="patient-profile-details-container">
+
+    </div>
+
+    <div id="info-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../model/Bridge.Provider.js"></script>
+<script type="text/javascript" src="../model/Bridge.Symptomate.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
+<script type="text/javascript" src="../lib/material-design-lite/material.min.js"></script>
+<script type="text/javascript" src="../lib/d3/d3.min.js"></script>
+<script type="text/javascript" src="../resources/js/modernizr/modernizr.svg.js"></script>
+<script type="text/javascript" src="../resources/js/d3.tip/d3.tip.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
+<script type="text/javascript" src="../resources/js/mobiscroll/mobiscroll.custom-2.17.2.min.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/react-mdl/out/ReactMDL.min.js"></script>
+
+<script type="text/javascript" src="../model/VitalSignsFactory.js"></script>
+
+<script type="text/javascript" src="js/patient-profile-details.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var snackbarContainer = document.querySelector("#info-snackbar");
+        componentHandler.upgradeElement(snackbarContainer);
+
+        var closeHandler = function(event) {
+            $("#info-snackbar").hide();
+        };
+
+        var data = {
+            message: 'In order to save profile click on DONE button which is located top-right corner within picture area.',
+            timeout: 10000,
+            actionHandler: closeHandler,
+            actionText: 'Close'
+        };
+        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    });
+</script>
+
+</body>
+</html>

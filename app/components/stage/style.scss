@@ -1,0 +1,30 @@
+@import '@material/theme/mixins';
+
+.toolbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+}
+
+
+
+.sign-out {
+    text-transform: none;
+}
+
+.logo {
+    height: 30px;
+    padding: 10px 10px;
+  }
+
+  .no-text-transform{
+      text-transform: none;
+  }
+  .large-toolbar-section{
+      min-width: 70% !important;
+  }
+
+  .title {
+      padding: 0;   
+  }

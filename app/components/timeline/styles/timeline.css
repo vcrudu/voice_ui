@@ -1,0 +1,118 @@
+.page-content-wrapper {
+    margin: 8px;
+}
+.dl-layout__header {
+    min-height: 48px !important;
+}
+
+.group-separator {
+    padding-top: 16px;
+    padding-bottom: 24px;
+    padding-left: 8px;
+}
+
+.mdl-card {
+    min-height: 120px;
+    margin-bottom: 8px;
+}
+
+h6.mdl-card__title-text {
+    font-size: 20px;
+}
+
+.notification-summary {
+    height: 20px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 4px;
+}
+
+.notification-message {
+    height: 40px;
+    padding-left: 56px;
+}
+
+.notification-title {
+    font-size: 16px;
+    color: rgba(0,0,0,.87);
+    padding-bottom: 8px;
+}
+
+.unread
+{
+    font-family: Roboto-Bold;
+}
+
+.notification-icon {
+    float: left;
+    margin-right: 16px;
+}
+
+.notification-icon .info {
+    background: #ffbc00;
+}
+
+.notification-icon .info-amber {
+    background: #ffc107;
+}
+
+.notification-icon .reading {
+    background: #8bc34a;
+}
+
+.notification-icon .alarm {
+    background: #ff5252;
+}
+
+.notification-icon .selected {
+    background: #651FFF;
+}
+
+.readingCard {
+    background: #8bc34a;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.infoCard {
+    background: #ffc107;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.alarmCard {
+    background: #ff5252;
+    height: 122px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.notification-title-summary {
+}
+
+.clear {
+    clear: both;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.push-right {
+    float: right;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}

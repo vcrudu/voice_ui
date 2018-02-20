@@ -1,0 +1,27 @@
+{
+  "name": "JSON-js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/dmitrif/JSON-js",
+  "authors": [
+    "Douglas Crockford"
+  ],
+  "description": "Douglas Crockford's JSON scripts",
+  "main": "json2.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "json2",
+    "json",
+    "parse",
+    "serialize"
+  ],
+  "license": "Public Domain",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

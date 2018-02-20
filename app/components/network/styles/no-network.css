@@ -1,0 +1,14 @@
+.page-content-wrapper {
+    margin: 8px;
+}
+
+.mdl-card__menu {
+    position: inherit;
+    top:0;
+    right: 0;
+    bottom: 8px;
+}
+
+.mdl-card {
+    min-height: 150px;
+}

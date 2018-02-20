@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>BloodPressure</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
+    <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
+    <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
+    <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
+    <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
+    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
+    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="styles/wizard.css">
+    <link rel="stylesheet" href="styles/bloodpressure.css">
+</head>
+<body>
+
+<!-- Full Page Image Background Carousel Header -->
+<header id="wizard" class="carousel slide">
+    <div id="blood-pressure-pair-progress"></div>
+    <!-- Wrapper for Slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption first-step">
+                <ol class="use-steps primary-text">
+                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu ornare mi, ut molestie quam.</li>
+                    <li>Morbi porta lacus ac nisleps lobortis, at tempor turpis gravida. Nullam sit amet mattis risus, a commodo dolor.</li>
+                    <li>Proin vitae magna vel magna ultrices imperdiet. Praesent eleifend ac metus id eleifend.</li>
+                </ol>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-01.png" alt="Blood Pressure - Step 1" class="img-responsive"/>
+            </div>
+        </div>
+        <div class="item">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption">
+                <h3 class="primary-text">Trying to detect your Blood Pressure device.</h3>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-02.png" alt="Blood Pressure - Step 2" class="img-responsive"/>
+            </div>
+        </div>
+        <div class="item">
+            <!-- Set the first background image using inline CSS below. -->
+            <div class="carousel-caption">
+                <h3 class="primary-text">The Blood Pressure device has been paired successfully.</h3>
+            </div>
+            <div class="fill">
+                <img src="images/blood-pressure-03.png" alt="Blood Pressure - Step 3" class="img-responsive"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="blood-pressure" class="buttons-group">
+    </div>
+</header>
+
+<script type="text/javascript" src="../model/EventBus.js"></script>
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/material.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
+
+<script type="text/javascript" src="js/BloodPressure.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("body").height($(window).height());
+        $(".carousel").carousel({
+            interval: 0 //changes the speed
+        });
+    });
+
+    $(window).resize(function() {
+        if (window.outerHeight < window.outerWidth) {
+            console.log("orientation changed");
+        } else if (window.outerHeight > window.outerWidth) {
+            console.log("orientation changed");
+        }
+
+        window.location.href = window.location.href;
+    });
+</script>
+</body>
+</html>

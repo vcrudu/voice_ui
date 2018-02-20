@@ -1,0 +1,35 @@
+@import "../../styles/fonts.css";
+
+#thermometer {
+    margin-top: -80px;
+}
+
+#thermometer-measure {
+    margin-top: -80px;
+}
+
+.btn-default {
+    width: auto;
+}
+
+.row-data-cells {
+    margin-top:-9px;
+}
+
+.row-data-cells > .data-cell  {
+    padding:10px;
+    text-align: center;
+    font-size:18px;
+    color:#8bc34a;
+    text-align: center;
+}
+
+/* -------------------------------------- *\
+    #Landscape Orientation Only
+\* -------------------------------------- */
+@media screen and (orientation:landscape) {
+    #thermometer {
+        margin-top: 50px;
+        position:static;
+    }
+}

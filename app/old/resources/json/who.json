@@ -1,0 +1,13 @@
+{
+  "email":"who@hotmail.com",
+  "name":"Martin",
+  "surname":"Who",
+  "passwordHash":"$2a$10$485JPr/XaP24jzX5juMFBe5VQH5hPalY1a8.IzqqaBwUxYd7NJCrO",
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Indob0Bob3RtYWlsLmNvbSIsImlhdCI6MTQ1NjQzNjE2MH0.vvdLKX6Al8C6n0QF7AoTwaa8JD0IFwa2I9VpzrbRNGU",
+  "isActive":true,
+  "type":"provider",
+  "onlineStatus":"online",
+  "socketId":"kMF7PYIDU3ktQbihAAAA",
+  "avatar":"https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png",
+  "createdDateTime":"2015-12-02T23:12:21.299Z"
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Patient Timeline</title>
+    <link rel="stylesheet" href="../styles/fonts.css">
+    <link rel="stylesheet" href="../styles/material-design-lite/material.icons.min.css">
+    <link rel="stylesheet" href="../lib/react-mdl/extra/css/material.grey-deep_purple.min.css">
+    <link rel="stylesheet" href="../styles/main-material.css">
+    <link rel="stylesheet" href="styles/timeline.css">
+
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .mdl-card {
+            overflow: visible;
+        }
+
+        .overlay-menu {
+            z-index: 999999;
+        }
+    </style>
+
+</head>
+<body>
+<div id="patient-timeline-2">
+</div>
+
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).on("mobileinit", function() {
+        jQuery.mobile.autoInitializePage = false;
+    });
+
+
+</script>
+<script type="text/javascript" src="../resources/js/jQuery.mobile.touch/jquery.mobile.touch.min.js"></script>
+<script type="text/javascript" src="../lib/react-mdl/extra/material.min.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../lib/react-mdl/out/ReactMDL.min.js"></script>
+<script type="text/javascript" src="../resources/js/dotdotdot/jquery.dotdotdot.min.js"></script>
+
+
+<script type="text/javascript" src="js/patient-timeline.js"></script>
+
+
+</body>
+</html>

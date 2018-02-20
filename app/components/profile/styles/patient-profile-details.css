@@ -1,0 +1,145 @@
+
+.mdl-textfield {
+    position: relative;
+    margin-right: -15px;
+    margin-left: 60px;
+    width: 100%;
+}
+
+.mdl-textfield > i {
+    position: absolute;
+    left: -60px;
+    top: 15px;
+    width: 40px;
+}
+
+/*Specific page styling*/
+.mdl-layout__content {
+    margin: 16px 0 16px 16px;
+}
+
+
+.profile-image-container {
+    height: 120px;
+}
+
+.mdl-textfield__label:after{
+    background-color: rgb(124,77,255) !important
+}
+
+.userName {
+    margin: 0 auto;
+}
+
+main {
+    padding: 16px;
+    background: #F5F5F5;
+}
+
+.done-button {
+    margin-top: 8px;
+    margin-right: 8px;
+    position:absolute;
+    top:0;
+    right:0;
+    z-index: 1000;
+}
+
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
+    background: rgb(103, 58, 183);
+}
+
+.mdl-card {
+    min-height: 100px;
+}
+
+.mdl-progress {
+    height: 16px;
+}
+
+.mdl-progress>.progressbar {
+    background-color: #651FFF;
+}
+
+.questions-list{
+    list-style-type: none;
+    padding-left: 8px;
+}
+
+.question-answer {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    line-height: 1;
+    min-height: 48px;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    padding: 0 0 16px 0;
+    cursor: default;
+    color: rgba(0,0,0,.87);
+}
+
+.answer {
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 18px;
+    color: rgba(0,0,0,.54);
+    display: block;
+    padding: 0;
+}
+
+.mdl-card__supporting-text {
+    width: inherit !important;
+}
+
+.show-mobile {
+    display: none;
+}
+
+.hide-mobile {
+    display: block;
+}
+
+.tab-icon
+{
+    margin-top: 8px;
+}
+
+.mdl-layout__tab {
+    min-width: 60px;
+}
+
+@media screen and (max-width: 1024px) {
+    .mdl-layout__header {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 435px) {
+    .show-mobile {
+        display: block;
+    }
+    .hide-mobile {
+        display: none;
+    }
+}
+
+.explain-hide {
+    display: none;
+}
+
+.explain {
+    color: rgba(0, 0, 0, 0.87) !important;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.bullet {
+    font-weight: 800;
+}

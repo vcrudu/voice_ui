@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Patient - My Devices</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
+    <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
+    <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
+    <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design-icons/css/material-icons.min.css">
+    <link rel="stylesheet" href="../lib/mprogress/mprogress.min.css">
+
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="styles/devices.css">
+</head>
+<body id="body">
+
+<div id="my-devices-progress"></div>
+<div id="my-devices"></div>
+
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/material.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+<script type="text/javascript" src="../lib/mprogress/mprogress.min.js"></script>
+
+<script type="text/javascript" src="js/patient-my-devices.js"></script>
+
+<script>
+    $(window).resize(function() {
+        if (window.outerHeight < window.outerWidth) {
+            console.log("orientation changed");
+        } else if (window.outerHeight > window.outerWidth) {
+            console.log("orientation changed");
+        }
+
+        window.location.href = window.location.href;
+    });
+</script>
+</body>
+</html>

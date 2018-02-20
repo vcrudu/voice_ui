@@ -1,0 +1,12 @@
+@import './reset';
+
+@font-face {
+  font-family: 'DefaultRegular';
+  src: url('../fonts/Roboto-Regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}  
+
+body {
+  font-family: 'DefaultRegular';
+}

@@ -1,0 +1,13 @@
+{
+  "email":"vcodreanu@yahoo.com",
+  "name":"fsdfasassd",
+  "surname":"sdfds",
+  "passwordHash":"$2a$10$BlIN8yQvXXSP7pVUfihjEOrOSx9a2Vw5IaSSdNR/BB7qfXZc0PaGe",
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InZjb2RyZWFudUB5YWhvby5jb20iLCJpYXQiOjE0NTc3Mjk2MjB9.rnNzqTL_P6zCuP5qvD1GB1u2iavVKT3NolB3THinG8Q",
+  "isActive":true,
+  "type":"provider",
+  "onlineStatus":"online",
+  "socketId":"/#1mFAF4lK3Ds9-YprAAAA",
+  "avatar":"https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png",
+  "createdDateTime":"1457043232669"
+}

@@ -1,0 +1,94 @@
+.page-content {
+    padding: 16px;
+}
+
+.question {
+    font-size: 20px;
+}
+
+.answer-buttons {
+    margin-top: 14px;
+    margin-bottom: 14px;
+    margin-left: 8px;
+}
+
+.accent-color {
+    color: #651FFF !important;
+}
+
+.conditionCard {
+    margin-bottom: 8px;
+}
+
+.mdl-card {
+    min-height: 100px;
+}
+
+.progress-bar-result {
+    height: 16px;
+    margin-top: 4px;
+}
+
+.progressbar {
+    background-color: #651FFF !important;
+}
+
+.condition-cards {
+    margin-top: 14px;
+}
+
+.book-appointment-button {
+    position: fixed;
+    right: 32px;
+    top: 10px;
+}
+
+.explain-hide {
+    display: none;
+}
+
+.explain {
+    color: rgba(0, 0, 0, 0.87) !important;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.bullet {
+    font-weight: 800;
+}
+
+.group_single ul {
+    display: block;
+    padding: 8px 0;
+    list-style: none;
+}
+
+.group_single ul > li {
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: .04em;
+    line-height: 1;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    padding: 16px;
+    cursor: default;
+    color: rgba(0,0,0,.87);
+    overflow: hidden;
+}
+
+.group_single ul > li > label {
+    position: relative;
+    z-index: 1;
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+}

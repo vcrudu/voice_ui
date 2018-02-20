@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Sample</title>
+    <link rel="stylesheet" href="../lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="../lib/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" href="../styles/ldpi.css" media="screen and (-webkit-min-device-pixel-ratio: 0.75)">
+    <link rel="stylesheet" href="../styles/mdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1)">
+    <link rel="stylesheet" href="../styles/hdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 1.5)">
+    <link rel="stylesheet" href="../styles/xhdpi.css" media="screen and (-webkit-min-device-pixel-ratio: 2)">
+    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/fullcalendar.min.css">
+    <link rel="stylesheet" href="../resources/js/fullcalendar-scheduler-1.1.0-beta/scheduler.min.css">
+</head>
+<body>
+
+<button class="btn-footer">Hello</button>
+
+<script type="text/javascript" src="../model/EventBus.js"></script>
+<script type="text/javascript" src="../model/Bridge.js"></script>
+<script type="text/javascript" src="../lib/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="../lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/JSON-js/json2.js"></script>
+<script type="text/javascript" src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/material.min.js"></script>
+<script type="text/javascript" src="../lib/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script type="text/javascript" src="../lib/react/react.js"></script>
+<script type="text/javascript" src="../lib/react/react-dom.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("body").height($(window).height());
+        $(".carousel").carousel({
+            interval: 0 //changes the speed
+        });
+    });
+
+    alert(window.devicePixelRatio);
+
+</script>
+</body>
+</html>

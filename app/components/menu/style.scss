@@ -1,0 +1,23 @@
+
+.menu {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.menu .mdc-tab {
+    text-transform: none;
+    line-height: inherit;
+    font-size:.8rem;
+}
+
+.menu .mdc-tab__icon{
+    font-size: 24px;
+}
+
+.mdc-tab__icon + .mdc-tab__icon-text {
+    padding-top: 0;
+}
+

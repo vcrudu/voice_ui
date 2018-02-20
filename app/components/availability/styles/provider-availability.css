@@ -1,0 +1,28 @@
+.fc-nursesGrid-view th{
+    display: none;
+}
+
+.fc-head-container {
+    border-color: transparent !important;
+}
+
+.fc-time-grid-event {
+    border-radius: 0;
+}
+
+.fc-toolbar {
+    display: none;
+}
+
+/*Specific page styling*/
+.fc-event-container {
+    width: 100%;
+}
+
+.show-avaialbility-mobiscroll-wrapper {
+    height: 0px;
+    position: absolute;
+    margin-top: -65px;
+    right: 0;
+    margin-right: 56px;
+}

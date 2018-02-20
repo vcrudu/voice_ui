@@ -1,0 +1,21 @@
+{
+  "email":"thcauditor@gmail.com",
+  "name":"Victor",
+  "surname":"Lungu",
+  "passwordHash":"$2a$10$VQ8sxqXJ9rLd1NdccPcW3uaTDJuYfbxmMBbhGta9ED7WZ5g.vYogS",
+  "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRoY2F1ZGl0b3JAZ21haWwuY29tIiwiaWF0IjoxNDc4MDc1NDg2fQ.Dc2bJd1Gy8R6XKcAHxZUTLhiLAlz1itEDau7HyqdEe8",
+  "isActive":true,
+  "type":"patient",
+  "onlineStatus":"offline",
+  "socketId":"cDe8tThMDVPzSrhbAAAA",
+  "avatar":"https://s3-eu-west-1.amazonaws.com/trichrome/public/male-doctor.png",
+  "createdDateTime":"2015-08-02T19:29:58.411Z",
+  "firstname":"Victor",
+  "title":"Mr.",
+  "dateOfBirth":"284688000000",
+  "sex":"Male",
+  "gender":"Male",
+  "ethnicity":"British/Mixed British",
+  "nhsNumber":"6567644567",
+  "mobile":"07532302702"
+}

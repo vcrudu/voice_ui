@@ -1,0 +1,37 @@
+{
+  "name": "JSON-js",
+  "version": "1.0.1",
+  "homepage": "https://github.com/dmitrif/JSON-js",
+  "authors": [
+    "Douglas Crockford"
+  ],
+  "description": "Douglas Crockford's JSON scripts",
+  "main": "json2.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "json2",
+    "json",
+    "parse",
+    "serialize"
+  ],
+  "license": "Public Domain",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "0b2deb9c1f2299d297d647027d084c1d9b2b8366"
+  },
+  "_source": "git://github.com/dmitrif/JSON-js.git",
+  "_target": "^1.0.1",
+  "_originalSource": "json2-bower",
+  "_direct": true
+}
