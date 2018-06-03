@@ -84,7 +84,7 @@
         if (!(callback && typeof callback === 'function')) {
           throw new Error('You must pass a callback function to export.');
         }
-        sampleRate = (typeof sampleRate !== 'undefined') ? sampleRate : 16000;
+        sampleRate = (typeof sampleRate !== 'undefined') ? sampleRate : window.sampleRate;
         recorder.exportWAV(callback, sampleRate);
       };
   
@@ -131,7 +131,9 @@
           console.log("No native audio plugin");
         } */
         // Play the audio file at url
+        if(window.device && window.device.platform==='iOS'){
           url = url.replace('file://', '');
+        }
       
         var my_media = new Media(url,
           // success callback
@@ -142,6 +144,7 @@
 
         // Play audio
         my_media.play();
+        
       }
   
       /**
@@ -159,38 +162,20 @@
         if (typeof buffer === 'undefined') {
           return;
         }
+        
+        /* if (window.audioBufferPlayer) {
+          audioBufferPlayer.play(buffer, () => {
+            console.log("audioBufferPlayer:success");
+          }, (err) => {
+            console.error(err);
+          });
+        } */
+
         var myBlob = new Blob([buffer]);
         fileSystem.writeToTemporaryFile(myBlob, function(err, answerUrl){
           console.log("Answer url: "+ answerUrl);
           playNative(answerUrl, callback);
-        });
-        
-        // We'll use a FileReader to create and ArrayBuffer out of the audio response.
-        /* var fileReader = new FileReader();
-        fileReader.onload = function() {
-          // Once we have an ArrayBuffer we can create our BufferSource and decode the result as an AudioBuffer.
-          playbackSource = audioRecorder.audioContext().createBufferSource();
-          audioRecorder.audioContext().decodeAudioData(this.result, function(buf) {
-            // Set the source buffer as our new AudioBuffer.
-            playbackSource.buffer = buf;
-            
-            playbackSource.connect(audioRecorder.gainNode());
-            console.log({maxValue: audioRecorder.gainNode().gain.maxValue});
-            console.log({value: audioRecorder.gainNode().gain.value});
-            // Set the destination (the actual audio-rendering device--your device's speakers).
-            audioRecorder.gainNode().connect(audioRecorder.audioContext().destination);
-            // Add an "on ended" callback.
-            playbackSource.onended = function(event) {
-              if (typeof callback === 'function') {
-                callback();
-              }
-            };
-            // Start the playback.
-            playbackSource.start(0);
-          });
-          recorder.clear();
-        };
-        fileReader.readAsArrayBuffer(myBlob); */
+        }); 
       };
   
       /**

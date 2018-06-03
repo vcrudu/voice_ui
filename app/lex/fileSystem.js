@@ -66,7 +66,7 @@
         
 
         function writeToTemporaryFile(dataBlob, callback) {
-            createFile(fileSystem.root, 'answer.wav', dataBlob, callback);
+            createFile(fileSystem.root, 'answer.mp3', dataBlob, callback);
         }
 
         function getAnswerFile() {

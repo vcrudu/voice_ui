@@ -35,7 +35,7 @@
     worker.postMessage({
       command: 'init',
       config: {
-        sampleRate: audioinput.SAMPLERATE.VOIP_16000Hz
+        sampleRate: window.sampleRate
       }
     });
 
@@ -147,11 +147,11 @@
     window.addEventListener("audioinputerror", onAudioInputError, false);
 
     audioinput.start({
-      sampleRate: audioinput.SAMPLERATE.VOIP_16000Hz,
+      sampleRate: window.sampleRate,
       format:audioinput.FORMAT.PCM_16BIT,
       audioSourceType: audioinput.AUDIOSOURCE_TYPE.DEFAULT,
       normalize: true,
-      normalizationFactor: 13106.8,
+      normalizationFactor: 32767.0,
       bufferSize: 4096,
       channels: audioinput.CHANNELS.MONO,
       streamToWebAudio: false,

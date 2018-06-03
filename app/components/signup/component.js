@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'rmwc/Button';
 import LoggedOutHeader from '../shared/loggedOutHeader';
 import { Grid, GridCell } from 'rmwc/Grid';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Redirect, withRouter} from 'react-router-dom';
 import ValidationInput from '../shared/ValidationInput';
 import apiService from '../../model/apiService'; 
 
@@ -124,7 +124,8 @@ class PatientSignUp extends Component {
 
         apiService.signUp(signUpFormData, (result) => {
             if (result.success) {
-                this.setState({successSubmit:true});    
+                this.setState({successSubmit:true});
+                apiService.sendEvent(result.data.token, result.data.email, {"event_name": "sign_up"}, 10000);    
             }
             else {
                 apiService.error(result, () => { });

@@ -1,8 +1,6 @@
-/**
- * Created by Victor on 2/26/2016.
- */
-
+import moment from 'moment';
 var VitalSignsFactory = {};
+import _ from 'underscore';
 
 VitalSignsFactory.createEmptyVitalSings = function() {
     var objectToReturn = {
@@ -53,6 +51,27 @@ VitalSignsFactory.createEmptyVitalSings = function() {
 
 VitalSignsFactory.createVitalSings = function(data) {
 
+    if (!data || data.length==0) {
+        data = [
+            {
+                measurementType: "bloodPressure",
+                value: { systolic: 145, diastolic: 105 },
+                utcDateTime: moment().valueOf()
+            },
+            {
+                measurementType: "bloodPressure",
+                value: { systolic: 135, diastolic: 103 },
+                utcDateTime: moment().add(-1,'d').valueOf()
+            },
+            {
+                measurementType: "bloodPressure",
+                value: { systolic: 146, diastolic: 106 },
+                utcDateTime: moment().add(-2,'d').valueOf()
+            }
+        
+        ];
+    }
+
     var objectToReturn = this.createEmptyVitalSings();
 
     if (data) {
@@ -102,3 +121,5 @@ VitalSignsFactory.createVitalSings = function(data) {
 
     return objectToReturn;
 }
+
+module.exports = VitalSignsFactory;

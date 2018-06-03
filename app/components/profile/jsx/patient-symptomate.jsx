@@ -5,7 +5,7 @@
 (function() {
 
     "use strict";
-
+    
     var Layout = ReactMDL.Layout;
     var Content = ReactMDL.Content;
     var Checkbox  = ReactMDL.Checkbox;

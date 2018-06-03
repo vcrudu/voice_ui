@@ -69,9 +69,9 @@ class SpeachWriter {
 
     }
 
-    writeToTemporaryFile(dataBlob, callback) {
+    writeToTemporaryFile(dataBlob, callback, fileName) {
         if(!this._fileSystem) throw "File system is not initialized"
-        this.createFile(this._fileSystem.root, 'speach.mp3', dataBlob, callback);
+        this.createFile(this._fileSystem.root, fileName?fileName:'speach.mp3', dataBlob, callback);
     }
 }
 

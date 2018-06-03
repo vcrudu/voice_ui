@@ -3,19 +3,20 @@ import SpeachWriter from './speachWriter';
 const doSpeachMethod = Symbol('doSpeachMethod');
 
 class Speaker {
-    constructor() {
+    constructor(endCallback) {
         this._speachWriter = new SpeachWriter();
         this._playCallback = (err, speachUrl) => {
             this.playNative(speachUrl);
         }
         this._playCallback = this._playCallback.bind(this);
+        this._endCallback = endCallback;
     }
 
     playNative(url, callback) {
         url = url.replace('file://', '');
         this._media = new Media(url,
             // success callback
-            function () {  },
+            function () { if(this._endCallback)this._endCallback(); },
             // error callback
             function (err) { console.log("playAudio():Audio Error: " + JSON.stringify(err)); }
         );
@@ -50,10 +51,25 @@ class Speaker {
         })
     }
 
+    play(audioStream){
+        /* if(window.audioBufferPlayer){
+            audioBufferPlayer.play(audioStream, ()=>{
+                console.log("audioBufferPlayer:success");
+            },(err)=>{
+                console.error(err);
+            });
+        } */
+        /* this._speachWriter.requestTemporaryFileSystem(()=>{
+            this._speachWriter.writeToTemporaryFile(audioStream, this._playCallback, 'speach.mp3');
+        });  */
+    }
+
     speak(text) {
-        this._speachWriter.requestTemporaryFileSystem(()=>{
-            this[doSpeachMethod](text);
-        });
+        if (window.cordova) {
+            this._speachWriter.requestTemporaryFileSystem(() => {
+                this[doSpeachMethod](text);
+            });
+        }
     }
 
     stop(){

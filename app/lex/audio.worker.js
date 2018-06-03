@@ -3,6 +3,9 @@ var recLength = 0,
   recBuffer = [],
   max = 0,
   start,
+  startMeasureSilence,
+  silenceLevel = 0.05,
+  measureSilenceInterval = 500,
   recordSampleRate;
 
 onmessage = function (e) {
@@ -27,17 +30,30 @@ function init(config) {
 }
 
 function record(inputBuffer) {
+  if (recBuffer.length == 0) {
+    startMeasureSilence = Date.now();
+  }
+
   recBuffer.push(inputBuffer[0]);
   recLength += inputBuffer[0].length;
   for (var i = 0; i < inputBuffer[0].length; i++) {
     var curr_value_time = inputBuffer[0][i];
     //console.log(curr_value_time);
-    if (Math.abs(curr_value_time) > 0.18) {
-      start = Date.now();
-    }
+    var newtime = Date.now();
+    /*if(newtime - startMeasureSilence<measureSilenceInterval){
+      if(Math.abs(curr_value_time)>silenceLevel){
+        silenceLevel = Math.abs(curr_value_time);
+      }
+    } */
+
+    //if(newtime - startMeasureSilence>measureSilenceInterval){
+      if (Math.abs(curr_value_time) > silenceLevel) {
+        start = Date.now();
+      }
+    //}
   }
   if (start) {
-    var newtime = Date.now();
+    newtime = Date.now();
     var elapsedTime = newtime - start;
     console.log("elapsedTime: " + elapsedTime);
     
@@ -59,6 +75,8 @@ function clear() {
   recLength = 0;
   recBuffer = [];
   start = null;
+  startMeasureSilence = null;
+  silenceLevel = 0.05;
 }
 
 function downsampleBuffer(buffer, exportSampleRate) {

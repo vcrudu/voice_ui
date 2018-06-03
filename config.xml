@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.trichromehealth.member" ios-CFBundleVersion="0.0.1" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.trichromehealth.member.bp" ios-CFBundleVersion="0.0.1" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Blood Pressure Assistant</name>
     <description>
         Blood pressure self-management assistant application
@@ -19,6 +19,8 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <preference name="android-targetSdkVersion" value="22" />
+        <preference name="android-minSdkVersion" value="21" />
     </platform>
     <platform name="ios">
         <icon height="180" src="res/icon/ios/icon-60@3x.png" width="180" />
@@ -52,6 +54,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="KeychainAccessibility" value="WhenUnlocked" />
+        <resource-file src="GoogleService-Info.plist" />
     </platform>
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-audioinput" spec="^0.3.0" />
@@ -67,7 +70,13 @@
     <preference name="KeyboardShrinksView" value="false" />
     <plugin name="cordova.plugin.nativealert" spec="https://github.com/vigneshuvi/cordova-plugin-nativealert.git" />
     <plugin name="cordova-plugin-secure-storage" spec="^2.6.8" />
+    <plugin name="cordova-plugin-device" spec="^2.0.1" />
+    <plugin name="cordova-plugin-device-motion" spec="^1.2.5" />
+    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
+    <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
+    <plugin name="com.trichrome.audiobufferplayer" spec="/Users/victorcrudu/Code/bp/plugin/AudioBufferPlayer" />
+    <plugin name="cordova-plugin-firebase" spec="^1.0.0" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.0.0" />
+    <engine name="android" spec="^7.1.0" />
 </widget>

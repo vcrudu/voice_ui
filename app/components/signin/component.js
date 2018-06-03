@@ -1,15 +1,18 @@
 import React from 'react';
+import {Link, Redirect, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import { TextField, TextFieldIcon, TextFieldHelperText } from 'rmwc/TextField';
 import { Button } from 'rmwc/Button';
 import LoggedOutHeader from '../shared/loggedOutHeader';
-import {Link} from 'react-router-dom';
 import { Grid, GridCell } from 'rmwc/Grid';
 import apiService from '../../model/apiService';
 import ValidationInput from '../shared/ValidationInput';
 import Stage from '../stage/component';
 import SecurityStorage from '../../model/SecurityStorage'
+import * as Actions from '../../actions'
 
-class SignIn extends React.Component {
+class SignInComponent extends React.Component {
     constructor(props){
         super(props);
         this.state = {width:'80vw',margin:'20vh auto'};
@@ -72,20 +75,20 @@ class SignIn extends React.Component {
             password: this.state.password.value
         };
 
-        apiService.signIn(signUpFormData, (result) => {
-            if (result.success) {
+        apiService.signIn(signUpFormData, (response) => {
+            if (response.success) {
                 const securityStorage = new SecurityStorage();
-                securityStorage.setValue('token', result.token);
-                this.setState({successSubmit:true});    
+                securityStorage.setValue('token', response.data.token);
+                this.props.actions.signInOut(response.data);
             }
             else {
-                apiService.error(result, () => { });
+                apiService.error(response, () => { });
             }
         });
     }
 
     render(){
-        return this.state.successSubmit?(<Stage loggedIn={true} title="Blood Pressure Assistant"/>):
+        return (this.props.userData&&this.props.userData.token)?(<Redirect to="/stage/home/false"/>):
         (
             <div>
                 <LoggedOutHeader/>
@@ -130,4 +133,19 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+const mapStateToProps = state => {
+    return { userData: state.userData};
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+const SignIn = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SignInComponent)
+
+export default withRouter(SignIn);
