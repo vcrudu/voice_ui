@@ -2,7 +2,7 @@
     'use strict';
     var audioRecorderFactory = require('./recorder.js');
     var fileSystemFactory = require('./fileSystem.js');
-    var recorder, audioRecorder, checkAudioSupport, audioSupported, playbackSource, fileSystem, UNSUPPORTED = 'Audio is not supported.';
+    var recorder, my_media, audioRecorder, checkAudioSupport, audioSupported, playbackSource, fileSystem, UNSUPPORTED = 'Audio is not supported.';
   
     /**
      * Represents an audio control that can start and stop recording,
@@ -135,9 +135,14 @@
           url = url.replace('file://', '');
         }
       
-        var my_media = new Media(url,
+        my_media = new Media(url,
           // success callback
-          function () { console.log("playAudio():Audio Success"); recorder.clear(); callback();},
+          function () { 
+            console.log("playAudio():Audio Success"); 
+          recorder.clear();
+          my_media.release(); 
+          callback();
+        },
           // error callback
           function (err) { console.log("playAudio():Audio Error: " + JSON.stringify(err)); }
         );

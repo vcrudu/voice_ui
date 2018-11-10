@@ -1,17 +1,17 @@
 import { TOGGLE_SOUND } from '../actions';
-import { CLICK_MICROPHONE } from '../actions';
+import { SWITCH_MICROPHONE } from '../actions';
 
 const initialState = {
-    voiceOn: true,
-    microphoneOn: false
+    voiceState: 'on',
+    microphoneState: 'off'
 }
 
 export const voiceState = (state = initialState, action) => {
     switch (action.type) {
         case TOGGLE_SOUND:
-            return { ...state, voiceOn: action.onOff };
-        case CLICK_MICROPHONE:
-            return { ...state, microphoneOn: !state.microphoneOn};
+            return { microphoneState: state.microphoneState, voiceState: action.onOff };
+        case SWITCH_MICROPHONE:
+            return { voiceState: action.onOff, microphoneState: action.onOff};
         default:
             return state;
     }

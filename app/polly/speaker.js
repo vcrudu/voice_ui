@@ -16,7 +16,7 @@ class Speaker {
         url = url.replace('file://', '');
         this._media = new Media(url,
             // success callback
-            function () { if(this._endCallback)this._endCallback(); },
+            this._endCallback,
             // error callback
             function (err) { console.log("playAudio():Audio Error: " + JSON.stringify(err)); }
         );

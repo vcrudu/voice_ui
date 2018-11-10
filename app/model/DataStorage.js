@@ -30,7 +30,7 @@ class DataStorage {
         if(state)
         return state;
         else return {
-            voiceState:{voiceOn:true, microphoneOn:false},
+            voiceState:{voiceState:'on', microphoneState:'on'},
             devices:[],
             dialogState:{title:"PASSIVE"}
         }

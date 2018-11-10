@@ -3,10 +3,15 @@ export const ADD_DEVICE = 'ADD_DEVICE';
 export const ADD_MEASURE = 'ADD_MEASURE';
 export const CHANGE_DIALOG_STATE = 'CHANGE_VOICE_STATE';
 export const ADD_MEASURE_COUNT = 'ADD_MEASURE_COUNT';
-export const CLICK_MICROPHONE = 'CLICK_MICROPHONE';
+export const SWITCH_MICROPHONE = 'SWITCH_MICROPHONE';
 export const SIGN_OUT = 'LOG_OUT';
 export const SIGN_IN = 'SIGN_IN';
 export const CURRENT_ACTION = 'CURRENT_ACTION';
+export const PAIR_ACTION = 'PAIR_ACTION';
+export const ADD_CHAT_MESSAGE = 'ADD_CHAT_MESSAGE';
+export const CLEAR_CHAT_MESSAGE = 'CLEAR_CHAT_MESSAGE';
+export const CHANGE_SCREEN_TITLE = 'CHANGE_SCREEN_TITLE';
+export const UPDATE_SETTINGS_DATA = 'UPDATE_SETTINGS_DATA';
 
 export const toggleSound = (onOff) => ({
     type: TOGGLE_SOUND,
@@ -32,8 +37,9 @@ export const addMeasureCount = () => ({
     type: ADD_MEASURE_COUNT
 });
 
-export const clickMicrophone = () => ({
-    type: CLICK_MICROPHONE
+export const switchMicrophone = (onOff) => ({
+    type: SWITCH_MICROPHONE,
+    onOff
 });
 
 export const signInOut = (userData) => ({
@@ -44,4 +50,28 @@ export const signInOut = (userData) => ({
 export const setCurrentAction = (message) => ({
     type: CURRENT_ACTION,
     currentAction: message
+});
+
+export const pairDevice = () => ({
+    type: PAIR_ACTION
+});
+
+export const addChatMessage = (message) => ({
+    type: ADD_CHAT_MESSAGE,
+    message: message
+});
+
+export const clearChatMessage = () => ({
+    type: CLEAR_CHAT_MESSAGE
+});
+
+export const changeScreenTitle = (title) => ({
+    type: CHANGE_SCREEN_TITLE,
+    title: title
+});
+
+export const updateSettingsData = (settingName, value) => ({
+    type: UPDATE_SETTINGS_DATA,
+    settingName: settingName,
+    value: value
 });

@@ -530,6 +530,8 @@ class PatientSymptomateComponent extends React.Component {
                 this.commonSymptoms.setCommonSymptoms(symptomsResult);
             });
         })
+        
+        this.props.actions.changeScreenTitle('Symptoms');
     }
     buildDiagnostic(diagnostic) {
         var evidence = {
@@ -643,7 +645,7 @@ class PatientSymptomateComponent extends React.Component {
 
     onFabClick() {
         if(!this.props.voiceState.microphoneOn) {
-            this.props.actions.clickMicrophone();
+            this.props.actions.switchMicrophone();
             
         }
     }
@@ -655,7 +657,7 @@ class PatientSymptomateComponent extends React.Component {
                     <CommonSymptoms show={this.state.showCommonSymptoms} ref={commonSymptoms => this.commonSymptoms = commonSymptoms} handleNext={this.handleNext} handlePrev={this.handlePrev} />
                     <SymptomQuestions show={this.state.showQuestion} question={this.state.diagnosticResponse.question} ref={symptomQuestions => this.symptomQuestions = symptomQuestions} handleNext={this.handleNext} handlePrev={this.handlePrev} />
                     <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} diagnosticPost={this.state.diagnostic} slotId={this.state.slotId} /> 
-                    <Fab style={{ position: 'fixed', bottom: '12vh', right: '5vh' }} onClick={this.onFabClick}>settings_voice</Fab>
+                    <Fab style={{ position: 'fixed', bottom: '12vh', right: '5vh' }} onClick={this.onFabClick} icon='settings_voice'></Fab>
                 </div>
             </GridCell>
         </Grid>

@@ -54,7 +54,6 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <preference name="KeychainAccessibility" value="WhenUnlocked" />
-        <resource-file src="GoogleService-Info.plist" />
     </platform>
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-audioinput" spec="^0.3.0" />
@@ -75,8 +74,10 @@
     <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
     <plugin name="cordova-plugin-nativeaudio" spec="^3.0.9" />
     <plugin name="com.trichrome.audiobufferplayer" spec="/Users/victorcrudu/Code/bp/plugin/AudioBufferPlayer" />
-    <plugin name="cordova-plugin-firebase" spec="^1.0.0" />
+    <plugin name="phonegap-plugin-push" spec="^1.11.1">
+        <variable name="SENDER_ID" value="85075801930" />
+    </plugin>
     <engine name="ios" spec="^4.5.4" />
     <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.1.0" />
+    <engine name="android" spec="^6.3.0" />
 </widget>

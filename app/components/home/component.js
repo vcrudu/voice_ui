@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import * as Actions from '../../actions';
 import { Fab } from 'rmwc/Fab';
 import {
@@ -40,6 +40,7 @@ class HomeComponent extends React.Component {
         if(this.props.match.params.startAssistant==='true'){
             this.onFabClick();
         }
+        this.props.actions.changeScreenTitle('Home');
     }
 
     componentWillUnmount() {
@@ -54,12 +55,16 @@ class HomeComponent extends React.Component {
 
     takeMeasurement(onSuccess) {
         console.log('takeMeasurement started');
+        var once = false;
         if (window.ble) {
             console.log('Starting to scan');
+            setTimeout(()=>{
+                ble.startScan([],()=>{console.log('Stop scanning for no activity.');})
+            }, 15 * 60 * 1000);
             ble.startScan([], (device) => {
                 console.log(device);
                 if (device.advertising &&
-                    device.advertising.kCBAdvDataServiceUUIDs && device.advertising.kCBAdvDataServiceUUIDs.find((uuid) => uuid === "1810") || device.name==="IH-51-1490-BT" ) {//name==="IH-51-1490-BT"){
+                    device.advertising.kCBAdvDataServiceUUIDs && device.advertising.kCBAdvDataServiceUUIDs.find((uuid) => uuid === "1810")) {//name==="IH-51-1490-BT"){
                     console.log('Stop scanning');
                     ble.stopScan(() => {
                         this.props.actions.addDevice(device);
@@ -68,13 +73,23 @@ class HomeComponent extends React.Component {
                             console.log(peripheralData)
                             ble.startNotification(device.id, '1810', '2A35', (data) => {
                                 const intData = new Uint8Array(data);
-                                let measure = { dateTime: Date.now(), systolic: intData[1], diastolic: intData[3], deviceModelType:"BloodPressure" };
-                                this.props.actions.addMeasure(measure);
+                                let dateTime = moment({ years:moment().year(), months:intData[9], days:intData[10], hours:intData[11], minutes:intData[12], seconds:moment().second()});
+                                let dateTime2 = moment(dateTime).add(1,'seconds');
+                               
+                                let bloodPressure = { dateTime: dateTime, systolic: intData[1], diastolic: intData[3], deviceModelType:"BloodPressure" };
+                                let heartRate = { dateTime: dateTime2, heartRate: intData[14], deviceModelType: "HeartRate" };
+                                this.props.actions.addMeasure(bloodPressure);
                                 
-                                apiService.sendMeasure(this.props.userData.token,measure,(error, data)=>{
+                                apiService.sendMeasure(this.props.userData.token,bloodPressure,(error, data)=>{
                                     console.log(data);
                                 });
-                                onSuccess(measure);
+                                apiService.sendMeasure(this.props.userData.token,heartRate,(error, data)=>{
+                                    console.log(data);
+                                });
+                                if(!once){
+                                    once = true;
+                                    onSuccess(bloodPressure);
+                                }
                             }, (error) => {
                                 console.log(error)
                             });
@@ -91,12 +106,12 @@ class HomeComponent extends React.Component {
 
     onFabClick() {
         //if(!this.props.voiceState.microphoneOn) {
-            //this.props.actions.clickMicrophone();
+            //this.props.actions.switchMicrophone();
             this.demoConversation.startConversation('MeasureBP', (stateTitle) => {
                 this.props.actions.changeDialogState(stateTitle);
             }, (voiceData) => {
                 console.log(voiceData.slotToElicit);
-                if (voiceData.slotToElicit === 'measurementFinished') {
+                if (voiceData.slotToElicit === 'measurementFinished'||voiceData.slots['readyToStart'] === 'no') {
                     this.takeMeasurement((measure) => {
                         this.props.actions.addMeasureCount();
                         if (this.props.measureCount.count < 2) {
@@ -105,11 +120,11 @@ class HomeComponent extends React.Component {
                             let now = moment();
                             let middleDay = now.startOf('day').add(12, 'hours');
                             this.demoConversation.startSpeech("Thanks for providing the measurement. I have received the result. I will help you in the " + (moment().isBefore(middleDay) ? "evening" : "morning") + " to measure the blood pressure again. Have a good time!");
-                            //this.props.actions.clickMicrophone(); 
+                            //this.props.actions.switchMicrophone(); 
                         }
                     });
                 } else {
-                    //this.props.actions.clickMicrophone();                    
+                    //this.props.actions.switchMicrophone();                    
                 }
                 console.log(voiceData);
             });
@@ -117,6 +132,7 @@ class HomeComponent extends React.Component {
     }
 
     handleAction(action) {
+        return;
         switch (action.actionType) {
             case 'readText':
                 let speaker = new Speaker();
@@ -136,11 +152,11 @@ class HomeComponent extends React.Component {
                                 let now = moment();
                                 let middleDay = now.startOf('day').add(12, 'hours');
                                 this.demoConversation.startSpeech("Thanks for providing the measurement. I have received the result. I will help you in the " + (moment().isBefore(middleDay) ? "evening" : "morning") + " to measure the blood pressure again. Have a good time!");
-                                //this.props.actions.clickMicrophone(); 
+                                //this.props.actions.switchMicrophone(); 
                             }
                         });
                     } else {
-                        //this.props.actions.clickMicrophone();                    
+                        //this.props.actions.switchMicrophone();                    
                     }
                     console.log(voiceData);
                 });
@@ -163,7 +179,7 @@ class HomeComponent extends React.Component {
                     <CardPrimaryAction>
                         {
                             this.props.currentAction.id!=="TakeDrug" && this.props.currentAction.id!=="EnrolPatientForTreatment"?
-                            <CardMedia sixteenByNine style={{ backgroundImage: 'url(img/blood-pressure-measure-01.png)', backgroundPosition: "center" }} />
+                            <CardMedia sixteenByNine style={{ backgroundImage: 'url(img/blood-pressure-measure-01.png)',     backgroundPosition: "center" }} />
                             :null
                         }
                         <div style={{ padding: '0 1rem 1rem 1rem' }}>
@@ -175,7 +191,7 @@ class HomeComponent extends React.Component {
                             <CardActionButtons>
                                 {
                                     this.props.currentAction.actions.map((action) => {
-                                        return <CardAction key={action.actionType} onClick={() => this.handleAction(action)}>{action.actionLabel}</CardAction>
+                                        return  <CardAction key={action.actionType} onClick={() => this.handleAction(action)}><Link to='/card_details'>{action.actionLabel}</Link></CardAction>
                                     })
                                 }
                             </CardActionButtons>
@@ -193,7 +209,7 @@ class HomeComponent extends React.Component {
                             }
                         </List>) */
                 } 
-                <Fab style={{ position: 'fixed', bottom: '12vh', right: '5vh' }} onClick={this.onFabClick}>settings_voice</Fab>
+                <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} onClick={this.onFabClick} icon='settings_voice'></Fab>
             </div>
         );
     }
@@ -205,7 +221,9 @@ const mapStateToProps = state => {
         measures: state.measures,
         measureCount: state.measureCount,
         voiceState: state.voiceState,
-        currentAction: state.currentAction
+        currentAction: state.currentAction,
+        userData: state.userData,
+        navigationState: state.navigationState
     };
 }
 

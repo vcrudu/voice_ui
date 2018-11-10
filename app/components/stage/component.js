@@ -29,6 +29,7 @@ import Home from '../home/component';
 import Signs from '../vital-signs/component';
 import Devices from '../devices/component';
 import Appointments from '../appointments/component';
+import ChatList from '../chat/chatList';
 import Doctors from '../doctors/component';
 import Symptomate from '../symptoms/symptomate';
 import Shop from '../shop/component';
@@ -53,15 +54,15 @@ class StageComponent extends React.Component {
                             <Toolbar>
                                 <ToolbarRow theme='background'>
                                     <ToolbarSection alignStart theme='primary-dark' className='large-toolbar-section'>
-                                        <img className="logo" src={logo} style={{paddingRight:'25vw'}} />
-                                        <ToolbarTitle className="title"><Typography use='subheading1'>{this.props.dialogState.title}</Typography></ToolbarTitle>
+                                        <img className="logo" src={logo} style={{paddingRight:'20vw'}} />
+                                        <ToolbarTitle className="title" theme='textPrimaryOnLight'><Typography use='subheading1'>{this.props.navigationState.title}</Typography></ToolbarTitle>
                                     </ToolbarSection>
-                                    <ToolbarSection alignEnd style={{paddingRight:'5vw'}} theme='primary-dark' >
+                                    <ToolbarSection alignEnd theme='textPrimaryOnLight' style={{paddingRight:'5vw'}} >
                                     {
-                                        (this.props.voiceState.voiceOn)?
-                                        (<Icon onClick={()=>this.toggleSound(false)} use="volume_mute" />)
+                                        (this.props.voiceState.voiceState=='on')?
+                                        (<Icon onClick={()=>this.toggleSound('off')} icon="volume_mute" />)
                                         :
-                                        (<Icon onClick={()=>this.toggleSound(true)} use="volume_off" />)
+                                        (<Icon onClick={()=>this.toggleSound('on')} icon="volume_off" />)
                                     }
                                     </ToolbarSection>
                                 </ToolbarRow>
@@ -72,7 +73,7 @@ class StageComponent extends React.Component {
                         {<Route path={this.props.match.url + '/home/:startAssistant'} render={() => <Home startAssistant={true}     />} />}
                         {<Route path={this.props.match.url + '/signs'} render={() => <Signs />} />}
                         {<Route path={this.props.match.url + '/devices'} render={() => <Devices />} />}
-                        {<Route path={this.props.match.url + '/appointments'} render={() => <Appointments />} />}
+                        {<Route path={this.props.match.url + '/chatList'} render={() => <ChatList />} />}
                         {<Route path={this.props.match.url + '/doctors'} render={() => <Doctors />} />}
                         {<Route path={this.props.match.url + '/symptoms'} render={() => <Symptomate />} />}
                         {<Route path={this.props.match.url + '/shop'} render={() => <Shop />} />}
@@ -83,7 +84,11 @@ class StageComponent extends React.Component {
     }
 }
 const mapStateToProps = state=>{
-    return {voiceState:state.voiceState, dialogState:state.dialogState, userData:state.userData};
+    return {
+        userData: state.userData,
+        voiceState: state.voiceState,
+        navigationState: state.navigationState
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {

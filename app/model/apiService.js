@@ -105,6 +105,11 @@ class ApiService{
                 obj.measurementType = "temperature";
                 obj.measurementDateTime = moment(value.dateTime).utc().valueOf();
                 break;
+            case "HeartRate":
+                obj.heartRate = value.heartRate;
+                obj.measurementType = "heartRate";
+                obj.measurementDateTime = moment(value.dateTime).utc().valueOf();
+                break;
             case "Weight":
                 obj.weight = value.value;
                 obj.measurementType = "weight";

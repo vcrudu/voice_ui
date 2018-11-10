@@ -164,9 +164,9 @@ import Speaker from '../polly/speaker';
               state.transition(new Speaking(state));
               state.onSuccess(data);
             } else {
-              const speaker = new Speaker();
-              speaker.speak(data.message);
-              state.transition(new Initial(state));
+              const speaker = new Speaker(()=>{state.transition(new Initial(state));});
+              state.transition(new Speaking(state));
+              speaker.speak(data.message);   
             }
           }
         });
@@ -178,7 +178,7 @@ import Speaker from '../polly/speaker';
     this.state = state;
     state.message = state.messages.SPEAKING;
     this.advanceConversation = function () {
-      if (state.audioOutput.contentType === 'audio/mpeg') {
+      if (state.audioOutput && state.audioOutput.contentType === 'audio/mpeg') {
         audioControl.play(state.audioOutput.audioStream, function () {
           if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
             state.audioOutput.dialogState === 'Fulfilled' ||
@@ -190,9 +190,10 @@ import Speaker from '../polly/speaker';
             state.transition(new Initial(state));//state.transition(new Listening(state));
           }
         });
-      } else {
-        state.transition(new Initial(state));
-      }
+      } 
+      //else {
+      //  state.transition(new Initial(state));
+      //}
     };
   };
 

@@ -10,17 +10,19 @@ import {
 import { Button, ButtonIcon } from 'rmwc/Button';
 import { Typography } from 'rmwc/Typography';
 import LandingCarousel from './landingCarousel';
-import {Link} from 'react-router-dom';
+import MainTerms from '../terms/main';
+import {Link, withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions';
 
-class LandingPage extends React.Component {
-    handleSignUpClick(e) {
-        Bridge.Redirect.redirectToPatientSignUp();
-    }
-    handleSignIn(e) {
-        Bridge.Redirect.redirectToSignIn("");
+
+class LandingPageComponent extends React.Component {
+    constructor(props){
+        super(props);
     }
     render() {
-        return <div>
+        return (<div>
             <LandingCarousel/>
             <Toolbar style={{position: 'fixed',bottom: 0,right: 0,width: '100%'}}>
                     <ToolbarRow theme='background'>
@@ -36,8 +38,25 @@ class LandingPage extends React.Component {
                         </ToolbarSection>
                     </ToolbarRow>
             </Toolbar>
-        </div>
+        </div>);
     }
 }
 
-export default LandingPage;
+const mapStateToProps = state=>{
+    return {
+        settingsData: state.settingsData
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      actions: bindActionCreators(Actions, dispatch)
+    };
+  };
+
+const LandingPage = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LandingPageComponent);
+
+export default withRouter(LandingPage);

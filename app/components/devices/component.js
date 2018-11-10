@@ -18,7 +18,7 @@ class DevicesComponent extends React.Component {
     }
 
     componentDidMount() {
-
+        //this.props.actions.changeScreenTitle('Devices');
     }
 
     componentWillUnmount() {
@@ -87,7 +87,11 @@ class DevicesComponent extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { devices: state.devices, measures: state.measures, dialogState: state.dialogState };
+    return { devices: state.devices, 
+        measures: state.measures, 
+        dialogState: state.dialogState,
+        navigationState: state.navigationState
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {

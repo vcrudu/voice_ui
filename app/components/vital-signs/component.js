@@ -21,7 +21,10 @@ import {
     CardActionIcons
 } from 'rmwc/Card';
 
+import { Fab } from 'rmwc/Fab';
+
 import { Typography } from 'rmwc/Typography';
+import DemoConversation from '../../demoConversation'
 
 class NoVitalSignsMessage extends Component {
     constructor(props) {
@@ -334,7 +337,18 @@ class SignsComponent extends React.Component {
         super(props);
 
         var component = this;
+        this.demoConversation = new DemoConversation();
+        this.onFabClick=this.onFabClick.bind(this);
 
+        
+    }
+
+    goToMyDevices() {
+        Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
+    }
+
+    componentDidMount() {
+        var chartsWrapper = this.chartsWrapper;
         apiService.getPatientVitalSigns(this.props.userData.token, (error, response) => {
             if (response.success) {
                 var newDataSource = VitalSignsFactory.createVitalSings(response.data);
@@ -349,20 +363,37 @@ class SignsComponent extends React.Component {
                     });
             }
         });
+        this.props.actions.changeScreenTitle('Vital signs');
     }
 
-    goToMyDevices() {
-        Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
-    }
-
-    componentDidMount() {
-        var chartsWrapper = this.chartsWrapper;
+    onFabClick() {
+        //if(!this.props.voiceState.microphoneOn) {
+            //this.props.actions.switchMicrophone();
+            this.demoConversation.sendAnswer('MeasureBP', 'Take a measurement.', (stateTitle) => {
+                this.props.actions.changeDialogState(stateTitle);
+            }, (voiceData) => {
+                console.log(voiceData.slotToElicit);
+                if (voiceData.slotToElicit === 'measurementFinished') {
+                    this.takeMeasurement((measure) => {
+                        this.demoConversation.startSpeech("Thanks for providing the measurement. Have a good time!");
+                    });
+                } else {
+                    //this.props.actions.switchMicrophone();                    
+                }
+                console.log(voiceData);
+            });
+        //}
     }
 
     render() {
-        if (!this.state || !this.state.haveData) return (<div ref={div => this.chartsWrapper = div}><NoVitalSignsMessage handleGoToMyDevices={this.goToMyDevices} /></div>);
+        if (!this.state || !this.state.haveData)
+            return (<div ref={div => this.chartsWrapper = div}>
+                <NoVitalSignsMessage handleGoToMyDevices={this.goToMyDevices} />
+                <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} onClick={this.onFabClick} icon='add'></Fab>
+            </div>);
         else
             return (<div className="signs-content" ref={div => this.chartsWrapper = div}>
+                <Link to='/card_details'><Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} icon='add'></Fab></Link>
                 <VitalSignChart dataSource={this.state.bloodPressureDef}
                     aspectWidth={16}
                     aspectHeight={9}
@@ -378,13 +409,22 @@ class SignsComponent extends React.Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
 
 const mapStateToProps = state=>{
-    return {userData:state.userData};
+    return {
+        userData:state.userData,
+        navigationState: state.navigationState
+    };
 }
 
 const Signs = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(SignsComponent);
 
 export default withRouter(Signs);

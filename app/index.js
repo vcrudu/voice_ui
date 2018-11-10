@@ -32,7 +32,7 @@ import io from 'socket.io-client';
 import Speaker from './polly/speaker';
 import messages from './messages';
 import {setCurrentAction} from './actions'
-//dataStorage.deleteState();
+dataStorage.deleteState();
 
 window.store = createStore(bloodPressureAssistant, dataStorage.loadState());
 store.subscribe(()=>{
@@ -43,6 +43,40 @@ import {
     HashRouter as Router
   } from 'react-router-dom';
 import Routes from './routes';
+
+function InitPush() {
+    if (window.PushNotification) {
+        PushNotification.hasPermission(data => {
+            if (data.isEnabled) {
+                console.log('isEnabled');
+            }
+        });
+        var push = PushNotification.init({
+            android: {},
+            browser: {
+                pushServiceURL: 'http://push.api.phonegap.com/v1/push'
+            },
+            ios: {
+                alert: "true",
+                badge: "true",
+                sound: "true"
+            },
+            windows: {}
+        });
+        push.on('registration', function (data) {
+            console.log(JSON.stringify(data));
+            alert('Event=registration, registrationId=' + data.registrationType)
+        });
+        push.on('notification', function (data) {
+            console.log(data)
+            alert('Event=notification, message=' + data.message)
+        });
+        push.on('error', function (err) {
+            console.log(err)
+            alert('Event=error, message=' + err.message)
+        });
+    }
+}
 
 var app = {
     // Application Constructor
@@ -60,22 +94,9 @@ var app = {
             window.sampleRate = audioinput.SAMPLERATE.VOIP_16000Hz;
             Keyboard.shrinkView(true);
             Keyboard.disableScrollingInShrinkView(true);
-
-            window.FirebasePlugin.grantPermission();
-
-            window.FirebasePlugin.getToken(function(token) {
-                // save this server-side and use it to push notifications to this device
-                console.log(token);
-            }, function(error) {
-                console.error(error);
-            });
-
-            window.FirebasePlugin.onNotificationOpen(function(notification) {
-                console.log(notification);
-            }, function(error) {
-                console.error(error);
-            });
         }
+
+        InitPush();
 
         window.socket = io(APP_SETTINGS.enrolServerUrl);
 
