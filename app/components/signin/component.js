@@ -17,8 +17,8 @@ class SignInComponent extends React.Component {
         super(props);
         this.state = {width:'80vw',margin:'20vh auto'};
         this.state = {
-            email: { value: "", isValid: false },
-            password: { value: "", isValid: false },
+            email: { value: "vcrudu@hotmail.com", isValid: false },
+            password: { value: "Test1234", isValid: false },
             confirmPassword: { value: "", isValid: false },
             surname: { value: "", isValid: false },
             givenName: { value: "", isValid: false },

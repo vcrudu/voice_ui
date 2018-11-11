@@ -6,7 +6,7 @@ import Speaker from '../polly/speaker';
   var DEFAULT_LATEST = 'production';
   var DEFAULT_CONTENT_TYPE = 'audio/x-l16; sample-rate=16000; channel-count=1';
   var DEFAULT_USER_ID = 'userId';
-  var DEFAULT_ACCEPT_HEADER_VALUE = 'audio/mpeg';
+  var DEFAULT_ACCEPT_HEADER_VALUE = 'text/plain; charset=utf-8';//'audio/mpeg';
   var MESSAGES = Object.freeze({
     PASSIVE: 'Passive',
     LISTENING: 'Listening',
@@ -61,10 +61,14 @@ import Speaker from '../polly/speaker';
       if (state.message === state.messages.SENDING || state.message === state.messages.SPEAKING) {
         currentState.advanceConversation();
       }
+      console.log('voice state:'+state.message);
       // If we are transitioning in to sending and we are not detecting silence (this was a manual state change)
       // we need to do some cleanup: stop recording, and stop rendering.
       if (state.message === state.messages.SENDING && !this.config.silenceDetection) {
         audioControl.stopRecording();
+      }
+      if (state.message === state.messages.PASSIVE) {
+        audioControl.clear();
       }
     };
 
@@ -127,8 +131,10 @@ import Speaker from '../polly/speaker';
     this.state = state;
     state.message = state.messages.SENDING;
     this.advanceConversation = function (answer) {
-      if (!answer) {
-        state.lexConfig.inputStream = state.audioInput;
+      //if (!answer) {
+        state.lexConfig.inputStream = answer ? answer:state.audioInput;
+        state.lexConfig.accept = 'text/plain; charset=utf-8';
+        state.lexConfig.contentType = answer ? 'text/plain; charset=utf-8':'audio/x-l16; sample-rate=16000; channel-count=1';
         if(state.audioOutput && state.audioOutput.dialogState){
           var requestAttributes = {dialogState:state.audioOutput.dialogState};          
           if(state.audioOutput && state.audioOutput.slotToElicit){
@@ -147,7 +153,8 @@ import Speaker from '../polly/speaker';
             state.onSuccess(data);
           }
         });
-      } else {
+      //} 
+      /* else {
         let postTextConfig = {
           botAlias: state.lexConfig.botAlias,
           botName: state.lexConfig.botName,
@@ -170,7 +177,7 @@ import Speaker from '../polly/speaker';
             }
           }
         });
-      }
+      } */
     };
   };
 
@@ -178,18 +185,32 @@ import Speaker from '../polly/speaker';
     this.state = state;
     state.message = state.messages.SPEAKING;
     this.advanceConversation = function () {
-      if (state.audioOutput && state.audioOutput.contentType === 'audio/mpeg') {
-        audioControl.play(state.audioOutput.audioStream, function () {
-          if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
-            state.audioOutput.dialogState === 'Fulfilled' ||
-            state.audioOutput.dialogState === 'Failed' ||
-            !state.config.silenceDetection) {
-            state.transition(new Initial(state));
-          } else {
-            //audioControl.startRecording(state.onSilence, state.onAudioData, state.config.silenceDetectionConfig);
-            state.transition(new Initial(state));//state.transition(new Listening(state));
-          }
-        });
+      if (state.audioOutput) {
+        if (state.audioOutput.contentType === 'audio/mpeg') {
+          audioControl.play(state.audioOutput.audioStream, function () {
+            if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
+              state.audioOutput.dialogState === 'Fulfilled' ||
+              state.audioOutput.dialogState === 'Failed' ||
+              !state.config.silenceDetection) {
+              state.transition(new Initial(state));
+            } else {
+              //audioControl.startRecording(state.onSilence, state.onAudioData, state.config.silenceDetectionConfig);
+              state.transition(new Initial(state));//state.transition(new Listening(state));
+            }
+          });
+        } else {
+          const speaker = new Speaker(function () {
+            if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
+              state.audioOutput.dialogState === 'Fulfilled' ||
+              state.audioOutput.dialogState === 'Failed' ||
+              !state.config.silenceDetection) {
+              state.transition(new Initial(state));
+            } else {
+              state.transition(new Initial(state));
+            }
+          });
+          speaker.speak(state.audioOutput.message);
+        }
       } 
       //else {
       //  state.transition(new Initial(state));

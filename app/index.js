@@ -46,6 +46,7 @@ import Routes from './routes';
 
 function InitPush() {
     if (window.PushNotification) {
+        window.notifications = [];
         PushNotification.hasPermission(data => {
             if (data.isEnabled) {
                 console.log('isEnabled');
@@ -65,11 +66,10 @@ function InitPush() {
         });
         push.on('registration', function (data) {
             console.log(JSON.stringify(data));
-            alert('Event=registration, registrationId=' + data.registrationType)
+            alert('Event=registration, registrationId=' + data.registrationId)
         });
         push.on('notification', function (data) {
-            console.log(data)
-            alert('Event=notification, message=' + data.message)
+            window.notifications.push({index:window.notifications.length,notification:JSON.stringify(data)});
         });
         push.on('error', function (err) {
             console.log(err)

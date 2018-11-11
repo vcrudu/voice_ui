@@ -63,6 +63,7 @@
      * Posts "clear" message to the worker.
      */
     var clear = function () {
+      console.log("Stop recording");
       stop();
       worker.postMessage({ command: 'clear' });
     };

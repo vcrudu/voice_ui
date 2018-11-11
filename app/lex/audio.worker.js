@@ -57,7 +57,7 @@ function record(inputBuffer) {
     var elapsedTime = newtime - start;
     console.log("elapsedTime: " + elapsedTime);
     
-    if (elapsedTime > 500) {
+    if (elapsedTime > 1000) {
       postMessage({ silence: true });
     }
   }

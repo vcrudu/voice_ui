@@ -36,7 +36,7 @@ class Speaker {
         let params = {
             'Text': text,
             'OutputFormat': 'mp3',
-            'VoiceId': 'Matthew'
+            'VoiceId': 'Brian'
         }
 
         Polly.synthesizeSpeech(params, (err, data) => {
