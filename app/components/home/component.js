@@ -200,11 +200,6 @@ class HomeComponent extends React.Component {
                 }
 
                  {
-                     (<List twoLine>
-                     {window.notifications.map((notification) => {
-                        return <SimpleListItem key={notification.index} graphic="favorite" text={`${notification.notification}`}  meta="info" />
-                    })}
-                    </List>)
                    /*  this.props.measures.length == 0 ? NoDevices :
                         (<List twoLine>
                             {
