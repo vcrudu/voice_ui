@@ -80,7 +80,7 @@ class ValidationInput extends Component {
                 name={this.props.inputName}
                 invalid={!this.state.isValid}
                 pattern={this.props.regexString}
-                withLeadingIcon={this.props.inputIconName}
+                withLeadingIcon={this.props.inputIconName} 
                 label={this.props.inputLabel}
                 onChange={(e)=>{this.onChange(e)}}
                 onBlur={(e)=>{this.onBlur(e)}} />
