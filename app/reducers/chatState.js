@@ -1,13 +1,21 @@
 import {ADD_CHAT_MESSAGE} from '../actions';
 import {CLEAR_CHAT_MESSAGE} from '../actions';
 
-export const chatState = (state=[], action)=>{
-    switch(action.type){
+export const chatState = (state = {}, action) => {
+    let newState;
+    switch (action.type) {
         case ADD_CHAT_MESSAGE:
-        return state.concat([action.message]);
+            newState = { ...state };
+            newState[action.message.patientCardId] = 
+            (newState[action.message.patientCardId]?
+                newState[action.message.patientCardId].concat([action.message]):
+                [].concat([action.message]))
+            return newState;
         case CLEAR_CHAT_MESSAGE:
-        return [];
+            newState = { ...state };
+            newState[action.message.patientCardId]=[];
+            return newState;
         default:
-        return state;
+            return state;
     }
 }

@@ -19,13 +19,15 @@ class TabsPageComponent extends Component {
     }
 
     onChange(event) {
-        if(event.detail.index===4){
+        if(event.detail.index===5){
             this.props.actions.signInOut(null);
+            if(window.socket)
+            window.socket.disconnect(); 
         }
 
-        if(event.detail.index===5){
-            this.props.actions.pairDevice(null);
-        }
+        //if(event.detail.index===5){
+        //    this.props.actions.pairDevice(null);
+        //}
     }
 
     render() {
@@ -36,8 +38,8 @@ class TabsPageComponent extends Component {
                     {/* <Tab theme='primary-dark'><Link to='/stage/devices'><TabIcon theme='primary-dark'>devices_other</TabIcon><TabIconText>Devices</TabIconText></Link></Tab> */}
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='chat'>Chats</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/symptoms'>   <Tab stacked restrictIndicator icon='playlist_add_check'>Symptoms</Tab></Link>
+                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/shop'>   <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab> </Link>
                     <Tab stacked restrictIndicator icon='exit_to_app'>Sign Out</Tab>
-                    <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/shop'>   <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab> </Link>
                 </TabBar>
         </div>);
     }

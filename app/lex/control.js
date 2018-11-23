@@ -198,6 +198,7 @@
        * Clear the recording buffer.
        */
       var clear = function () {
+        if(recorder)
         recorder.clear();
       };
   

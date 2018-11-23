@@ -17,10 +17,11 @@ import moment from 'moment';
 import chatApiService from '../../model/chatApiService';
 import { Fab } from 'rmwc/Fab';
 import DemoConversation from '../../demoConversation'
-import './styles/card-details.css';
+import './voice.css';
 import enableInlineVideo from 'iphone-inline-video';
+import bleService from '../../model/bleService';
 
-class ChatComponent extends React.Component {
+class VoiceComponent extends React.Component {
     constructor(props){
         super(props);
         this.demoConversation = new DemoConversation();
@@ -30,18 +31,19 @@ class ChatComponent extends React.Component {
         this.listening = this.listening.bind(this);
         this.conversationStateChange = this.conversationStateChange.bind(this);
         this.voiceDataComming = this.voiceDataComming.bind(this);
-        this.takeMeasurement = this.takeMeasurement.bind(this);
     }
 
     componentDidMount() {
         var video = document.querySelector('video');
         enableInlineVideo(video);
-        this.avatar.current.loop=true;
+        this.avatar.current.loop = true;
         this.listening();
         this.demoConversation.sendAnswer('MeasureBP',
-            'Take a measurement.', 
-            this.conversationStateChange, 
-            this.voiceDataComming); 
+            this.props.currentAction.message ?
+                this.props.currentAction.message : this.props.currentChatCommand.message,
+            this.conversationStateChange,
+            this.voiceDataComming,
+            'voice');
     }
 
     speaking(){
@@ -73,7 +75,13 @@ class ChatComponent extends React.Component {
     voiceDataComming(voiceData){
         console.log(voiceData.slotToElicit);
         if (voiceData.slotToElicit === 'measurementFinished'||voiceData.slots['readyToStart'] === 'no') {
-            this.takeMeasurement((measure) => {
+            bleService.takeMeasurement(this.props.currentChatCommand.measureType,(measure)=>{
+                this.props.actions.addMeasure(measure);
+            },(device)=>{
+                this.props.actions.addDevice(device);
+            }, this.props.userData.token,
+            (measure) => {
+                console.log(measure);
                 this.props.actions.addMeasureCount();
                 if (this.props.measureCount.count < 2) {
                     this.demoConversation.sendAnswer("Yes it has finished.");
@@ -103,12 +111,24 @@ class ChatComponent extends React.Component {
         }
     }
 
+    getBackScreenUrl(backScreen){
+        switch(backScreen){
+            case 'chatList':
+                return '/stage/chatList';
+            case 'signs':
+                return '/stage/signs'
+            default: 
+                return '/stage/home/false';
+        }
+    }
+
     render(){
         return(
             <div>
                 <Grid>
                     <GridCell span='4'>
-                        <LeafHeader backUrl="/stage/signs" title="Detailed information" />
+                        <LeafHeader backUrl={this.getBackScreenUrl(this.props.match.params.backScreen)} 
+                        title={this.props.match.params.scenarioTitle} />
                     </GridCell>
                 </Grid>
                 <Grid>
@@ -135,57 +155,6 @@ class ChatComponent extends React.Component {
                 </div>
         );
     }
-
-    takeMeasurement(onSuccess){
-        console.log('takeMeasurement started');
-        var once = false;
-        if (window.ble) {
-            console.log('Starting to scan');
-            setTimeout(()=>{
-                ble.startScan([],()=>{console.log('Stop scanning for no activity.');})
-            }, 15 * 60 * 1000);
-            ble.startScan([], (device) => {
-                console.log(device);
-                if (device.advertising &&
-                    device.advertising.kCBAdvDataServiceUUIDs && device.advertising.kCBAdvDataServiceUUIDs.find((uuid) => uuid === "1810")) {//name==="IH-51-1490-BT"){
-                    console.log('Stop scanning');
-                    ble.stopScan(() => {
-                        this.props.actions.addDevice(device);
-                        console.log(JSON.stringify(device))
-                        ble.connect(device.id, (peripheralData) => {
-                            console.log(peripheralData)
-                            ble.startNotification(device.id, '1810', '2A35', (data) => {
-                                const intData = new Uint8Array(data);
-                                let dateTime = moment();
-                                let dateTime2 = moment(dateTime).add(1,'seconds');
-                               
-                                let bloodPressure = { dateTime: dateTime, systolic: intData[1], diastolic: intData[3], deviceModelType:"BloodPressure" };
-                                let heartRate = { dateTime: dateTime2, heartRate: intData[14], deviceModelType: "HeartRate" };
-                                this.props.actions.addMeasure(bloodPressure);
-                                
-                                apiService.sendMeasure(this.props.userData.token,bloodPressure,(error, data)=>{
-                                    console.log(data);
-                                });
-                                apiService.sendMeasure(this.props.userData.token,heartRate,(error, data)=>{
-                                    console.log(data);
-                                });
-                                if(!once){
-                                    once = true;
-                                    onSuccess(bloodPressure);
-                                }
-                            }, (error) => {
-                                console.log(error)
-                            });
-                        }, function (error) {
-                            console.log(error)
-                        });
-                    });
-                }
-            }, (error) => {
-                console.log(error)
-            });
-        }
-    }
 }
 
 const mapStateToProps = state => {
@@ -194,7 +163,9 @@ const mapStateToProps = state => {
         measureCount: state.measureCount,
         devices: state.devices,
         measures: state.measures,
-        userData: state.userData
+        userData: state.userData,
+        currentAction:state.currentAction,
+        currentChatCommand:state.currentChatCommand
     };
 }
 
@@ -204,9 +175,9 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const Chat = connect(
+const Voice = connect(
     mapStateToProps,
     mapDispatchToProps
-)(ChatComponent)
+)(VoiceComponent)
 
-export default withRouter(Chat);
+export default withRouter(Voice);

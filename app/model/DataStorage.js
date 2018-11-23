@@ -27,8 +27,13 @@ class DataStorage {
 
     loadState(){
         const state = this.getItem(APP_SETTINGS.stateKey);
-        if(state)
-        return state;
+        if(state){
+          /*   state.voiceState = null;
+            state.measures = null;
+            state.navigationState = null;
+            state.dialogState = null; */
+            return state;
+        }
         else return {
             voiceState:{voiceState:'on', microphoneState:'on'},
             devices:[],

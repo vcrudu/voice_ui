@@ -11,6 +11,8 @@ import { CURRENT_ACTION } from '../actions';
 import { PAIR_ACTION } from '../actions';
 import { CHANGE_SCREEN_TITLE } from '../actions';
 import { UPDATE_SETTINGS_DATA } from '../actions';
+import { REMOVE_CURRENT_ACTION } from '../actions';
+import { CURRENT_CHAT_COMMAND } from '../actions';
 
 
 export const measureCount = (state = { count: 0 }, action) => {
@@ -36,6 +38,17 @@ export const currentAction = (state={}, action) => {
     switch (action.type) {
         case CURRENT_ACTION:
             return action.currentAction;
+        case REMOVE_CURRENT_ACTION:
+            return {};
+        default:
+            return state;
+    }
+}
+
+export const currentChatCommand = (state={}, action) => {
+    switch (action.type) {
+        case CURRENT_CHAT_COMMAND:
+            return action.currentChatCommand;
         default:
             return state;
     }
@@ -81,11 +94,13 @@ const bloodPressureAssistant = combineReducers({
     voiceState, 
     devices, measures, 
     dialogState, measureCount, 
-    userData, currentAction, 
+    userData, userData, 
+    currentAction: currentAction,
     pairDeviceAction,
     navigationState,
     chatState,
-    settingsData
+    settingsData,
+    currentChatCommand
 });
 
 export default bloodPressureAssistant;

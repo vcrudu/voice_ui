@@ -4,6 +4,7 @@ import moment from 'moment';
 class ApiService{
     signUp(signUpData, callBack) {
         var dataToSend = JSON.stringify(signUpData);
+        console.log(APP_SETTINGS.serverUrl);
         $.ajax({
             url: APP_SETTINGS.serverUrl + "signup",
             type: 'POST',
@@ -25,6 +26,7 @@ class ApiService{
 
     signIn(signInData, callBack) {
         var dataToSend = JSON.stringify(signInData);
+        console.log(APP_SETTINGS.serverUrl);
         $.ajax({
             url: APP_SETTINGS.serverUrl + "signin",
             type: 'POST',

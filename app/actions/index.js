@@ -12,6 +12,8 @@ export const ADD_CHAT_MESSAGE = 'ADD_CHAT_MESSAGE';
 export const CLEAR_CHAT_MESSAGE = 'CLEAR_CHAT_MESSAGE';
 export const CHANGE_SCREEN_TITLE = 'CHANGE_SCREEN_TITLE';
 export const UPDATE_SETTINGS_DATA = 'UPDATE_SETTINGS_DATA';
+export const REMOVE_CURRENT_ACTION = 'REMOVE_CURRENT_ACTION';
+export const CURRENT_CHAT_COMMAND = 'CURRENT_CHAT_COMMAND';
 
 export const toggleSound = (onOff) => ({
     type: TOGGLE_SOUND,
@@ -47,9 +49,18 @@ export const signInOut = (userData) => ({
     userData: userData
 });
 
-export const setCurrentAction = (message) => ({
+export const setCurrentAction = (card) => ({
     type: CURRENT_ACTION,
-    currentAction: message
+    currentAction: card
+});
+
+export const setCurrentChatCommand = (command) => ({
+    type: CURRENT_CHAT_COMMAND,
+    currentChatCommand: command
+});
+
+export const removeCurrentAction = () => ({
+    type: REMOVE_CURRENT_ACTION
 });
 
 export const pairDevice = () => ({
@@ -62,7 +73,8 @@ export const addChatMessage = (message) => ({
 });
 
 export const clearChatMessage = () => ({
-    type: CLEAR_CHAT_MESSAGE
+    type: CLEAR_CHAT_MESSAGE,
+    message: message
 });
 
 export const changeScreenTitle = (title) => ({

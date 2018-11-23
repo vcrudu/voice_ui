@@ -6,7 +6,7 @@ import Stage from './components/stage/component';
 import SignIn from './components/signin/component';
 import SignUp from './components/signup/component';
 import Chat from './components/chat/chat';
-import CardDetails from './components/home/cardDetails';
+import Voice from './components/voice/component';
 import * as Actions from './actions';
 import MainTerms from './components/terms/main';
 
@@ -18,8 +18,8 @@ const RoutesComponent = (props) => {
     }}/>
         <Route path='/terms' component={MainTerms}  />
         <Route path='/stage' component={Stage}  />
-        <Route path='/chat' component={Chat}  />
-        <Route path='/card_details' component={CardDetails}  />
+        <Route path='/chat/:backScreen/:scenarioId/:dateTime/:scenarioTitle' component={Chat}  />
+        <Route path='/voice/:backScreen/:scenarioId/:dateTime/:scenarioTitle' component={Voice}  />
         <Route path='/signin' component={SignIn}  />
         <Route path='/signup' component={SignUp}  />
     </div>);

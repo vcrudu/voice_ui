@@ -3,34 +3,47 @@ import { Link, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
+import moment from 'moment';
 import {
     List,
     ListItem,
     ListItemGraphic,
-    ListItemMeta,
-    ListDivider
+    ListItemPrimaryText,
+    ListItemText,
+    ListDivider,
+    ListItemSecondaryText,
+    SimpleListItem
   } from 'rmwc/list';
+
+  import chatApiService from '../../model/chatApiService';
   
 class ChatList extends React.Component {
     constructor(props){
         super(props);
+        this.state = {chatsList:[]};
     }
 
     componentDidMount(){
         this.props.actions.changeScreenTitle('Chats');
+        chatApiService.getChatsList(this.props.userData.token, (err, chatsList)=>{
+            if(!err)
+            this.setState({chatsList:chatsList});
+        });
     }
 
     render() {
-        return (<List>
-            <List>
-                <ListItem>
-                    <Link to='/chat'>
-                        <ListItemGraphic icon="star_border" />
-                        Main chat
-                    </Link>
-                </ListItem>
-                <ListDivider/>
-            </List>
+        return (<List style={{height:'75vh', overflowY:'scroll'}} twoLine>
+            {this.state.chatsList ?
+                this.state.chatsList.map((chat) => {
+                    return (
+                        <div key={chat.dateTime}>
+                            <Link to={`/chat/chatList/${chat.scenarioId}/${chat.dateTime}/${chat.title}`}>
+                                <SimpleListItem graphic="chat" text={chat.title} secondaryText={moment(new Date(chat.dateTime)).format('lll')} meta="info" />
+                            </Link>
+                            <ListDivider />
+                        </div>);
+                }) : null
+            }
         </List>);
     }
 }

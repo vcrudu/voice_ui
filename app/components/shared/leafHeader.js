@@ -8,14 +8,8 @@ import {
     ToolbarMenuIcon,
     ToolbarIcon
 } from 'rmwc/Toolbar';
-import {
-    TopAppBar,
-    TopAppBarRow,
-    TopAppBarSection,
-    TopAppBarNavigationIcon,
-    TopAppBarActionItem,
-    TopAppBarTitle
-  } from '@rmwc/top-app-bar';
+
+
 import { Elevation } from 'rmwc/Elevation';
 import { Icon } from 'rmwc/icon';
 import { Theme } from '@rmwc/theme';
@@ -26,23 +20,20 @@ class LeafHeader extends React.Component{
         super(props);
     }
 
-   render(){     
-   return (<Elevation z='3'>
-   <TopAppBar>
-  <TopAppBarRow theme='background'>
-    <TopAppBarSection alignStart>
-    <Link to={this.props.backUrl}>
-      <TopAppBarNavigationIcon theme='primary' icon="arrow_back_ios" />
-      </Link>
-      <Theme use="textPrimaryOnLight" wrap>
-      <TopAppBarTitle>{this.props.title}</TopAppBarTitle>
-      </Theme>
-    </TopAppBarSection>
-  </TopAppBarRow>
-</TopAppBar>
-           
-        </Elevation>);
-   }
+  render() {
+    return (<Elevation z='3'>
+      <Toolbar>
+        <ToolbarRow>
+          <ToolbarSection alignStart theme='background'>
+          <Link to={this.props.backUrl}>
+            <ToolbarMenuIcon style={{ marginRight: '20px'}} theme='primary' icon="arrow_back_ios" />
+            </Link> 
+            <ToolbarTitle theme='textPrimaryOnLight'>{this.props.title}</ToolbarTitle>
+          </ToolbarSection>
+        </ToolbarRow>
+      </Toolbar>
+    </Elevation>);
+  }
 }
 
 export default LeafHeader;

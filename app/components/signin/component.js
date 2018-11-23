@@ -11,6 +11,8 @@ import ValidationInput from '../shared/ValidationInput';
 import Stage from '../stage/component';
 import SecurityStorage from '../../model/SecurityStorage'
 import * as Actions from '../../actions'
+import APP_SETTINGS from '../../constants/appSettings';
+import io from 'socket.io-client';
 
 class SignInComponent extends React.Component {
     constructor(props){
@@ -26,6 +28,8 @@ class SignInComponent extends React.Component {
             canSubmitForm: false,
             style:{width:'80vw',margin:'20vh auto'}
         }
+        this.onKeyboardDidShow = this.onKeyboardDidShow.bind(this);
+        this.onKeyboardDidHide = this.onKeyboardDidHide.bind(this);
     }
 
     onKeyboardDidShow(){
@@ -37,8 +41,13 @@ class SignInComponent extends React.Component {
     }
 
     componentDidMount(){
-        window.addEventListener('keyboardDidShow', ()=>{this.onKeyboardDidShow()});
-        window.addEventListener('keyboardDidHide', ()=>{this.onKeyboardDidHide()});
+        window.addEventListener('keyboardDidShow', this.onKeyboardDidShow);
+        window.addEventListener('keyboardDidHide', this.onKeyboardDidHide);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('keyboardDidShow', this.onKeyboardDidShow);
+        window.removeEventListener('keyboardDidHide', this.onKeyboardDidHide);
     }
 
     emailOnBlur(component, isValid) {
@@ -80,6 +89,14 @@ class SignInComponent extends React.Component {
                 const securityStorage = new SecurityStorage();
                 securityStorage.setValue('token', response.data.token);
                 this.props.actions.signInOut(response.data);
+                console.log(APP_SETTINGS.serverUrl);
+                window.socket = io(APP_SETTINGS.serverUrl);
+                window.socket.on('connect', function () {
+                    window.socket.emit('authenticate', { token: response.data.token });
+                    window.socket.on('disconnect', function (reason) {
+                        console.log('socket disconnect:'+reason)
+                    });
+                });
             }
             else {
                 apiService.error(response, () => { });

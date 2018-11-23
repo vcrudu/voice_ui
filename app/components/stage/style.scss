@@ -4,7 +4,9 @@
     width: 100%;
 }
 
-
+a:any-link {
+    text-decoration: none;
+}
 
 .sign-out {
     text-transform: none;

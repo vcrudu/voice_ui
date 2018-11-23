@@ -111,7 +111,7 @@
         "react-swipe": "^5.1.1",
         "rmwc": "^3.0.5",
         "sass-loader": "^6.0.6",
-        "socket.io-client": "^2.1.0",
+        "socket.io-client": "^2.1.1",
         "style-loader": "^0.20.1",
         "swipe-js-iso": "^2.0.4",
         "underscore": "^1.8.3",

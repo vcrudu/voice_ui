@@ -211,7 +211,7 @@ class MainTermsComponent extends React.Component {
                     show={this.state.snackbarIsOpen}
                     onHide={evt => this.setState({ snackbarIsOpen: false })}
                     message="Scroll to read all text"
-                    timeout={10000}
+                    timeout={5000}
                     dismissesOnAction={true}
                 />
             </div>

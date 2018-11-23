@@ -9,6 +9,7 @@ import apiService from '../../model/apiService';
 import moment from 'moment';
 import _ from 'underscore';
 import * as d3 from "d3";
+import bleService from '../../model/bleService';
 import './styles/charts.scss'
 
 import {
@@ -20,6 +21,14 @@ import {
     CardActionButtons,
     CardActionIcons
 } from 'rmwc/Card';
+
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    DialogButton
+  } from '@rmwc/dialog';
 
 import { Fab } from 'rmwc/Fab';
 
@@ -336,15 +345,23 @@ class SignsComponent extends React.Component {
     constructor(props) {
         super(props);
 
-        var component = this;
         this.demoConversation = new DemoConversation();
-        this.onFabClick=this.onFabClick.bind(this);
-
-        
+        this.state = {};
+        this.onFabClick = this.onFabClick.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
-    goToMyDevices() {
-        Bridge.Redirect.redirectToWithLevelsUp("devices/patient-my-devices.html", 2);
+    onFabClick() {
+        this.setState({dialogOpen: true});
+    }
+
+    onClose(evt){
+        this.props.actions.setCurrentChatCommand({message:"Let's measure your blood pressure", measureType:this.state.measureType});
+                            this.setState({ dialogOpen: false, 
+                                measureType: evt.detail.action,
+                                scenarioTitle: "Blood Pressure Measurement",
+                                scenarioId: "MeasureBP"
+                             });
     }
 
     componentDidMount() {
@@ -366,34 +383,18 @@ class SignsComponent extends React.Component {
         this.props.actions.changeScreenTitle('Vital signs');
     }
 
-    onFabClick() {
-        //if(!this.props.voiceState.microphoneOn) {
-            //this.props.actions.switchMicrophone();
-            this.demoConversation.sendAnswer('MeasureBP', 'Take a measurement.', (stateTitle) => {
-                this.props.actions.changeDialogState(stateTitle);
-            }, (voiceData) => {
-                console.log(voiceData.slotToElicit);
-                if (voiceData.slotToElicit === 'measurementFinished') {
-                    this.takeMeasurement((measure) => {
-                        this.demoConversation.startSpeech("Thanks for providing the measurement. Have a good time!");
-                    });
-                } else {
-                    //this.props.actions.switchMicrophone();                    
-                }
-                console.log(voiceData);
-            });
-        //}
-    }
-
     render() {
-        if (!this.state || !this.state.haveData)
-            return (<div ref={div => this.chartsWrapper = div}>
-                <NoVitalSignsMessage handleGoToMyDevices={this.goToMyDevices} />
-                <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} onClick={this.onFabClick} icon='add'></Fab>
-            </div>);
-        else
+        if(!this.state.bloodPressureDef) return null;
+        if(this.state.measureType && this.state.measureType!='none'){
+            return <Redirect 
+            to={`/voice/signs/${this.state.scenarioId}/${new Date().getTime()}/${this.state.scenarioTitle}`} />
+        } else
             return (<div className="signs-content" ref={div => this.chartsWrapper = div}>
-                <Link to='/card_details'><Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} icon='add'></Fab></Link>
+                    <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} icon='add'
+                    onClick={()=>{
+                        this.onFabClick();
+                    }}
+                    ></Fab>
                 <VitalSignChart dataSource={this.state.bloodPressureDef}
                     aspectWidth={16}
                     aspectHeight={9}
@@ -405,7 +406,22 @@ class SignsComponent extends React.Component {
                     yDelta={50}
                     label={this.state.bloodPressureDef.label}
                     unit={this.state.bloodPressureDef.unit} />
-            </div>);
+                {
+                    <Dialog
+                        open={this.state.dialogOpen}
+                        onClose={evt => this.onClose(evt)}
+                    >
+                        <DialogContent>Please select the device?</DialogContent>
+                        <DialogActions>
+                            <DialogButton action="bloodPressure">Blood Pressure</DialogButton>
+                            <DialogButton action="weight">Weight</DialogButton>
+                            <DialogButton action="none">Cancel</DialogButton>
+                        </DialogActions>    
+                    </Dialog>
+
+                }
+            </div>
+            );
     }
 }
 
@@ -418,7 +434,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = state=>{
     return {
         userData:state.userData,
-        navigationState: state.navigationState
+        navigationState: state.navigationState,
+        currentChatCommand: state.currentChatCommand
     };
 }
 

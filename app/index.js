@@ -1,21 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 import 'material-components-web/material-components-web.scss';
 import './fonts/material-icons.scss';
 import './styles/main.scss';
@@ -32,7 +14,7 @@ import io from 'socket.io-client';
 import Speaker from './polly/speaker';
 import messages from './messages';
 import {setCurrentAction} from './actions'
-dataStorage.deleteState();
+//dataStorage.deleteState();
 
 window.store = createStore(bloodPressureAssistant, dataStorage.loadState());
 store.subscribe(()=>{
@@ -66,10 +48,16 @@ function InitPush() {
         });
         push.on('registration', function (data) {
             console.log(JSON.stringify(data));
-            alert('Event=registration, registrationId=' + data.registrationId)
         });
         push.on('notification', function (data) {
-            window.notifications.push({index:window.notifications.length,notification:JSON.stringify(data)});
+            store.dispatch(setCurrentAction({
+                pictureId: data.additionalData.picture_id,
+                scenarioId: data.additionalData.scenario_id,
+                dateTime: data.additionalData.date_time,
+                scenarioTitle: data.additionalData.scenario_title,
+                message: data.message,
+                timeToLive: data.additionalData.time_to_live
+            })); 
         });
         push.on('error', function (err) {
             console.log(err)
@@ -98,7 +86,7 @@ var app = {
 
         InitPush();
 
-        window.socket = io(APP_SETTINGS.enrolServerUrl);
+        /* window.socket = io(APP_SETTINGS.enrolServerUrl);
 
         window.socket.on('connect', function (socket) {
             window.socket.emit("provideUserId", {userId:"vcrudu@hotmail.com", mobile:"07532302702"}, function(data){
@@ -191,7 +179,7 @@ var app = {
 
         window.socket.on('disconnect', function () {
 
-        });
+        }); */
        
         ReactDOM.render(
             (

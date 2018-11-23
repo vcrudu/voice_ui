@@ -199,17 +199,21 @@ import Speaker from '../polly/speaker';
             }
           });
         } else {
-          const speaker = new Speaker(function () {
-            if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
-              state.audioOutput.dialogState === 'Fulfilled' ||
-              state.audioOutput.dialogState === 'Failed' ||
-              !state.config.silenceDetection) {
-              state.transition(new Initial(state));
-            } else {
-              state.transition(new Initial(state));
-            }
-          });
-          speaker.speak(state.audioOutput.message);
+          if (state.config.conversationType == 'voice') {
+            const speaker = new Speaker(function () {
+              if (state.audioOutput.dialogState === 'ReadyForFulfillment' ||
+                state.audioOutput.dialogState === 'Fulfilled' ||
+                state.audioOutput.dialogState === 'Failed' ||
+                !state.config.silenceDetection) {
+                state.transition(new Initial(state));
+              } else {
+                state.transition(new Initial(state));
+              }
+            });
+            speaker.speak(state.audioOutput.message);
+          } else {
+            state.transition(new Initial(state));
+          }
         }
       } 
       //else {
