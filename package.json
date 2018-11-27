@@ -66,7 +66,6 @@
             "cordova-plugin-device-motion": {},
             "cordova-plugin-local-notification": {},
             "cordova-plugin-nativeaudio": {},
-            "com.trichrome.audiobufferplayer": {},
             "phonegap-plugin-push": {
                 "FCM_VERSION": "11.6.2"
             },
