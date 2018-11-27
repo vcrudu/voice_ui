@@ -16,14 +16,18 @@ class SymptomateService {
         ];
     }
 
-    getEmptyEvidence(dateOfBirth, sex, callBack) {
+    getEmptyEvidence(userData, callBack) {
+        var ageYear;
+        if(userData.dateOfBirth){
             var dateOfBirth = new Date(parseFloat(dateOfBirth));
             var ageMS = Date.parse(Date()) - dateOfBirth;
             var age = new Date();
             age.setTime(ageMS);
-            var ageYear = age.getFullYear() - 1970;
-
-            callBack(null, { success: true, data: { "sex": sex.toLowerCase(), "age": ageYear.toString(), "evidence": [] }, error: "" });
+            ageYear = age.getFullYear() - 1970;
+        } else {
+            ageYear = userData.age;
+        }
+        callBack(null, { success: true, data: { "sex": userData.sex.toLowerCase(), "age": ageYear.toString(), "evidence": [] }, error: "" });
     }
 
     getExplainPortObjectEvidence(diagnostic, targetId, sex, dateOfBirth, callBack) {

@@ -11,9 +11,10 @@ import { CURRENT_ACTION } from '../actions';
 import { PAIR_ACTION } from '../actions';
 import { CHANGE_SCREEN_TITLE } from '../actions';
 import { UPDATE_SETTINGS_DATA } from '../actions';
+import { UPDATE_USER_DATA } from '../actions';
 import { REMOVE_CURRENT_ACTION } from '../actions';
 import { CURRENT_CHAT_COMMAND } from '../actions';
-
+import { REGISTER_NOTIFICATION } from '../actions';
 
 export const measureCount = (state = { count: 0 }, action) => {
     switch (action.type) {
@@ -29,6 +30,10 @@ export const userData = (state={}, action) => {
         case SIGN_IN:
         case SIGN_OUT:
             return action.userData;
+        case UPDATE_USER_DATA:
+            let newState = {...state};
+            newState[action.settingName] = action.value;
+            return newState;
         default:
             return state;
     }
@@ -90,6 +95,15 @@ export const settingsData = (state={}, action) => {
     }
 }
 
+export const notificationData = (state = null, action) => {
+    switch (action.type) {
+        case REGISTER_NOTIFICATION:
+            return { registrationId: action.registrationId }
+        default:
+            return state;
+    }
+}
+
 const bloodPressureAssistant = combineReducers({
     voiceState, 
     devices, measures, 
@@ -100,7 +114,8 @@ const bloodPressureAssistant = combineReducers({
     navigationState,
     chatState,
     settingsData,
-    currentChatCommand
+    currentChatCommand,
+    notificationData
 });
 
 export default bloodPressureAssistant;

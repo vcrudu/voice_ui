@@ -64,10 +64,18 @@ class HomeComponent extends React.Component {
     }
 
     handleAction() {
-        this.setState({questionOpen: true});
+        if(this.props.currentAction.scenarioTitle!='Summary'){
+            this.setState({questionOpen: true});
+        } else {
+            this.setState({redirectToInfo: true});
+        }
     }
 
     render() {
+        if(this.state.redirectToInfo){
+            return <Redirect 
+            to={`/voice/home/${this.props.currentAction.scenarioId}/${this.props.currentAction.dateTime}/${this.props.currentAction.scenarioTitle}`} />
+        }
         if(this.state.questionAnswer && this.state.questionAnswer!='cancel'){
             return <Redirect 
             to={this.state.questionAnswer=='chat'?

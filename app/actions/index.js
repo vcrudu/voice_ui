@@ -14,6 +14,8 @@ export const CHANGE_SCREEN_TITLE = 'CHANGE_SCREEN_TITLE';
 export const UPDATE_SETTINGS_DATA = 'UPDATE_SETTINGS_DATA';
 export const REMOVE_CURRENT_ACTION = 'REMOVE_CURRENT_ACTION';
 export const CURRENT_CHAT_COMMAND = 'CURRENT_CHAT_COMMAND';
+export const REGISTER_NOTIFICATION = 'REGISTER_NOTIFICATION';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 
 export const toggleSound = (onOff) => ({
     type: TOGGLE_SOUND,
@@ -72,6 +74,11 @@ export const addChatMessage = (message) => ({
     message: message
 });
 
+export const registerNotification = (registrationId) => ({
+    type: REGISTER_NOTIFICATION,
+    registrationId: registrationId
+});
+
 export const clearChatMessage = () => ({
     type: CLEAR_CHAT_MESSAGE,
     message: message
@@ -87,3 +94,10 @@ export const updateSettingsData = (settingName, value) => ({
     settingName: settingName,
     value: value
 });
+
+export const updateUserData = (settingName, value) => ({
+    type: UPDATE_USER_DATA,
+    settingName: settingName,
+    value: value
+});
+

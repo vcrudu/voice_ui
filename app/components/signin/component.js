@@ -97,6 +97,15 @@ class SignInComponent extends React.Component {
                         console.log('socket disconnect:'+reason)
                     });
                 });
+                if (this.props.notificationData && this.props.notificationData.registrationId) {
+                    apiService.updatePushNotification(
+                        this.props.notificationData.registrationId,
+                        response.data.token,
+                        (result) => {
+                            if (!result.success) console.log(result.error)
+                        }
+                    );
+                }
             }
             else {
                 apiService.error(response, () => { });
@@ -151,7 +160,7 @@ class SignInComponent extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return { userData: state.userData};
+    return { userData: state.userData, notificationData: state.notificationData};
 }
 
 const mapDispatchToProps = (dispatch) => {

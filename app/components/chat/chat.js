@@ -25,12 +25,14 @@ class ChatComponent extends React.Component {
         this.state = {
             messages:[],
             currentMessage:'',
-            chatHeight:'75vh'
+            chatHeight:'75vh',
+            justifyContent: 'flex-end'
         };
         this.sendMessage = this.sendMessage.bind(this);
         this.handleCurrentMessage = this.handleCurrentMessage.bind(this);
         this.getBackScreenUrl = this.getBackScreenUrl.bind(this);
         this.messageInput = React.createRef();
+        this.listRef = React.createRef();
         this.demoConversation = new DemoConversation();
         this.conversationStateChange = this.conversationStateChange.bind(this);
         this.voiceDataComming = this.voiceDataComming.bind(this);
@@ -48,6 +50,11 @@ class ChatComponent extends React.Component {
 
     conversationStateChange(stateTitle) {
         console.log(stateTitle);
+    }
+
+    scrollDown(){
+        const list = this.listRef.current;
+        list.scrollTop = list.scrollHeight;
     }
 
     voiceDataComming(voiceData){
@@ -122,6 +129,7 @@ class ChatComponent extends React.Component {
                 }
             });
         }
+        this.scrollDown();
     }
 
     componentWillUnmount(){
@@ -130,8 +138,9 @@ class ChatComponent extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        this.scrollDown();
         this.messageInput.current.input_.focus();
-      }
+    }
 
     sendMessage() {
         let chatMessage = {
@@ -153,6 +162,7 @@ class ChatComponent extends React.Component {
         this.setState({
             currentMessage:''
         });
+        Keyboard.hide();
     }
 
     handleCurrentMessage(event){
@@ -174,11 +184,11 @@ class ChatComponent extends React.Component {
                         <LeafHeader backUrl={this.getBackScreenUrl(this.props.match.params.backScreen)} 
                         title={this.props.match.params.scenarioTitle} />
 
-                <div style={{display:'flex',
+                <div ref={this.listRef} style={{display:'flex',
                     height:this.state.chatHeight, 
                     marginTop:'5vh',
                     flexDirection:'column', 
-                    justifyContent:'flex-end',
+                    justifyContent:this.state.justifyContent,
                     marginRight:'4vw',
                     marginLeft:'4vw',
                     overflowY:'scroll'

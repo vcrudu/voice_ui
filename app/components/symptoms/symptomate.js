@@ -12,7 +12,7 @@ import {
     CardActions,
     CardActionButtons,
     CardActionIcons
-} from 'rmwc/Card';
+  } from 'rmwc/Card';
 
 import { LinearProgress } from 'rmwc/LinearProgress';
 import { Radio } from 'rmwc/Radio';
@@ -31,17 +31,14 @@ import { Checkbox } from 'rmwc/Checkbox';
 import { Typography } from 'rmwc/Typography';
 import {
     Dialog,
-    DefaultDialogTemplate,
-    DialogSurface,
-    DialogHeader,
-    DialogHeaderTitle,
-    DialogBody,
-    DialogFooter,
-    DialogFooterButton,
-    DialogBackdrop
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    DialogButton
   } from 'rmwc/Dialog';
 
 import { Fab } from 'rmwc/Fab';
+import Picker from 'react-mobile-picker-scroll';
   
 
 import symptomateService from '../../model/SymptomateService';
@@ -141,11 +138,11 @@ class ConditionResult extends React.Component {
     }
 
     render() {
-        return (
+        return 
             <div>
-                <CardPrimaryAction onClick={()=>this.handleConditionClick()}>
+                <CardPrimaryAction onClick={() => this.handleConditionClick()}>
                     <div style={{ padding: '1rem' }}>
-                        <Typography use="headline" style={{marginBottom:'10px'}}>{this.props.label}</Typography>
+                        <Typography use="headline" style={{ marginBottom: '10px' }}>{this.props.label}</Typography>
                         <Typography use="caption" tag="div">likelihood - {(this.props.probability * 100).toFixed(2)} %</Typography>
                         <LinearProgress progress={this.props.probability}></LinearProgress>
                         <ExplainContainer show={this.state.explainContainerShow}
@@ -154,7 +151,7 @@ class ConditionResult extends React.Component {
                     </div>
                 </CardPrimaryAction>
                 <ListDivider />
-            </div>);
+            </div>;
     }
 }
 
@@ -380,20 +377,16 @@ class CommonSymptoms extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            commonSymptoms: [],
             selectedSymptoms: []
         };
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
     }
 
-    setCommonSymptoms(symtoms) {
-        this.setState({ commonSymptoms: symtoms });
-    }
     onChange(event, symptomId) {
         var isChecked = event.target.checked;
 
-        var symptom = this.state.commonSymptoms.find((symptom) => {
+        var symptom = this.props.commonSymptoms.find((symptom) => {
             return symptom.id === symptomId;
         });
         if (symptom) {
@@ -401,7 +394,7 @@ class CommonSymptoms extends React.Component {
         }
     }
     handleNext() {
-        var selectedSymptoms = this.state.commonSymptoms.filter((symptom) => {
+        var selectedSymptoms = this.props.commonSymptoms.filter((symptom) => {
             return symptom.selected === true;
         });
 
@@ -425,7 +418,7 @@ class CommonSymptoms extends React.Component {
         this.props.handlePrev(undefined);
     }
     render() {
-        var symptoms = this.state.commonSymptoms.map((symptom) => {
+        var symptoms = this.props.commonSymptoms.map((symptom) => {
             return <ListItem key={symptom.id + "_check"}><Checkbox key={symptom.id} onChange={event => this.onChange(event, symptom.id)}>{symptom.name}</Checkbox></ListItem>;
         });
 
@@ -453,8 +446,8 @@ class PatientSymptomateResult extends React.Component {
         })
 
         if (diagnosticResult && diagnosticResult.conditions) {
-            var sortedConditions = diagnosticResult.conditions.sort((condition) => {
-                return condition.probability * -1;
+            var sortedConditions = diagnosticResult.conditions.sort((condition1, condition2) => {
+                return condition1.probability < condition2.probability? 1:-1;
             }).slice(0, 5);
 
             coditions = sortedConditions.map((condition) => {
@@ -475,18 +468,13 @@ class PatientSymptomateResult extends React.Component {
                 open={this.state.explainNotRelevantDialogIsOpen}
                 onClose={() => this.setState({ explainNotRelevantDialogIsOpen: false })}
             >
-                <DialogSurface>
-                    <DialogHeader>
-                        <DialogHeaderTitle>Explanation</DialogHeaderTitle>
-                    </DialogHeader>
-                    <DialogBody>Unfortunately the probability is to low the disease to be considered as diagnosis result.</DialogBody>
-                    <DialogFooter>
-                        <DialogFooterButton accept>CLOSE</DialogFooterButton>
-                    </DialogFooter>
-                </DialogSurface>
-                <DialogBackdrop />
+                <DialogTitle>Explanation</DialogTitle>
+                    <DialogContent>Unfortunately the probability is to low the disease to be considered as diagnosis result.</DialogContent>
+                    <DialogActions>
+                        <DialogButton action="close">CLOSE</DialogButton>
+                    </DialogActions>
             </Dialog>
-            <Card style={{maxHeight:'76vh',overflowY:'scroll'}}>
+            <Card style={{maxHeight:'72vh',overflowY:'scroll'}}>
                 {coditions}
             </Card>
         </div>) : null;
@@ -500,9 +488,12 @@ class PatientSymptomateComponent extends React.Component {
         this.handleNext = this.handleNext.bind(this);
         this.handlePrev = this.handlePrev.bind(this);
         this.onFabClick = this.onFabClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleAge = this.handleAge.bind(this);
     }
 
-    getInitialState(){
+    getInitialState() {
+        var N = 121;
         return {
             commonSymptoms: [],
             selections: [],
@@ -514,25 +505,45 @@ class PatientSymptomateComponent extends React.Component {
             showResult: false,
             evidences: [],
             emptyEvidence: {},
-            slotId: undefined
+            slotId: undefined,
+            optionGroups: { 
+                age: Array.apply(null, { length: N }).map(Number.call, Number).slice(20),
+                sex: ["Male", "Female"]
+            },
+            valueGroups: {age: 45, sex: "Male"}
         }
     }
+
+    handleChange(name, value){
+        this.setState(({valueGroups}) => ({
+          valueGroups: {
+            ...valueGroups,
+            [name]: value
+          }
+        }));
+    };
 
     getEmptyDiagnostic() {
         return this.state.emptyEvidence;
     }
+
     componentDidMount() {
-        symptomateService.getEmptyEvidence(this.props.userData.dateOfBirth, this.props.userData.sex, (error, result) => {
-            symptomateService.getSymptoms((error, symptomsResult) => {
-                if (symptomsResult.length > 0) {
-                    this.setState({ commonSymptoms: symptomsResult, showCommonSymptoms: true, emptyEvidence: result.data, diagnostic: result.data});
-                }
-                this.commonSymptoms.setCommonSymptoms(symptomsResult);
-            });
-        })
+        if(this.props.userData.dateOfBirth || (this.props.userData.age && this.props.userData.sex))
+            symptomateService.getEmptyEvidence(this.props.userData, (error, result) => {
+                symptomateService.getSymptoms((error, symptomsResult) => {
+                    if (symptomsResult.length > 0) {
+                        this.setState({ commonSymptoms: symptomsResult, showCommonSymptoms: true, emptyEvidence: result.data, diagnostic: result.data });
+                    }
+                });
+            })
         
         this.props.actions.changeScreenTitle('Symptoms');
     }
+
+    componentWillUpdate(){
+
+    }
+
     buildDiagnostic(diagnostic) {
         var evidence = {
             sex: this.props.userData.sex.toLowerCase(),
@@ -646,21 +657,57 @@ class PatientSymptomateComponent extends React.Component {
     onFabClick() {
         if(!this.props.voiceState.microphoneOn) {
             this.props.actions.switchMicrophone();
-            
         }
     }
 
+    handleAge(){
+        this.props.actions.updateUserData('sex',this.state.valueGroups.sex)
+        this.props.actions.updateUserData('age',this.state.valueGroups.age);
+        this.props.userData['sex'] = this.state.valueGroups.sex;
+        this.props.userData['age'] = this.state.valueGroups.age;
+        symptomateService.getEmptyEvidence(this.props.userData, (error, result) => {
+            symptomateService.getSymptoms((error, symptomsResult) => {
+                if (symptomsResult.length > 0) {
+                    this.setState({ commonSymptoms: symptomsResult, showCommonSymptoms: true, emptyEvidence: result.data, diagnostic: result.data });
+                }
+            });
+        })
+    }
+
     render() {
-        return <Grid>
+        return this.props.userData.dateOfBirth || this.state.showCommonSymptoms
+            ?(<Grid>
             <GridCell span="4">
                 <div>
-                    <CommonSymptoms show={this.state.showCommonSymptoms} ref={commonSymptoms => this.commonSymptoms = commonSymptoms} handleNext={this.handleNext} handlePrev={this.handlePrev} />
+                    <CommonSymptoms show={this.state.showCommonSymptoms} commonSymptoms={this.state.commonSymptoms} handleNext={this.handleNext} handlePrev={this.handlePrev} />
                     <SymptomQuestions show={this.state.showQuestion} question={this.state.diagnosticResponse.question} ref={symptomQuestions => this.symptomQuestions = symptomQuestions} handleNext={this.handleNext} handlePrev={this.handlePrev} />
                     <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} diagnosticPost={this.state.diagnostic} slotId={this.state.slotId} /> 
                     <Fab style={{ position: 'fixed', bottom: '12vh', right: '5vh' }} onClick={this.onFabClick} icon='settings_voice'></Fab>
                 </div>
             </GridCell>
-        </Grid>
+        </Grid>):
+            (
+            <div>
+            <Card style={{ width: '21rem', marginTop:'5px', marginLeft:'auto', marginRight:'auto' }}>
+                    <CardPrimaryAction>
+                    <div style={{ marginTop: '1rem' }}>
+                            <Typography style={{textAlign:'center'}} use="body1" tag="div" theme="text-secondary-on-background">Please provide your age and gender</Typography>
+                        </div>
+                    <Picker
+                style={{width:'80vw'}}
+                optionGroups={this.state.optionGroups}
+                valueGroups={this.state.valueGroups}
+                onChange={this.handleChange} />
+                    </CardPrimaryAction>
+                        <CardActions>
+                            <CardActionButtons>
+                               <CardAction onClick={() => this.handleAge()}>Next</CardAction>
+                            </CardActionButtons>
+                        </CardActions>
+                </Card>
+            
+            </div>
+            )
     }
 }
 

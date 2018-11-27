@@ -12,7 +12,7 @@ class SecurityStorage {
         if(window.cordova){
             if(!window.securityStorage){
                 this.init((error)=>{
-                    if(error) {returnwindow.localStorage.setItem(key, value);}
+                    if(error) {return window.localStorage.setItem(key, value);}
                     window.securityStorage.set(
                         function (key) { console.log('Set ' + key); },
                         function (error) { console.log('Error ' + error); },

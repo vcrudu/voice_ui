@@ -20,6 +20,9 @@ import DemoConversation from '../../demoConversation'
 import './voice.css';
 import enableInlineVideo from 'iphone-inline-video';
 import bleService from '../../model/bleService';
+import { Card, CardPrimaryAction, CardAction, CardActions } from '@rmwc/card';
+import { Typography } from '@rmwc/typography';
+
 
 class VoiceComponent extends React.Component {
     constructor(props){
@@ -131,8 +134,6 @@ class VoiceComponent extends React.Component {
                         title={this.props.match.params.scenarioTitle} />
                     </GridCell>
                 </Grid>
-                <Grid>
-                </Grid>
                 <div style={{margin:'auto',position:'absolute', left:'60px', overflow:'hidden', width:'220px'}}>
                 <div style={{position:'relative', top:'10px', left:'10px'}}>
                     <video ref={this.avatar} width="220" playsInline muted>
@@ -140,14 +141,48 @@ class VoiceComponent extends React.Component {
                     </video>
                 </div>
                 </div>
+                <div style={{position:'relative', top:'250px', left:'20px'}}>
+                    {
+                        this.props.match.params.scenarioTitle=='Summary'?
+                        (
+                            <Card outlined style={{ width: '21rem' }}>
+                            <CardPrimaryAction>
+                                <div style={{ padding: '1rem' }}>
+                                <Typography use="headline5" tag="div">
+                                    Summary of the progress
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                    <b>Blood pressure:</b> 145/93 mmHg
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                <b>Blood pressure trend:</b> Decreased by 1 mmHg 
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                <b>Weight:</b> 75.3
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                <b>Weight trend:</b> Decreased by 1.5 kg
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                <b>Activity for day:</b> 20 minutes.
+                                </Typography>
+                                <Typography use="body1" tag="p" theme="text-secondary-on-background">
+                                    <b>Activity for week:</b> 93 minutes.
+                                </Typography>
+                                </div>
+                            </CardPrimaryAction>
+                            </Card>
+                        )
+                        : null}
+                </div>
                 {
                     (this.props.voiceState.microphoneState=='on') ?
                         (   
-                            <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} 
+                            <Fab style={{ position: 'fixed', bottom: '9vh', right: '5vh' }} 
                             onClick={this.onFabClick} icon='mic'>
                             </Fab>
                         ) : (   
-                            <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} 
+                            <Fab style={{ position: 'fixed', bottom: '9vh', right: '5vh' }} 
                             onClick={this.onFabClick} icon='mic_off'>
                             </Fab>
                         )

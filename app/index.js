@@ -13,8 +13,9 @@ import APP_SETTINGS from './constants/appSettings';
 import io from 'socket.io-client';
 import Speaker from './polly/speaker';
 import messages from './messages';
-import {setCurrentAction} from './actions'
-//dataStorage.deleteState();
+import SecurityStorage from './model/SecurityStorage';
+import {setCurrentAction, registerNotification} from './actions'
+dataStorage.deleteState();
 
 window.store = createStore(bloodPressureAssistant, dataStorage.loadState());
 store.subscribe(()=>{
@@ -48,6 +49,17 @@ function InitPush() {
         });
         push.on('registration', function (data) {
             console.log(JSON.stringify(data));
+            store.dispatch(registerNotification(data.registrationId));
+            let state = store.getState();
+            if (state.userData && state.userData.token) {
+                apiService.updatePushNotification(
+                    data.registrationId,
+                    state.userData.token,
+                    (result) => {
+                        if (!result.success) console.log(result.error)
+                    }
+                );
+            }
         });
         push.on('notification', function (data) {
             store.dispatch(setCurrentAction({

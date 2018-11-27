@@ -25,9 +25,11 @@ class TabsPageComponent extends Component {
             window.socket.disconnect(); 
         }
 
-        //if(event.detail.index===5){
-        //    this.props.actions.pairDevice(null);
-        //}
+        if(event.detail.index===4){
+            if(window.cordova && window.cordova.InAppBrowser){
+                window.cordova.InAppBrowser.open("https://app.trichromehealth.com/#/patient/patient.devices/patient.devices.buy?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InZjcnVkdUBob3RtYWlsLmNvbSIsImlhdCI6MTUyMDU1MTI5OX0.CepkyHlhAqGTi9JdYzfFbH64ztmvZS9xq5xjQRLwEuU", "_blank", 'location=no');
+            }
+        }
     }
 
     render() {
@@ -38,7 +40,7 @@ class TabsPageComponent extends Component {
                     {/* <Tab theme='primary-dark'><Link to='/stage/devices'><TabIcon theme='primary-dark'>devices_other</TabIcon><TabIconText>Devices</TabIconText></Link></Tab> */}
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='chat'>Chats</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/symptoms'>   <Tab stacked restrictIndicator icon='playlist_add_check'>Symptoms</Tab></Link>
-                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/shop'>   <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab> </Link>
+                 <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab>
                     <Tab stacked restrictIndicator icon='exit_to_app'>Sign Out</Tab>
                 </TabBar>
         </div>);

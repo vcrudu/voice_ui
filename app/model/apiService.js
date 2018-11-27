@@ -24,6 +24,27 @@ class ApiService{
         });
     }
 
+    updatePushNotification(registrationId, token, callBack) {
+        var dataToSend = JSON.stringify({"pnToken":registrationId});
+        $.ajax({
+            url: APP_SETTINGS.serverApiUrl + "push_subscriptions" + "?token=" + token,
+            type: 'PUT',
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: dataToSend
+        }).done(function (result) {
+            if (result.success) {
+                callBack({success:true, data: result.data, error: undefined});
+            }else {
+                console.log(result);
+                callBack({success:false, data: undefined, error: result.error});
+            }
+        }).fail(function () {
+            callBack({success:false, data: undefined, error: "Signup error ocured! Please contact system administrator."});
+        });
+    }
+
     signIn(signInData, callBack) {
         var dataToSend = JSON.stringify(signInData);
         console.log(APP_SETTINGS.serverUrl);
