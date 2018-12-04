@@ -36,9 +36,9 @@ class TabsPageComponent extends Component {
         return (<div className="menu">
                 <TabBar onActivate={(event) => { this.onChange(event) }}>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/home/false'><Tab stacked restrictIndicator icon='home' label='Home'></Tab></Link>
-                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/signs'><Tab stacked restrictIndicator icon='timeline' label='Signs'></Tab></Link>
+                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/signs'><Tab stacked restrictIndicator icon='timeline' label='Data'></Tab></Link>
                     {/* <Tab theme='primary-dark'><Link to='/stage/devices'><TabIcon theme='primary-dark'>devices_other</TabIcon><TabIconText>Devices</TabIconText></Link></Tab> */}
-                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='chat'>Chats</Tab></Link>
+                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='list'>History</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/symptoms'>   <Tab stacked restrictIndicator icon='playlist_add_check'>Symptoms</Tab></Link>
                  <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab>
                     <Tab stacked restrictIndicator icon='exit_to_app'>Sign Out</Tab>

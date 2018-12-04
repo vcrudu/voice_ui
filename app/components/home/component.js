@@ -42,6 +42,7 @@ class HomeComponent extends React.Component {
         super(props);
         this.demoConversation = new DemoConversation();
         this.state = {};
+        this.onFabClick = this.onFabClick.bind(this);
     }
 
     componentDidMount() {
@@ -69,6 +70,10 @@ class HomeComponent extends React.Component {
         } else {
             this.setState({redirectToInfo: true});
         }
+    }
+
+    onFabClick() {
+        console.log(this.props.voiceState);
     }
 
     render() {
@@ -117,7 +122,12 @@ class HomeComponent extends React.Component {
                    </DialogActions>
                  </Dialog>
                  
-                } 
+                }
+                <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} icon='chat'
+                    onClick={()=>{
+                        this.onFabClick();
+                    }}
+                    ></Fab> 
             </div>
         );
     }

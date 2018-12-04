@@ -380,7 +380,7 @@ class SignsComponent extends React.Component {
                     });
             }
         });
-        this.props.actions.changeScreenTitle('Vital signs');
+        this.props.actions.changeScreenTitle('Your data');
     }
 
     render() {

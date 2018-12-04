@@ -69,7 +69,7 @@ typings/
 
 # dotenv environment variables file
 .env
-
-
-
+.vscode
+.vscode/
+www/js/
 # End of https://www.gitignore.io/api/node,apachecordova

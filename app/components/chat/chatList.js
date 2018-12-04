@@ -24,7 +24,7 @@ class ChatList extends React.Component {
     }
 
     componentDidMount(){
-        this.props.actions.changeScreenTitle('Chats');
+        this.props.actions.changeScreenTitle('History');
         chatApiService.getChatsList(this.props.userData.token, (err, chatsList)=>{
             if(!err)
             this.setState({chatsList:chatsList});

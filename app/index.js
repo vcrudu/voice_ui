@@ -15,7 +15,7 @@ import Speaker from './polly/speaker';
 import messages from './messages';
 import SecurityStorage from './model/SecurityStorage';
 import {setCurrentAction, registerNotification} from './actions'
-dataStorage.deleteState();
+//dataStorage.deleteState();
 
 window.store = createStore(bloodPressureAssistant, dataStorage.loadState());
 store.subscribe(()=>{
@@ -97,101 +97,6 @@ var app = {
         }
 
         InitPush();
-
-        /* window.socket = io(APP_SETTINGS.enrolServerUrl);
-
-        window.socket.on('connect', function (socket) {
-            window.socket.emit("provideUserId", {userId:"vcrudu@hotmail.com", mobile:"07532302702"}, function(data){
-                console.log(data);
-            });
-        });
-
-        window.socket.on('sendPlan', function (data) {
-            console.log(data);
-            if (window.cordova) {
-                cordova.plugins.notification.local.clearAll();
-                switch (data.currentIntent.name) {
-                    case "EnrolPatient":
-                        setTimeout(() => {
-                            if (window.cordova) {
-                                const EnrolePatient = messages["EnrolPatient"];
-                                cordova.plugins.notification.local.schedule({
-                                    id: 1,
-                                    title: EnrolePatient.title,
-                                    text: EnrolePatient.subtitle,
-                                    foreground: true,
-                                    data: {
-                                        "intent-name": "EnrolPatient"
-                                    }
-                                });
-                                const MeasureBP = messages["MeasureBP"];
-                                cordova.plugins.notification.local.schedule({
-                                    id: 2,
-                                    title: MeasureBP.title,
-                                    text: MeasureBP.subtitle,
-                                    trigger: { type: "timespan", in: 30, unit: 'second' },
-                                    foreground: true,
-                                    data: {
-                                        "intent-name": "MeasureBP"
-                                    }
-                                });
-                                cordova.plugins.notification.local.on('trigger', (event) => {
-                                    const message = messages[event.data["intent-name"]];
-                                    store.dispatch(setCurrentAction(message));
-                                    let speaker = new Speaker();
-                                    speaker.speak(message.notificationText);
-                                }, this);
-                            } else {
-                                const message = messages[data.currentIntent.name];
-                                store.dispatch(setCurrentAction(message));
-                            }
-                        }, 10000);
-                        break;
-                    case "EnrolPatientForTreatment":
-                        setTimeout(() => {
-                            if (window.cordova) {
-                                const currentAction = messages["EnrolPatientForTreatment"];
-                                cordova.plugins.notification.local.schedule({
-                                    id: 3,
-                                    title: currentAction.title,
-                                    text: currentAction.subtitle,
-                                    foreground: true,
-                                    data: {
-                                        "intent-name": currentAction.id
-                                    }
-                                });
-                                const TakeDrug = messages["TakeDrug"];
-                                cordova.plugins.notification.local.schedule({
-                                    id: 4,
-                                    title: TakeDrug.title,
-                                    text: TakeDrug.subtitle,
-                                    trigger: { type: "timespan", in: 30, unit: 'second' },
-                                    foreground: true,
-                                    data: {
-                                        "intent-name": "TakeDrug"
-                                    }
-                                });
-                                cordova.plugins.notification.local.on('trigger', (event) => {
-                                    const message = messages[event.data["intent-name"]];
-                                    store.dispatch(setCurrentAction(message));
-                                    let speaker = new Speaker();
-                                    speaker.speak(message.notificationText);
-                                }, this);
-                            } else {
-                                const message = messages[data.currentIntent.name];
-                                store.dispatch(setCurrentAction(message));
-                            }
-                        }, 10000);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
-        window.socket.on('disconnect', function () {
-
-        }); */
        
         ReactDOM.render(
             (
