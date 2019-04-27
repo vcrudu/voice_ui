@@ -8,9 +8,9 @@ import {
     ListItemGraphic,
     ListItemMeta,
     ListDivider
-} from 'rmwc/List';
+} from '@rmwc/List';
 
-import { TabBar, Tab, TabIcon, TabIconText, TabBarScroller } from 'rmwc/Tabs';
+import { TabBar, Tab, TabIcon, TabIconText, TabBarScroller } from '@rmwc/Tabs';
 
 class AppointmentInfo extends React.Component {
     constructor(props){

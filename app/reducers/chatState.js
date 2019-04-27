@@ -13,7 +13,7 @@ export const chatState = (state = {}, action) => {
             return newState;
         case CLEAR_CHAT_MESSAGE:
             newState = { ...state };
-            newState[action.message.patientCardId]=[];
+            newState[action.cardId]=[];
             return newState;
         default:
             return state;

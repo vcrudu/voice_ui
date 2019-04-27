@@ -8,14 +8,6 @@ const messages = {
         actions:[{actionLabel: 'More Info', actionType:'readText'}]
     },
 
-    MeasureBP:{
-        id:"MeasureBP",
-        title:"Blood Pressure Measurement",
-        subtitle:"It is time to take you blood pressure measurement",
-        notificationText: "It is time to take you blood pressure measurement",
-        actions:[{actionLabel: 'Start Now', actionType:'bot', botName: 'MeasureBP', botTriggerText:'Take a measurement.', process:true}]
-    },
-
     TakeDrug:{
         id:"TakeDrug",
         title:"Your medicine",

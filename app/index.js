@@ -15,7 +15,20 @@ import Speaker from './polly/speaker';
 import messages from './messages';
 import SecurityStorage from './model/SecurityStorage';
 import {setCurrentAction, registerNotification} from './actions'
+import healthKitService from './model/healthKitService';
 //dataStorage.deleteState();
+
+if (!Object.entries) {
+    Object.entries = function( obj ){
+      var ownProps = Object.keys( obj ),
+          i = ownProps.length,
+          resArray = new Array(i); // preallocate the Array
+      while (i--)
+        resArray[i] = [ownProps[i], obj[ownProps[i]]];
+      
+      return resArray;
+    };
+  }
 
 window.store = createStore(bloodPressureAssistant, dataStorage.loadState());
 store.subscribe(()=>{
@@ -26,6 +39,8 @@ import {
     HashRouter as Router
   } from 'react-router-dom';
 import Routes from './routes';
+
+
 
 function InitPush() {
     if (window.PushNotification) {
@@ -73,7 +88,7 @@ function InitPush() {
         });
         push.on('error', function (err) {
             console.log(err)
-            alert('Event=error, message=' + err.message)
+            //alert('Event=error, message=' + err.message)
         });
     }
 }
@@ -82,6 +97,7 @@ var app = {
     // Application Constructor
     initialize: function () {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        document.addEventListener("resume", this.onResume.bind(this), false);
     },
 
     // deviceready Event Handler
@@ -92,11 +108,37 @@ var app = {
         this.receivedEvent('deviceready');
         if(window.cordova){
             window.sampleRate = audioinput.SAMPLERATE.VOIP_16000Hz;
-            Keyboard.shrinkView(true);
-            Keyboard.disableScrollingInShrinkView(true);
+            window.Keyboard.shrinkView(true);
+            window.Keyboard.disableScrollingInShrinkView(true);
+        }
+
+        if (!window.socket) {
+            window.socket = io(APP_SETTINGS.serverUrl);
+            let state = store.getState();
+             window.socket.on('connect', function () {
+                window.socket.emit('authenticate', { token: state.userData.token });
+                window.socket.on('disconnect', function (reason) {
+                    console.log('socket disconnect:' + reason)
+                });
+                window.socket.on('card', function (event) {
+                    store.dispatch(setCurrentAction({
+                        pictureId: event.pictureId,
+                        scenarioId: event.scenarioId,
+                        dateTime: event.dateTime,
+                        scenarioTitle: event.scenarioTitle,
+                        message: event.message,
+                        timeToLive: event.timeToLive
+                    })); 
+                    console.log('socket event:' + event)
+                });
+            }); 
         }
 
         InitPush();
+
+        healthKitService.initHealthRepository((data)=>{
+            
+        });
        
         ReactDOM.render(
             (
@@ -108,6 +150,12 @@ var app = {
             ),
             document.getElementById('root')
           );
+    },
+
+    onResume: function(){
+        setTimeout(function() {
+            
+        }, 0);
     },
 
     // Update DOM on a Received Event

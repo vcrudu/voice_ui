@@ -10,50 +10,26 @@ import DatePicker from 'react-date-picker';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
+import '../../mobiscroll.custom/css/mobiscroll.react.min.css';
+import './styles/component.css';
+import mobiscroll from '../../mobiscroll.custom/js/mobiscroll.react.min';
+import { Route, Redirect, withRouter } from 'react-router-dom';
 
-import { Button, ButtonIcon } from 'rmwc/Button';
-import {
-    Card,
-    CardPrimaryAction,
-    CardMedia,
-    CardAction,
-    CardActions,
-    CardActionButtons,
-    CardActionIcons
-} from 'rmwc/Card';
-
-import { LinearProgress } from 'rmwc/LinearProgress';
-import { Radio } from 'rmwc/Radio';
-import {
-    List,
-    ListItem,
-    ListItemText,
-    ListItemSecondaryText,
-    ListItemGraphic,
-    ListItemMeta,
-    ListDivider
-} from 'rmwc/List';
-
-import { Grid, GridCell } from 'rmwc/Grid';
-import { Checkbox } from 'rmwc/Checkbox';
-import { Typography } from 'rmwc/Typography';
+import { Typography } from '@rmwc/Typography';
 import {
     Dialog,
-    DefaultDialogTemplate,
-    DialogSurface,
-    DialogHeader,
-    DialogHeaderTitle,
-    DialogBody,
-    DialogFooter,
-    DialogFooterButton,
-    DialogBackdrop
-  } from 'rmwc/Dialog';
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    DialogButton
+  } from '@rmwc/dialog';
 
-import { Snackbar } from 'rmwc/Snackbar';
-import { TextField, TextFieldIcon, TextFieldHelperText } from 'rmwc/TextField';
-import { Fab } from 'rmwc/Fab';
+
+import { TextField, TextFieldIcon, TextFieldHelperText } from '@rmwc/TextField';
+import { Fab } from '@rmwc/Fab';
 import apiService from '../../model/apiService';
 import calendarFactory from '../../model/calendarFactory';
+import doctorImg from './images/doctor.png'
 
 class DateSelector extends React.Component {
     constructor(props) {
@@ -90,11 +66,33 @@ class AppointmentsComponent extends React.Component {
             isSnackbarActive: false,
             snackbarTimeOut: 10000
         }
-        this.jq = $.noConflict();
+        this.onDayChange = this.onDayChange.bind(this);
+        this.onEventSelect = this.onEventSelect.bind(this);
+        this.onReasonChange = this.onReasonChange.bind(this);
+        this.handleSkipSymptomCheckerSuggestion=this.handleSkipSymptomCheckerSuggestion.bind(this);
+        this.handleSymptomCheckerSuggestion = this.handleSymptomCheckerSuggestion.bind(this);
+        this.handleBookAppointment = this.handleBookAppointment.bind(this);
+        this.handleCancelAppointmentModal = this.handleCancelAppointmentModal.bind(this);
+        this.onCallClick = this.onCallClick.bind(this);
+        this.onKeyboardDidShow = this.onKeyboardDidShow.bind(this);
+        this.onKeyboardDidHide = this.onKeyboardDidHide.bind(this);
+
+        this.stopCall = this.stopCall.bind(this);
+
+        if(window.Media){
+              this.my_media = new Media('img/skype_call.mp3',
+                // success callback
+                function () { 
+                  console.log("playAudio():Audio Success"); 
+              },
+                // error callback
+                function (err) { console.log("playAudio():Audio Error: " + JSON.stringify(err)); }
+              );
+        }
     }
+
     handleSymptomCheckerSuggestion() {
-        var slotId = this.state.slotId;
-        Bridge.Redirect.redirectToWithLevelsUp("profile/patient-symptomate.html?slotId=" + slotId, 2);
+        this.setState({goCheckSymptoms:true});
     }
 
     handleSkipSymptomCheckerSuggestion() {
@@ -102,16 +100,15 @@ class AppointmentsComponent extends React.Component {
     }
 
     handleBookAppointment() {
-        var appointmentsCalendarDiv = this.jq(this.appointmentsCalendar);
         var slotId = this.state.slotId;
-        var reasonText = this.jq("#reasonText").val();
+        var reasonText = this.state.reasonText;
 
         var slotDateTime = moment(slotId);
         var now = new Date();
         var component = this;
-        if (slotDateTime <= now.getTime()) {
-            this.jq("#reasonText").val("");
-            component.setState({ openDialog: false, slotId: undefined });
+        if (slotId <= now.getTime()) {
+            this.setState({ reasonText: "" });
+            this.setState({ openDialog: false, slotId: undefined });
             return;
         }
         else {
@@ -120,31 +117,19 @@ class AppointmentsComponent extends React.Component {
                 slotDateTime: slotId,
                 appointmentReason: reasonText
             }, (error, result) => {
-                var event = calendarFactory.getEventById(slotId, appointmentsCalendarDiv.fullCalendar("clientEvents"));
-                if (event) {
-                    appointmentsCalendarDiv.fullCalendar("updateEvent", calendarFactory.getBookedEvent(event, result));
-                }
-
-                this.jq("#reasonText").val("");
-                component.setState({ openDialog: false, slotId: undefined });
-                return;
+                var event = calendarFactory.getEventById(slotId, this.state.events);
+                event.date = slotId;
+                this.setState({ reasonText:'',openDialog: false, slotId: undefined });
+                this.onDayChange(event);
             });
         }
     }
+
     handleCancelAppointmentModal() {
-        this.setState({ openDialog: false, slotId: undefined });
-        this.jq("#reasonText").val("");
-
-        var actualHeight = this.jq(".fc-scroller").height();
-        this.jq(".fc-scroller").height(actualHeight + 1);
-        this.jq(".fc-scroller").height(actualHeight - 1);
-
+        this.setState({ reasonText:'', openDialog: false, slotId: undefined });
         return;
     }
-    onDateChanged(valueText, inst) {
-        var date = moment(valueText);
-        this.jq(this.appointmentsCalendar).fullCalendar("gotoDate", date);
-    }
+
     isToday(td) {
         var d = new Date();
         return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
@@ -153,144 +138,153 @@ class AppointmentsComponent extends React.Component {
     }
 
     componentDidMount() {
-        var component = this;
+        
+        this.onDayChange({date:moment()});
+        window.addEventListener('keyboardDidShow', this.onKeyboardDidShow);
+        window.addEventListener('keyboardDidHide', this.onKeyboardDidHide);
+    }
 
-        this.jq(component.appointmentsCalendar).on("swipeleft", (event) => {
-            this.jq(component.appointmentsCalendar).fullCalendar("next");
-        });
+    componentWillUnmount(){
+        window.removeEventListener('keyboardDidShow', this.onKeyboardDidShow);
+        window.removeEventListener('keyboardDidHide', this.onKeyboardDidHide);
+    }
 
-        this.jq(component.appointmentsCalendar).on("swiperight", (event) => {
-            var defDate = this.jq(component.appointmentsCalendar).fullCalendar("getDate")._d;
-            if (component.isToday(defDate)) { return; }
-            this.jq(component.appointmentsCalendar).fullCalendar("prev");
-        });
+    onKeyboardDidShow(){
+        if(this.state.openDialog){
+            this.setState({openDialogStyle:{top: '40vh !important'}, openDialogClassName:'keyboard-did-show'});
+        }
+    }
 
-        var slotId = this.props.slotId;
+    onKeyboardDidHide(){
+        this.setState({openDialogStyle:null, openDialogClassName:null});
+    }
 
-        var currentDate = slotId && slotId.slotId ? new Date(parseFloat(slotId.slotId)) : new Date();
-        this.jq('#appointmentsCalendar').fullCalendar({
-            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-            defaultView: 'nursesGrid',
-            defaultTimedEventDuration: '00:15:00',
-            allDaySlot: false,
-            header: false,
-            height: this.jq(this.appointmentsCalendarWrapper).height() - 8,
-            allDay: false,
-            defaultDate: currentDate,
-            views: {
-                nursesGrid: {
-                    type: 'agenda',
-                    duration: { days: 1 },
-                    slotDuration: '00:15',
-                    slotLabelInterval: '00:15',
-                    columnFormat: 'dddd MM / DD'
+    onDayChange(event){
+        let start = moment(event.date).startOf('day');
+        let end = moment(event.date).endOf('day');
+        apiService.getSlots(this.props.userData.token, moment().format("MM/DD"), (error, slotsResult) => {
+            if (error) return;
+            apiService.getPatientAppointment(this.props.userData.token, (error, appointmentsResult) => {
+                if (error) return;
+                let events = [];
+                for (var i = 0; i < slotsResult.length; i++) {
+                    if (slotsResult[i].slotDateTime >= start.valueOf() && slotsResult[i].slotDateTime < end.valueOf()) {
+                        var event = calendarFactory.getEvent(slotsResult[i], appointmentsResult);
+
+                        events.push(event);
+                    }
                 }
-            },
-            scrollTime: currentDate.getHours() + ':' + currentDate.getMinutes() + ':00',
-            eventClick: (calEvent, jsEvent, view)=> {
-                var now = new Date();
-                if (calEvent.id < now.getTime()) {
-                    return;
-                }
+                this.setState({events:events});
+                //callback(events);
 
-                if (calEvent.status == "appointment") {
-                    Bridge.Redirect.redirectToWithLevelsUp("profile/appointment-details.html?slotId=" + calEvent.id, 2);
-                    return;
-                }
-
-                if (calEvent.slot.countOfProviders == 0) {
-                    return;
-                }
-
-                if (view.name == 'nursesGrid') {
-                    setTimeout( () => {
-                        this.jq('.fc-scroller').animate({
-                            scrollTop: jsEvent.currentTarget.offsetTop
-                        }, 300,  () => {
-                            component.setState({ openDialog: false, openSymptomateDialog: true, slotId: calEvent.id, slotReason: "" });
-                        });
-                    }, 0);
-                }
-            },
-            events: (start, end, timezone, callback) => {
-                var events = [];
-                apiService.getSlots(this.props.userData.token, start.format("MM/DD"), (error, slotsResult) => {
-                    if (error) return;
-                    apiService.getPatientAppointment(this.props.userData.token, (error, appointmentsResult) => {
-                        if (error) return;
-                        for (var i = 0; i < slotsResult.length; i++) {
-                            if (slotsResult[i].slotDateTime >= start.valueOf() && slotsResult[i].slotDateTime < end.valueOf()) {
-                                var event = calendarFactory.getEvent(slotsResult[i], appointmentsResult);
-
-                                events.push(event);
-                            }
+                /* if (slotId && slotId.slotId) {
+                    var slotDate = moment(parseFloat(slotId.slotId));
+                    if (start <= slotDate && slotDate <= end) {
+                        var event = calendarFactory.getEventById(parseFloat(slotId.slotId), events);
+                        if (event && event.status != "appointment") {
+                            setTimeout( () => {
+                                component.setState({ openDialog: true, openSymptomateDialog: false, slotId: parseFloat(slotId.slotId), slotReason: "" });
+                            }, 500);
                         }
-                        callback(events);
+                    }
+                }
+                else {
+                    component.setState({ isSnackbarActive: true });
+                } */
 
-                        if (slotId && slotId.slotId) {
-                            var slotDate = moment(parseFloat(slotId.slotId));
-                            if (start <= slotDate && slotDate <= end) {
-                                var event = calendarFactory.getEventById(parseFloat(slotId.slotId), events);
-                                if (event && event.status != "appointment") {
-                                    setTimeout( () => {
-                                        component.setState({ openDialog: true, openSymptomateDialog: false, slotId: parseFloat(slotId.slotId), slotReason: "" });
-                                    }, 500);
-                                }
-                            }
-                        }
-                        else {
-                            component.setState({ isSnackbarActive: true });
-                        }
-
-                    })
-                });
-
-                component["dateSelector"].setDate(start._d);
-            },
-            eventAfterAllRender: (view) => {
-            },
-            loading: (isLoading, view) => {
-            }
+            })
         });
     }
-    onReasonChange() {
+
+    onEventSelect(event){
+        if(event.event.countOfProviders>0){
+            this.setState({openSymptomateDialog:true, slotId:event.event.slotId});
+        }
+    }
+
+    onReasonChange(event){
+        this.setState({ reasonText: event.target.value });
+    }
+
+    onCallClick(){
+        this.setState({ callDialog: true });
+        if(this.my_media)
+        this.my_media.play();
+        setTimeout(()=>{
+            this.stopCall();
+            if(window.CDV.ZoomPlugin){
+                window.CDV.ZoomPlugin.joinMeeting('9194547223','Patient',()=>{
+                    console.log("We are in the meeting");
+                },
+                (err)=>{
+
+                });
+            }
+        },8000);
+    }
+
+    stopCall(){
+        this.setState({ callDialog: false });
+        if(this.my_media)
+        this.my_media.stop();
     }
 
     render() {
-        return <div>
+        return this.state.goCheckSymptoms? (<Redirect to='/stage/symptoms'/>): (<div>
             <div>
-                <div style={{height:'85vh', overflowY:'scroll'}} ref={appointmentsCalendarWrapper => this.appointmentsCalendarWrapper = appointmentsCalendarWrapper}>
-                    <div id='appointmentsCalendar' ref={appointmentsCalendar => this.appointmentsCalendar = appointmentsCalendar}></div>
-                    <Dialog ref={suggestSymptomateModal => this.suggestSymptomateModal = suggestSymptomateModal} id="appointmentModal" open={this.state.openSymptomateDialog}>
-                        <DialogSurface>
-                            <DialogHeader>
-                                <DialogHeaderTitle>Symptoms</DialogHeaderTitle>
-                            </DialogHeader>
-                            <DialogBody>Do you have any symptoms?</DialogBody>
-                            <DialogFooter>
-                                <DialogFooterButton onClick={this.handleSymptomCheckerSuggestion}>Yes</DialogFooterButton >
-                                <DialogFooterButton onClick={this.handleSkipSymptomCheckerSuggestion}>Skip</DialogFooterButton>
-                            </DialogFooter>
-                        </DialogSurface>
+                <div style={{ height: '78vh', overflowY: 'scroll' }}>
+                <mobiscroll.Eventcalendar
+                lang="en-UK"
+                theme="ios"
+                display="inline"
+                data = {this.state.events}
+                view={{
+                    calendar: { type: 'week' },
+                    eventList: { type: 'day' }
+                }}
+                onDayChange={this.onDayChange}
+                onEventSelect={this.onEventSelect}
+                />
+                    <Fab style={{ position: 'fixed', bottom: '15vh', right: '5vh' }} icon='phone'
+                        onClick={() => {
+                            this.onCallClick();
+                        }}
+                    ></Fab>
+                    <Dialog open={this.state.openSymptomateDialog}>
+                        <DialogTitle>Symptoms</DialogTitle>
+                        <DialogContent>Do you have any symptoms?</DialogContent>
+                        <DialogActions>
+                            <DialogButton onClick={this.handleSymptomCheckerSuggestion}>Yes</DialogButton>
+                            <DialogButton onClick={this.handleSkipSymptomCheckerSuggestion} isDefaultAction>Skip</DialogButton>
+                        </DialogActions>
                     </Dialog>
-                    <Dialog ref={appointmentModal => this.appointmentModal = appointmentModal} id="appointmentModal" open={this.state.openDialog}>
-                        <DialogSurface>
-                            <DialogHeader>
-                                <DialogHeaderTitle>Book an appointment</DialogHeaderTitle>
-                            </DialogHeader>
-                            <DialogBody>
-                                <TextField textarea fullwidth rows="3" id="reasonText" name="reasonText" ref={reasonText => this.reasonText = reasonText} label="Reason" onChange={this.onReasonChange} />
-                            </DialogBody>
-                            <DialogFooter>
-                                <DialogFooterButton onClick={this.handleBookAppointment}>Submit</DialogFooterButton >
-                                <DialogFooterButton onClick={this.handleCancelAppointmentModal}>Close</DialogFooterButton>
-                            </DialogFooter>
-                        </DialogSurface>
+                    <div style={this.state.openDialogStyle}>
+                    <Dialog className={this.state.openDialogClassName} open={this.state.openDialog}>
+                        <DialogTitle>Book an appointment</DialogTitle>
+                        <DialogContent>
+                            <TextField textarea fullwidth rows="3" id="reasonText" name="reasonText" onChange={this.onReasonChange} label="Reason" onChange={this.onReasonChange} />
+                        </DialogContent>
+                        <DialogActions>
+                            <DialogButton onClick={this.handleBookAppointment}>Submit</DialogButton>
+                            <DialogButton onClick={this.handleCancelAppointmentModal}>Close</DialogButton>
+                        </DialogActions>
                     </Dialog>
-                    <DateSelector ref={dateSelector => this.dateSelector = dateSelector} onSelectDateCallback={this.onDateChanged} />
+                    </div>
+                    <Dialog open={this.state.callDialog}>
+                        <DialogTitle>Call</DialogTitle>
+                        <DialogContent>
+                            <img src={doctorImg} style={{width:'65vw', height:'30vh'}} />
+                                <div>
+                                    <Typography style={{display: 'block', marginBottom: '10px', marginLeft: 'auto',marginRight: 'auto', width:'50%'}} use="body1" tag="div" theme="text-secondary-on-background">Dr. Martin Who</Typography>
+                                </div>
+                                <div>
+                                    <Fab  style={{display: 'block',marginLeft: 'auto',marginRight: 'auto'}} icon='call_end' onClick={this.stopCall} />
+                                </div>
+                        </DialogContent>
+                    </Dialog>
                 </div>
             </div>
-        </div>
+        </div>);
     }
 }
 

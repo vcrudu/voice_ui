@@ -1,6 +1,6 @@
 const AWS_CONSTANTS = {
-    accessKeyId:"AKIAIVDQJ625RK25RPFA",
-    secretAccessKey:"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",
+    accessKeyId:"AKIAI7INLAFWZQJZZ64Q",
+    secretAccessKey:"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",
     region:"eu-west-1"
 }
 

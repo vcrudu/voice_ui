@@ -19,8 +19,8 @@ class LandingCarousel extends React.Component {
         return (<div>
             <LoggedOutHeader />
 
-        <ReactSwipe swipeOptions={{speed: 400,auto: 3000, continuous: false}}>
-                <div style={{backgroundColor:'#8bc34a', color:'white', height:'100vh'}}>
+        <ReactSwipe swipeOptions={{speed: 400,auto: 12000, continuous: true}}>
+                <div style={{backgroundColor:'green', color:'white', height:'100vh'}}>
                     <div className="carousel-caption">
                     <div style={{display: 'flex',justifyContent: 'center'}}>
                     <img style={{width:'288px', height:'131px'}} src={imgMonitor}/>
@@ -38,7 +38,7 @@ class LandingCarousel extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div style={{backgroundColor:'#ffbc00', color:'white', height:'100vh'}}>
+                <div style={{backgroundColor:'#ffa000', color:'white', height:'100vh'}}>
                     <div className="carousel-caption">
                     <div style={{display: 'flex',justifyContent: 'center'}}>
                     <img style={{width:'288px', height:'131px'}} src={imgGetAlerts}/>
@@ -55,7 +55,7 @@ class LandingCarousel extends React.Component {
                     </div>
                 </div>
 
-                <div style={{backgroundColor:'#ff5252', color:'white', height:'100vh'}}>
+                <div style={{backgroundColor:'red', color:'white', height:'100vh'}}>
                     <div className="carousel-caption">
                     <div style={{display: 'flex',justifyContent: 'center'}}>
                     <img style={{width:'288px', height:'131px'}} src={imgConnectSpecialist}/>

@@ -6,8 +6,8 @@ import {
     ToolbarTitle,
     ToolbarMenuIcon,
     ToolbarIcon
-} from 'rmwc/Toolbar';
-import { Elevation } from 'rmwc/Elevation';
+} from '@rmwc/Toolbar';
+import { Elevation } from '@rmwc/Elevation';
 import trichromeHealthcareImg from './images/trichrome-healthcare.png';
 import logo from './images/logo.png';
 

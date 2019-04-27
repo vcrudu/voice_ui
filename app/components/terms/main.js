@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
     Toolbar,
     ToolbarRow,
@@ -6,9 +7,9 @@ import {
     ToolbarTitle,
     ToolbarMenuIcon,
     ToolbarIcon
-} from 'rmwc/Toolbar';
-import { Elevation } from 'rmwc/Elevation';
-import { Typography } from 'rmwc/Typography';
+} from '@rmwc/Toolbar';
+import { Elevation } from '@rmwc/Elevation';
+import { Typography } from '@rmwc/Typography';
 import { Checkbox } from '@rmwc/checkbox';
 import { Button } from '@rmwc/button';
 import { ThemeProvider } from '@rmwc/theme';
@@ -17,12 +18,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions';
 import {Link, withRouter} from 'react-router-dom'
+import '../../model/bleService';
+import bleService from '../../model/bleService';
 
 class MainTermsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {contentRead:false, agreedTerms: false, snackbarIsOpen: true};
         this.contentDiv = React.createRef();
+    }
+    componentDidMount(){
+        this.props.actions.updateHealthKitSyncDate(moment().year(1976).valueOf());
     }
     render() {
         return (
@@ -32,7 +38,7 @@ class MainTermsComponent extends React.Component {
                         <Toolbar>
                             <ToolbarRow theme='background'>
                                 <ToolbarSection theme='primary-dark' className='large-toolbar-section'>
-                                    <ToolbarTitle className="title" theme='textPrimaryOnLight'><Typography use='subheading1'>Terms and Conditions</Typography></ToolbarTitle>
+                                    <ToolbarTitle onClick={()=>{bleService.startTest()}} className="title" theme='textPrimaryOnLight'><Typography use='subheading1'>Terms and Conditions</Typography></ToolbarTitle>
                                 </ToolbarSection>
                             </ToolbarRow>
                         </Toolbar>
@@ -41,7 +47,7 @@ class MainTermsComponent extends React.Component {
                 <div>
                 <Elevation z='1'>
                     <div ref={this.contentDiv} style={{ margin: '1rem', overflow: 'scroll', height: '70vh' }} onScroll={()=>{
-                        if(this.contentDiv.current.scrollTop>2900){
+                        if(this.contentDiv.current.scrollTop>2000){
                             this.setState({contentRead:true});
                         }
                     }}>

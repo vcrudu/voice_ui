@@ -1,8 +1,8 @@
 import React from 'react';
 import lexImage from '../../assets/images/lex.png';
-import Button from 'rmwc/Button'
+import Button from '@rmwc/Button'
 import DemoConversation from '../../demoConversation';
-import { Grid, GridCell } from 'rmwc/Grid';
+import { Grid, GridCell } from '@rmwc/Grid';
 
 const AudioRenderer = () => {
     const demoConversation = new DemoConversation();
@@ -14,7 +14,7 @@ const AudioRenderer = () => {
             <p style={{marginLeft:'40vw'}}><span id="message"></span></p>
             <Grid>
                 <GridCell phone="2">
-                    <Button style={{ width: '100%' }} onClick={()=>{demoConversation.startConversation()}}>Conversation</Button>
+                    <Button style={{ width: '100%' }} onClick={()=>{demoConversation.transcribeAudio()}}>Conversation</Button>
                 </GridCell>
                 <GridCell phone="2">
                     <Button style={{ width: '100%' }} onClick={()=>{demoConversation.startSpeech()}}>Start speech</Button>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button } from 'rmwc/Button';
+import { Button } from '@rmwc/Button';
 import LoggedOutHeader from '../shared/loggedOutHeader';
-import { Grid, GridCell } from 'rmwc/Grid';
+import { Grid, GridCell } from '@rmwc/Grid';
 import {Link, Redirect, withRouter} from 'react-router-dom';
 import ValidationInput from '../shared/ValidationInput';
 import apiService from '../../model/apiService'; 
@@ -137,7 +137,7 @@ class PatientSignUp extends Component {
         return this.state.successSubmit?(<Redirect to='/signin' />):
             (<div>
                 <LoggedOutHeader />
-                <div style={{width:'80vw',margin:'0 auto', height:'90vh', overflowY:'scroll'}}>
+                <div style={{width:'80vw',margin:'10vh auto', height:'90vh', overflowY:'scroll'}}>
                     <ValidationInput inputLabel="Email"
                         inputIconName="email"
                         inputType="email"
@@ -145,8 +145,8 @@ class PatientSignUp extends Component {
                         inputId="userEmail"
                         inputRequired={true}
                         lostFocusCallBack={(component, isValid)=>{this.emailOnBlur(component, isValid)}}
-                        regexString="[A-Za-z0-9._%+-]{3,}@[a-zA-Z_-]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
-                        regex={/^[A-Za-z0-9._%+-]{3,}@[a-zA-Z_-]{3,}([.][a-zA-Z]{2,}|[.][a-zA-Z]{2,}[.][a-zA-Z]{2,})$/}
+                        regexString="[A-Za-z0-9._%+-]{2,}@[a-zA-Z_-]{2,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+                        regex={/^[A-Za-z0-9._%+-]{2,}@[a-zA-Z_-]{2,}([.][a-zA-Z]{2,}|[.][a-zA-Z]{2,}[.][a-zA-Z]{2,})$/}
                         validators={["required", "pattern"]}
                         validatorMessages={["Email is required.", "Your email must look like an e-mail address."]} />
                     <ValidationInput inputLabel="Password"
@@ -185,8 +185,8 @@ class PatientSignUp extends Component {
                         inputId="phoneNumber"
                         inputRequired={true}
                         lostFocusCallBack={(component, isValid)=>{this.phoneNumberOnBlur(component, isValid)}}
-                        regexString="(((\+44\s?|0044\s?)?|(\(?0))((2[03489]\)?\s?\d{4}\s?\d{4})|(1[23456789]1\)?\s?\d{3}\s?\d{4})|(1[23456789][234578][0234679]\)?\s?\d{6})|(1[2579][0245][0467]\)?\s?\d{5})|(11[345678]\)?\s?\d{3}\s?\d{4})|(1[35679][234689]\s?[46789][234567]\)?\s?\d{4,5})|([389]\d{2}\s?\d{3}\s?\d{4})|([57][0-9]\s?\d{4}\s?\d{4})|(500\s?\d{6})|(7[456789]\d{2}\s?\d{6})))"
-                        regex={/^(((\+44\s?|0044\s?)?|(\(?0))((2[03489]\)?\s?\d{4}\s?\d{4})|(1[23456789]1\)?\s?\d{3}\s?\d{4})|(1[23456789][234578][0234679]\)?\s?\d{6})|(1[2579][0245][0467]\)?\s?\d{5})|(11[345678]\)?\s?\d{3}\s?\d{4})|(1[35679][234689]\s?[46789][234567]\)?\s?\d{4,5})|([389]\d{2}\s?\d{3}\s?\d{4})|([57][0-9]\s?\d{4}\s?\d{4})|(500\s?\d{6})|(7[456789]\d{2}\s?\d{6})))$/}
+                        regexString="^\+?[0-9]{11,}$"
+                        regex={/^\+?[0-9]{11,}$/}
                         validators={["required", "pattern"]}
                         validatorMessages={["Mobile is required.", "Mobile number is not valid."]} />
                     <div>

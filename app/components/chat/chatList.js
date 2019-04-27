@@ -13,7 +13,7 @@ import {
     ListDivider,
     ListItemSecondaryText,
     SimpleListItem
-  } from 'rmwc/list';
+  } from '@rmwc/list';
 
   import chatApiService from '../../model/chatApiService';
   
@@ -32,19 +32,22 @@ class ChatList extends React.Component {
     }
 
     render() {
-        return (<List style={{height:'75vh', overflowY:'scroll'}} twoLine>
-            {this.state.chatsList ?
-                this.state.chatsList.map((chat) => {
-                    return (
-                        <div key={chat.dateTime}>
-                            <Link to={`/chat/chatList/${chat.scenarioId}/${chat.dateTime}/${chat.title}`}>
-                                <SimpleListItem graphic="chat" text={chat.title} secondaryText={moment(new Date(chat.dateTime)).format('lll')} meta="info" />
-                            </Link>
-                            <ListDivider />
-                        </div>);
-                }) : null
-            }
-        </List>);
+        return (<div>
+            <List style={{ height: '75vh', overflowY: 'scroll' }} twoLine>
+                {this.state.chatsList ?
+                    this.state.chatsList.map((chat) => {
+                        return (
+                            <div key={chat.dateTime}>
+                                <Link to={`/chat/chatList/${chat.scenarioId}/${chat.dateTime}/${chat.scenarioTitle}`}>
+                                    <SimpleListItem graphic="chat" text={chat.scenarioTitle} secondaryText={moment(new Date(chat.dateTime)).format('lll')} meta="info" />
+                                </Link>
+                                <ListDivider />
+                            </div>);
+                    }) : null
+                }
+            </List>
+        </div>
+        );
     }
 }
 

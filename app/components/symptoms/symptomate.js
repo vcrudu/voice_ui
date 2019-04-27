@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
 
-import { Button, ButtonIcon } from 'rmwc/Button';
+import { Button, ButtonIcon } from '@rmwc/Button';
 import {
     Card,
     CardPrimaryAction,
@@ -12,10 +12,10 @@ import {
     CardActions,
     CardActionButtons,
     CardActionIcons
-  } from 'rmwc/Card';
+  } from '@rmwc/Card';
 
-import { LinearProgress } from 'rmwc/LinearProgress';
-import { Radio } from 'rmwc/Radio';
+import { LinearProgress } from '@rmwc/LinearProgress';
+import { Radio } from '@rmwc/Radio';
 import {
     List,
     ListItem,
@@ -24,20 +24,20 @@ import {
     ListItemGraphic,
     ListItemMeta,
     ListDivider
-} from 'rmwc/List';
+} from '@rmwc/List';
 
-import { Grid, GridCell } from 'rmwc/Grid';
-import { Checkbox } from 'rmwc/Checkbox';
-import { Typography } from 'rmwc/Typography';
+import { Grid, GridCell } from '@rmwc/Grid';
+import { Checkbox } from '@rmwc/Checkbox';
+import { Typography } from '@rmwc/Typography';
 import {
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
     DialogButton
-  } from 'rmwc/Dialog';
+  } from '@rmwc/Dialog';
 
-import { Fab } from 'rmwc/Fab';
+import { Fab } from '@rmwc/Fab';
 import Picker from 'react-mobile-picker-scroll';
   
 
@@ -490,6 +490,11 @@ class PatientSymptomateComponent extends React.Component {
         this.onFabClick = this.onFabClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAge = this.handleAge.bind(this);
+        this.onSymptomTextChange = this.onSymptomTextChange.bind(this);
+        this.symptomTextInput = React.createRef();
+        this.handleCommonSymptoms = this.handleCommonSymptoms.bind(this);
+        this.handleCommonSymptomsBack = this.handleCommonSymptomsBack.bind(this);
+        this.handleCommonBack = this.handleCommonBack.bind(this);
     }
 
     getInitialState() {
@@ -510,7 +515,9 @@ class PatientSymptomateComponent extends React.Component {
                 age: Array.apply(null, { length: N }).map(Number.call, Number).slice(20),
                 sex: ["Male", "Female"]
             },
-            valueGroups: {age: 45, sex: "Male"}
+            valueGroups: {age: 45, sex: "Male"},
+            noCommonSymptoms: true,
+            nextDisabled: true
         }
     }
 
@@ -528,6 +535,7 @@ class PatientSymptomateComponent extends React.Component {
     }
 
     componentDidMount() {
+        symptomateService.init();
         if(this.props.userData.dateOfBirth || (this.props.userData.age && this.props.userData.sex))
             symptomateService.getEmptyEvidence(this.props.userData, (error, result) => {
                 symptomateService.getSymptoms((error, symptomsResult) => {
@@ -546,8 +554,12 @@ class PatientSymptomateComponent extends React.Component {
 
     buildDiagnostic(diagnostic) {
         var evidence = {
-            sex: this.props.userData.sex.toLowerCase(),
-            age: moment().diff(moment(Number(this.props.userData.dateOfBirth)), 'years'),
+            sex: this.props.userData.sex ?
+                this.props.userData.sex.toLowerCase() :
+                this.props.userData.patientState.gender,
+            age: this.props.userData.dateOfBirth ?
+                moment().diff(moment(Number(this.props.userData.dateOfBirth)), 'years') :
+                this.props.userData.patientState.age,
             evidence: []
         };
 
@@ -607,13 +619,13 @@ class PatientSymptomateComponent extends React.Component {
                 result = sortedConditions;
             }
 
-            symptomateService.saveResultToStorage(this.state.slotId,
+            /* symptomateService.saveResultToStorage(this.state.slotId,
                 result, this.state.diagnostic,
                 this.props.userData.token,
                 this.props.userData.email,
                 (data) => {
                     $(".mdl-progress-top").css('visibility', 'hidden');
-                });
+                }); */
         }
     }
 
@@ -661,25 +673,27 @@ class PatientSymptomateComponent extends React.Component {
     }
 
     handleAge(){
-        this.props.actions.updateUserData('sex',this.state.valueGroups.sex)
-        this.props.actions.updateUserData('age',this.state.valueGroups.age);
-        this.props.userData['sex'] = this.state.valueGroups.sex;
-        this.props.userData['age'] = this.state.valueGroups.age;
-        symptomateService.getEmptyEvidence(this.props.userData, (error, result) => {
-            symptomateService.getSymptoms((error, symptomsResult) => {
-                if (symptomsResult.length > 0) {
-                    this.setState({ commonSymptoms: symptomsResult, showCommonSymptoms: true, emptyEvidence: result.data, diagnostic: result.data });
-                }
-            });
-        })
+        this.setState({'sex':this.state.valueGroups.sex});
+        this.setState({'age':this.state.valueGroups.age});
+        this.setState({ showCommonSymptoms: true});
     }
 
     render() {
-        return this.props.userData.dateOfBirth || this.state.showCommonSymptoms
+        return this.props.userData.age || this.state.showCommonSymptoms
             ?(<Grid>
             <GridCell span="4">
                 <div>
-                    <CommonSymptoms show={this.state.showCommonSymptoms} commonSymptoms={this.state.commonSymptoms} handleNext={this.handleNext} handlePrev={this.handlePrev} />
+                {
+                        this.state.noCommonSymptoms?
+                        (
+                            <div>
+                            <TextField textarea ref={this.symptomTextInput}  onChange={this.onSymptomTextChange} fullwidth label="Please describe your symptoms..." rows="8" />
+                            <Button onClick={this.handleCommonSymptomsBack}>Back</Button>
+                            <Button onClick={this.handleCommonSymptoms} disabled={this.state.nextDisabled}>Next</Button>
+                            </div>
+                        ):
+                      (<CommonSymptoms show={this.state.showCommonSymptoms} commonSymptoms={this.state.commonSymptoms} handleNext={this.handleNext} handleBack={this.handleCommonBack} handlePrev={this.handlePrev} />)
+                    }
                     <SymptomQuestions show={this.state.showQuestion} question={this.state.diagnosticResponse.question} ref={symptomQuestions => this.symptomQuestions = symptomQuestions} handleNext={this.handleNext} handlePrev={this.handlePrev} />
                     <PatientSymptomateResult show={this.state.showResult} diagnosticResult={this.state.diagnosticResponse} diagnosticPost={this.state.diagnostic} slotId={this.state.slotId} /> 
                     <Fab style={{ position: 'fixed', bottom: '12vh', right: '5vh' }} onClick={this.onFabClick} icon='settings_voice'></Fab>

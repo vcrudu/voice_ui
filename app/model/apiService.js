@@ -24,6 +24,31 @@ class ApiService{
         });
     }
 
+    markMessageRead(token, callBack) {
+        var dataToSend = JSON.stringify({
+            "eventName":"markMessageRead", 
+            "payload":{}
+        });
+        console.log(APP_SETTINGS.serverUrl);
+        $.ajax({
+            url: APP_SETTINGS.serverApiUrl + "patient_event"+ "?token=" + token,
+            type: 'POST',
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: dataToSend
+        }).done(function (result) {
+            if (result.success) {
+                callBack({success:true, data: result.data, error: undefined});
+            }else {
+                console.log(result);
+                callBack({success:false, data: undefined, error: result.error});
+            }
+        }).fail(function () {
+            callBack({success:false, data: undefined, error: "Mark message read error ocured! Please contact system administrator."});
+        });
+    }
+
     updatePushNotification(registrationId, token, callBack) {
         var dataToSend = JSON.stringify({"pnToken":registrationId});
         $.ajax({
@@ -87,11 +112,80 @@ class ApiService{
         });
     }
 
+    getDashboard(token, callback) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "dashboard";
+        $.ajax({
+            url: apiUrl + '?token=' + token,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        }).done(function (response) {
+            if(callback)
+            callback(null, response);
+        }).fail(function (error) {
+            if(callback)
+            callback(error, { success: false, data: undefined, error: "error" });
+        });
+    }
+
+    getSymptomsHystory(token, callback) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "symptoms_history";
+        $.ajax({
+            url: apiUrl + '?token=' + token,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        }).done(function (response) {
+            if(callback)
+            callback(null, response);
+        }).fail(function (error) {
+            if(callback)
+            callback(error, { success: false, data: undefined, error: "error" });
+        });
+    }
+
+    getMedicationHystory(token, callback) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "medication_history";
+        $.ajax({
+            url: apiUrl + '?token=' + token,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        }).done(function (response) {
+            if(callback)
+            callback(null, response);
+        }).fail(function (error) {
+            if(callback)
+            callback(error, { success: false, data: undefined, error: "error" });
+        });
+    }
+
     getDetails(token, callBack) {
         var apiUrl = APP_SETTINGS.serverApiUrl + "patients";
         apiUrl = apiUrl + "/" + data.email;
         $.ajax({
             url: apiUrl + '?token=' + data.token,
+            type: 'GET',
+            crossDomain: true
+        }).done(function (response) {
+            if (response.success) {
+                callBack(null, { success: true, data: response.result, error: undefined });
+            }
+            else {
+                callBack(null, { success: false, data: undefined, error: "error" });
+            }
+        }).fail(function (error) {
+            callBack(error, { success: false, data: undefined, error: "error" });
+        });
+    }
+
+    getExercise(token, callBack) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "activity";
+        $.ajax({
+            url: apiUrl + '?token=' + token,
             type: 'GET',
             crossDomain: true
         }).done(function (response) {
@@ -134,7 +228,7 @@ class ApiService{
                 obj.measurementDateTime = moment(value.dateTime).utc().valueOf();
                 break;
             case "Weight":
-                obj.weight = value.value;
+                obj.weight = value.weight;
                 obj.measurementType = "weight";
                 obj.measurementDateTime = moment(value.dateTime).utc().valueOf();
                 break;
@@ -148,6 +242,28 @@ class ApiService{
         }
         var dataToSend = JSON.stringify(obj);
         var apiUrl = APP_SETTINGS.serverApiUrl + "events";
+            $.ajax({
+                url: apiUrl + '?token=' + token,
+                type: 'POST',
+                crossDomain: true,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: dataToSend
+            }).done(function (response) {
+                if (response.success) {
+                    callBack(null, { success: true, data: { status: "measure-confirmed" }, error: undefined });
+                }
+                else {
+                    callBack(null, { success: false, data: undefined, error: response.message });
+                }
+            }).fail(function (error) {
+                callBack(error, { success: false, data: undefined, error: error });
+            });
+    }
+
+    sendBulkEvents(token, events, callBack) {
+        var dataToSend = JSON.stringify(events);
+        var apiUrl = APP_SETTINGS.serverApiUrl + "bulk_events";
             $.ajax({
                 url: apiUrl + '?token=' + token,
                 type: 'POST',
@@ -305,6 +421,38 @@ class ApiService{
             this.timeoutHandler = setTimeout(()=>{
                 this.sendEvent(token, userId, event, retryInterval * 2, callBack);
             }, retryInterval);
+        });
+    }
+
+    resetPatientState(token, cycle, callBack) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "patient_event_reset";
+        $.ajax({
+            url: apiUrl + "?token="+token,
+            type: "POST",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({cycle: cycle})
+        }).done((data)=> {
+            if(callBack) callBack(null, data);
+        }).fail((error)=> {
+            if(callBack) callBack(error, null);
+        });
+    }
+
+    updatePatientState(token, cycle, callBack) {
+        var apiUrl = APP_SETTINGS.serverApiUrl + "patient_event_reset";
+        $.ajax({
+            url: apiUrl + "?token="+token,
+            type: "POST",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({cycle: cycle})
+        }).done((data)=> {
+            if(callBack) callBack(null, data);
+        }).fail((error)=> {
+            if(callBack) callBack(error, null);
         });
     }
 

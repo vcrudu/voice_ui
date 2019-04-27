@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from '../../actions';
-import { Fab } from 'rmwc/Fab';
+import { Fab } from '@rmwc/Fab';
 import {
     List,
     SimpleListItem
-} from 'rmwc/List';
+} from '@rmwc/List';
 import dataStorage from '../../model/DataStorage';
 import moment from 'moment';
 
@@ -89,7 +89,6 @@ class DevicesComponent extends React.Component {
 const mapStateToProps = state => {
     return { devices: state.devices, 
         measures: state.measures, 
-        dialogState: state.dialogState,
         navigationState: state.navigationState
     };
 }

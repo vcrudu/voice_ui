@@ -1,3 +1,5 @@
+import moment from "moment";
+
 class CalendarFactory {
     getCurrentTimeString(dateTime) {
         var hours = dateTime.getHours();
@@ -26,59 +28,31 @@ class CalendarFactory {
         var dateTime = new Date();
         dateTime.setTime(slotData.slotDateTime);
         var event = {
-            id: slotData.slotDateTime,
-            title: slotData.countOfProviders + " doctors are available.",
-            titleText: " doctors are available.",
-            slot: slotData,
-            start: this.getCurrentTimeString(dateTime),
-            icon: 'fa fa-calendar',
-            borderColor: '#ffffff',
-            displayEventTime: false,
-            allDay:false
+            slotId: slotData.slotDateTime,
+            start: moment(slotData.slotDateTime),
+            end: moment(slotData.slotDateTime).add(15,'m'),
+            text: slotData.countOfProviders + (slotData.countOfProviders>1?" doctors are":" doctor is")+" available.",
+            countOfProviders:slotData.countOfProviders
         };
         switch(eventType){
             case 'noProvider':
-                event.backgroundColor = '#ffffff';
-                event.textColor = 'rgb(255,82,82)';
-                event.status = "noProvider";
-                return event;
                 break;
-            case 'available':
-                event.backgroundColor = '#ffffff';
-                event.textColor = 'rgb(100,221,23)';
-                event.status = "available";
-                return event;
+            case 'available':                
                 break;
             case 'appointment':
-                event.backgroundColor = '#ffffff';
-                event.textColor = 'rgb(0,176,255)';
-                event.title = " You have booked the appointment at this time. " + matchedSlot.providerName + " will be with you. Please be online!";
+                event.background =  '#ffa000';
+                event.color =  '#ffa000';
+                event.text = " You have booked the appointment at this time. " + matchedSlot.providerName + " will be with you. Please be online!";
                 event.status = "appointment";
-                return event;
                 break;
         }
-    }
-
-    getBookedEvent(event, provider) {
-        var dateTime = new Date();
-        dateTime.setTime(event.id);
-
-        if (event.countOfProviders > 0) {
-            event.countOfProviders -= 1;
-        }
-
-        event.title = "You have booked the appointment at this time. " + provider.result.title + " " + provider.result.name + " " + provider.result.surname + " will be with you. Please be online!";
-        event.backgroundColor = 'rgb(245,245,245)';
-        event.textColor = 'rgb(0,176,255)';
-        event.titleText = "";
-        event.status = "appointment";
 
         return event;
     }
 
     getEventById(eventId, events) {
         for(var i=0; i<events.length; i++) {
-            if (events[i].id === eventId) {
+            if (events[i].slotId === eventId) {
                 return events[i];
             }
         }

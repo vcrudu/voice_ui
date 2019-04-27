@@ -11,7 +11,7 @@ export const voiceState = (state = initialState, action) => {
         case TOGGLE_SOUND:
             return { microphoneState: state.microphoneState, voiceState: action.onOff };
         case SWITCH_MICROPHONE:
-            return { voiceState: action.onOff, microphoneState: action.onOff};
+            return { voiceState: state.voiceState, microphoneState: action.onOff};
         default:
             return state;
     }

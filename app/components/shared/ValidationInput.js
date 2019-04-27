@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, TextFieldIcon, TextFieldHelperText } from 'rmwc/TextField';
+import { TextField, TextFieldIcon, TextFieldHelperText } from '@rmwc/TextField';
 
 class ValidationInput extends Component {
     constructor(props) {

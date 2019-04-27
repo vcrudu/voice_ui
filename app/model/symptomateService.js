@@ -16,6 +16,17 @@ class SymptomateService {
         ];
     }
 
+    init(){
+        this._commonSymptoms = [
+            { "id": "s_21", "name": "Headache" },
+            { "id": "s_98", "name": "Fever" },
+            { "id": "s_13", "name": "Abdominal pain" },
+            { "id": "s_156", "name": "Nausea" },
+            { "id": "s_285", "name": "Weight loss" },
+            { "id": "s_241", "name": "Worrisome skin lesions" }
+        ];
+    }
+
     getEmptyEvidence(userData, callBack) {
         var ageYear;
         if(userData.dateOfBirth){
@@ -67,6 +78,30 @@ class SymptomateService {
                         }
                     }
                 callBack(null, tempArray);
+            }
+            else {
+                callBack(null, tempArray);
+            }
+        }).fail(error => {
+            callBack(error, { success: false, data: undefined, error: "error" });
+        });
+    }
+
+    getCommonSymptoms(text, callBack) {
+        var apiUrl = this._apiUrl + "parse";
+        $.ajax({
+            url: apiUrl,
+            type: "POST",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            headers: { "app_id": this._app_id, "app_key": this._app_key, "Accept": "application/json" },
+            data:JSON.stringify(text)
+        }).done((response) => {
+            let tempArray = [];            
+            if (response) {
+                this._commonSymptoms = response.mentions;
+                callBack(null, response.mentions);
             }
             else {
                 callBack(null, tempArray);

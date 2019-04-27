@@ -2,10 +2,9 @@ import React from 'react';
 import {Link, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { TextField, TextFieldIcon, TextFieldHelperText } from 'rmwc/TextField';
-import { Button } from 'rmwc/Button';
+import { TextField, TextFieldIcon, TextFieldHelperText } from '@rmwc/TextField';
 import LoggedOutHeader from '../shared/loggedOutHeader';
-import { Grid, GridCell } from 'rmwc/Grid';
+import { Grid, GridCell } from '@rmwc/Grid';
 import apiService from '../../model/apiService';
 import ValidationInput from '../shared/ValidationInput';
 import Stage from '../stage/component';
@@ -30,6 +29,7 @@ class SignInComponent extends React.Component {
         }
         this.onKeyboardDidShow = this.onKeyboardDidShow.bind(this);
         this.onKeyboardDidHide = this.onKeyboardDidHide.bind(this);
+        this.apiSignInResponse = this.apiSignInResponse.bind(this);
     }
 
     onKeyboardDidShow(){
@@ -84,8 +84,11 @@ class SignInComponent extends React.Component {
             password: this.state.password.value
         };
 
-        apiService.signIn(signUpFormData, (response) => {
-            if (response.success) {
+        apiService.signIn(signUpFormData, this.apiSignInResponse);
+    }
+
+    apiSignInResponse(response){
+        if (response.success) {
                 const securityStorage = new SecurityStorage();
                 securityStorage.setValue('token', response.data.token);
                 this.props.actions.signInOut(response.data);
@@ -110,7 +113,6 @@ class SignInComponent extends React.Component {
             else {
                 apiService.error(response, () => { });
             }
-        });
     }
 
     render(){
@@ -127,8 +129,8 @@ class SignInComponent extends React.Component {
                         inputId="userEmail"
                         inputRequired={true}
                         lostFocusCallBack={(component, isValid)=>{this.emailOnBlur(component, isValid)}}
-                        regexString="[A-Za-z0-9._%+-]{3,}@[a-zA-Z_-]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
-                        regex={/^[A-Za-z0-9._%+-]{3,}@[a-zA-Z_-]{3,}([.][a-zA-Z]{2,}|[.][a-zA-Z]{2,}[.][a-zA-Z]{2,})$/}
+                        regexString="[A-Za-z0-9._%+-]{2,}@[a-zA-Z_-]{2,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+                        regex={/^[A-Za-z0-9._%+-]{2,}@[a-zA-Z_-]{2,}([.][a-zA-Z]{2,}|[.][a-zA-Z]{2,}[.][a-zA-Z]{2,})$/}
                         validators={["required", "pattern"]}
                         validatorMessages={["Email is required.", "Your email must look like an e-mail address."]} />
                     <ValidationInput inputLabel="Password"
