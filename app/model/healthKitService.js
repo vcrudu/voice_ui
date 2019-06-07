@@ -203,8 +203,8 @@ class HealthKitService{
     queryToday(dataType, successDataCallback, errorDataCallback) {
         if (navigator.health) {
             navigator.health.queryAggregated({
-                startDate: moment().startOf('day'), // three days ago
-                endDate: moment(), // now
+                startDate: new Date(moment().startOf('day').valueOf()), // three days ago
+                endDate: new Date(moment().valueOf()), // now
                 dataType: dataType,
                 bucket: 'day'
               }, (data)=>{ 

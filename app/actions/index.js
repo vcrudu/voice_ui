@@ -22,6 +22,7 @@ export const UPDATE_HEALTHKIT_SYNC_DATE = 'UPDATE_HEALTHKIT_SYNC_DATE';
 export const UPDATE_MENU_HEIGHT = 'UPDATE_MENU_HEIGHT';
 export const UPDATE_TOOLBAR_HEIGHT = 'UPDATE_TOOLBAR_HEIGHT';
 export const UPDATE_VIEW_HEIGHT = 'UPDATE_VIEW_HEIGHT';
+export const UPDATE_CURRENT_RECORD_DETAILS = 'UPDATE_CURRENT_RECORD_DETAILS';
 
 export const toggleSound = (onOff) => ({
     type: TOGGLE_SOUND,
@@ -130,6 +131,11 @@ export const updateToolbarHeight = (data) => ({
 export const updateViewHeight = (data) => ({
     type: UPDATE_VIEW_HEIGHT,
     data: data
+});
+
+export const updateCurrentRecordDetails = (recordDetails) => ({
+    type: UPDATE_CURRENT_RECORD_DETAILS,
+    data: recordDetails
 });
 
 

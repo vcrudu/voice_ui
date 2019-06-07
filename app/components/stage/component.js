@@ -31,6 +31,7 @@ import Appointments from '../appointments/component';
 import ChatList from '../chat/chatList';
 import Doctors from '../doctors/component';
 import Symptomate from '../symptoms/guestSymptomate';
+import Records from '../records/component';
 import Shop from '../shop/component';
 import {
     Dialog,
@@ -135,6 +136,7 @@ class StageComponent extends React.Component {
                         {<Route path={this.props.match.url + '/chatList'} render={() => <ChatList />} />}
                         {<Route path={this.props.match.url + '/appointments'} render={() => <Appointments />} />}
                         {<Route path={this.props.match.url + '/symptoms'} render={() => <Symptomate />} />}
+                        {<Route path={this.props.match.url + '/records'} render={() => <Records />} />}
                         {<Route path={this.props.match.url + '/shop'} render={() => <Shop />} />}
                     </div>
                     <Dialog open={this.state.logoClickCount === 5}>

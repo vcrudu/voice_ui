@@ -7,6 +7,7 @@ import {
     ToolbarMenuIcon,
     ToolbarIcon
 } from '@rmwc/Toolbar';
+import { Button } from '@rmwc/Button';
 import { Fab } from '@rmwc/Fab';
 import { Typography } from '@rmwc/Typography';
 import LandingCarousel from './landingCarousel';

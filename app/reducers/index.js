@@ -21,7 +21,7 @@ import { UPDATE_HEALTHKIT_SYNC_DATE } from '../actions';
 import { UPDATE_MENU_HEIGHT } from '../actions';
 import { UPDATE_TOOLBAR_HEIGHT } from '../actions';
 import { UPDATE_VIEW_HEIGHT } from '../actions';
-
+import { UPDATE_CURRENT_RECORD_DETAILS } from '../actions';
 
 export const measureCount = (state = { count: 0 }, action) => {
     switch (action.type) {
@@ -158,6 +158,15 @@ export const layoutHeight = (state = {}, action) => {
     }
 }
 
+export const currentRecordDetails = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_CURRENT_RECORD_DETAILS:
+            return action.data
+        default:
+            return state;
+    }
+}
+
 const bloodPressureAssistant = combineReducers({
     voiceState, 
     devices, measures, 
@@ -173,7 +182,8 @@ const bloodPressureAssistant = combineReducers({
     dialogState,
     patientCards,
     healthKitSyncDate,
-    layoutHeight
+    layoutHeight,
+    currentRecordDetails
 });
 
 export default bloodPressureAssistant;

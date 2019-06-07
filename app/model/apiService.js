@@ -471,6 +471,22 @@ class ApiService{
         });
     }
 
+    getPatientData(token, requestName, callback){
+          $.ajax({
+            url: APP_SETTINGS.serverApiUrl + "hgcs?requestName="+requestName+"&view=false&token="+token,
+            type: "GET",
+            crossDomain: true,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8"
+        }).done((data)=> {
+            let jsonObject = JSON.parse(data.result.response);
+            let collections = jsonObject["mig:migResponse"]["mig:serviceContent"]["ehr:ehrExtractResponsev2-0"]["ehr:content"]["ehr:structured"]["q1:openHealthRecord"]["q1:healthDomain"];
+            if(callback) callback(null, collections);
+        }).fail((error)=> {
+            if(callback) callback(error, null);
+        });
+    }
+
     error(errorData) {
         window.alert("Invalid username or password. Please try again!")
         return;

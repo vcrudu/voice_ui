@@ -138,7 +138,7 @@ class AppointmentsComponent extends React.Component {
     }
 
     componentDidMount() {
-        
+        this.props.actions.changeScreenTitle('Appointments');        
         this.onDayChange({date:moment()});
         window.addEventListener('keyboardDidShow', this.onKeyboardDidShow);
         window.addEventListener('keyboardDidHide', this.onKeyboardDidHide);

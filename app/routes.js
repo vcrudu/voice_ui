@@ -17,6 +17,7 @@ import SymptomsHistory from './components/vital-signs/symptomsHistory';
 import MedicationHistory from './components/vital-signs/medicationHistory';
 import GuestSymptomateWithHeader from './components/symptoms/guestSymptomateWithHeader';
 import Distance from './components/vital-signs/distance';
+import RecordDetails from './components/records/recordDetails';
 
 const RoutesComponent = (props) => {
     return (<div style={{height:'100vh', overflow:'hidden'}}>
@@ -35,6 +36,7 @@ const RoutesComponent = (props) => {
         <Route path='/symptoms_history' component={SymptomsHistory}  />
         <Route path='/medication_history' component={MedicationHistory}  />
         <Route path='/weight' component={Weight}  />
+        <Route path='/records/details/:requestName' component={RecordDetails}  />
         <Route path='/signin' component={SignIn}  />
         <Route path='/signup' component={SignUp}  />
         <Route path='/guest_symptoms' component={GuestSymptomateWithHeader}  />

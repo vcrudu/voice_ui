@@ -85,6 +85,7 @@
         "@material/theme": "^1.0.0",
         "@material/typography": "^1.0.0",
         "a": "^2.1.2",
+        "aws-amplify-react": "^2.3.6",
         "babel-core": "^6.26.3",
         "babel-loader": "^7.1.5",
         "babel-plugin-transform-object-rest-spread": "^6.26.0",

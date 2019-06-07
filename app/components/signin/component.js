@@ -3,6 +3,7 @@ import {Link, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { TextField, TextFieldIcon, TextFieldHelperText } from '@rmwc/TextField';
+import { Button } from '@rmwc/Button';
 import LoggedOutHeader from '../shared/loggedOutHeader';
 import { Grid, GridCell } from '@rmwc/Grid';
 import apiService from '../../model/apiService';

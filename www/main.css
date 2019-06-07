@@ -20524,6 +20524,8 @@ input:disabled + span .mbsc-slider-handle-cont {
   border-color: #333333; }
 .keyboard-did-show {
   top: 40vh !important; }
+.picker-container {
+  background-color: white; }
 .IIV::-webkit-media-controls-play-button,
 .IIV::-webkit-media-controls-start-playback-button {
   opacity: 0;
