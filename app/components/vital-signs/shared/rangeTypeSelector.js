@@ -8,38 +8,8 @@ class RangeTypeSelector extends Component {
     constructor(props) {
         super(props);
         this.state = {enabledButton:'D'};
-        this.getEnabledTheme = this.getEnabledTheme.bind(this);
-        this.clickButton = this.clickButton.bind(this);
+        this.rangeTypeChanged = this.rangeTypeChanged.bind(this);
         this.state = {
-            items: [{
-                value: 1,
-                text: 'Atlanta'
-            }, {
-                value: 2,
-                text: 'Berlin'
-            }, {
-                value: 3,
-                text: 'Boston'
-            }, {
-                value: 4,
-                text: 'Chicago'
-            }, {
-                value: 5,
-                text: 'London'
-            }, {
-                value: 6,
-                text: 'Los Angeles'
-            }, {
-                value: 7,
-                text: 'New York'
-            }, {
-                value: 8,
-                text: 'Paris'
-            }, {
-                value: 9,
-                text: 'San Francisco'
-            }],
-            val: 1
         };
         
         this.show = this.show.bind(this);
@@ -49,15 +19,8 @@ class RangeTypeSelector extends Component {
          this.refs.external.instance.show();
      }
 
-    getEnabledTheme(button) {
-        return button === this.state.enabledButton ?
-            ['primaryBg', 'onPrimary'] : ['primary']
-    }
-
-    clickButton(button) {
-        this.setState({ enabledButton: button });
-        if (this.props.onClick)
-            this.props.onClick(button);
+    rangeTypeChanged(event) {
+       if(this.props.onChange)this.props.onChange(event.target.value);
     }
 
     render() {
@@ -66,16 +29,16 @@ class RangeTypeSelector extends Component {
                  <mobiscroll.Form theme="ios">
                  
                 <mobiscroll.FormGroup>
-                    <mobiscroll.Segmented name="range" value="day" defaultChecked>
+                    <mobiscroll.Segmented name="range" value="day" onChange={this.rangeTypeChanged} defaultChecked>
                         Day
                     </mobiscroll.Segmented>
-                    <mobiscroll.Segmented name="range" value="week">
+                    <mobiscroll.Segmented name="range" value="week" onChange={this.rangeTypeChanged}>
                         Week
                     </mobiscroll.Segmented>
-                    <mobiscroll.Segmented name="range" value="range" value="month">
+                    <mobiscroll.Segmented name="range" value="month" onChange={this.rangeTypeChanged}>
                         Month
                     </mobiscroll.Segmented>
-                    <mobiscroll.Segmented name="range" value="year">
+                    <mobiscroll.Segmented name="range" value="year" onChange={this.rangeTypeChanged}>
                         Year
                     </mobiscroll.Segmented>
                 </mobiscroll.FormGroup>

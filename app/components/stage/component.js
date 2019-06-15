@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions';
+import bleService from '../../model/bleService';
 
 import {
     Toolbar,
@@ -45,6 +46,7 @@ import {
   import { Fab } from '@rmwc/Fab';
 
 import apiService from '../../model/apiService';
+import qriskService from '../../model/qriskService';
 import chatApiService from '../../model/chatApiService';
 import _ from 'underscore';
 
@@ -58,6 +60,7 @@ class StageComponent extends React.Component {
         this.state={logoClickCount:0};
         this.toolbarRef = React.createRef();
         this.viewRef = React.createRef();
+        this.clickTitle = this.clickTitle.bind(this);
     }
 
     componentDidMount(){
@@ -104,6 +107,11 @@ class StageComponent extends React.Component {
         this.setState( {logoClickCount:0});
     }
 
+    clickTitle(){
+        qriskService.getTownScore('TN48JX',this.props.userData.token);
+        //bleService.getBP();
+    }
+
     render() {
         return (!this.props.userData || !this.props.userData.token) ?
             (<LandingPage />) :
@@ -116,6 +124,9 @@ class StageComponent extends React.Component {
                                     <ToolbarSection alignStart theme='primary-dark' className='large-toolbar-section'>
                                         <img className="logo" src={logo} style={{ paddingRight: '20vw' }} onClick={this.onClickLogo} />
                                         <ToolbarTitle className="title" theme='textPrimaryOnLight'><Typography use='subheading1'>{this.props.navigationState.title}</Typography></ToolbarTitle>
+                                    </ToolbarSection>
+                                    <ToolbarSection alignEnd theme='textPrimaryOnLight' style={{ paddingRight: '5vw' }} >
+                                        <Icon onClick={() => this.clickTitle()} icon="bluetooth" />
                                     </ToolbarSection>
                                     <ToolbarSection alignEnd theme='textPrimaryOnLight' style={{ paddingRight: '5vw' }} >
                                         {

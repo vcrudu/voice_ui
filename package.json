@@ -21,6 +21,7 @@
         "cordova-ios": "^4.5.5",
         "cordova-plugin-audioinput": "^0.3.0",
         "cordova-plugin-ble-central": "^1.2.2",
+        "cordova-plugin-bluetoothle": "^4.5.5",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-device-motion": "^1.2.5",
@@ -69,7 +70,8 @@
                 "HEALTH_READ_PERMISSION": "App needs read access",
                 "HEALTH_WRITE_PERMISSION": "App needs write access"
             },
-            "cordova-custom-config": {}
+            "cordova-custom-config": {},
+            "cordova-plugin-bluetoothle": {}
         },
         "platforms": [
             "ios",

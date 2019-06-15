@@ -7,25 +7,16 @@ import moment from 'moment'
 class Distance extends Component{
     constructor(props){
         super(props);
+        this.onRangeTypeChange = this.onRangeTypeChange.bind(this);
         this.state = {
-            weekStart: moment().startOf('isoWeek')
+            rangeType: 'day'
         };
     }
 
-    previousWeek() {
-        this.setState((prev) => {
-            return {
-                weekStart: moment(prev.weekStart).subtract(7, 'day')
-            }
-        })
-    }
-
-    nextWeek(){
-        this.setState((prev) => {
-            return {
-                weekStart: moment(prev.weekStart).add(7, 'days')
-            }
-        })
+    onRangeTypeChange(rangeType){
+        this.setState({
+            rangeType:rangeType
+        });
     }
 
     render() {
@@ -33,11 +24,8 @@ class Distance extends Component{
                 <div>
                     <LeafHeader backUrl='/stage/signs' title='Blood pressure' />
                     <div className="signs-content">
-                        <RangeTypeSelector/>
-                        <RangeSelector weekStart={this.state.weekStart}
-                                       previousWeek = {()=>this.previousWeek()}
-                                       nextWeek={()=>this.nextWeek()}
-                        />
+                        <RangeTypeSelector onChange={this.onRangeTypeChange}/>
+                        <RangeSelector rangeType={this.state.rangeType} />
                     </div>
                 </div>
             );

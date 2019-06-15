@@ -50,6 +50,7 @@ class TabsPageComponent extends Component {
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/appointments'><Tab stacked restrictIndicator icon='event'>Doctors</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/symptoms'>   <Tab stacked restrictIndicator icon='playlist_add_check'>Symptoms</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/records'>   <Tab stacked restrictIndicator icon='view_list'>Records</Tab></Link>
+                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/food'>   <Tab stacked restrictIndicator icon='utensils'>Food</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='list'>History</Tab></Link>
                  <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab>
                     <Tab stacked restrictIndicator icon='exit_to_app'>Sign Out</Tab>

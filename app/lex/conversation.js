@@ -158,7 +158,7 @@ import _ from 'underscore';
             state.transition(new Initial(state));
           } else {
             let results = response.results;
-            if (results.length > 0
+            if (results && results.length && results.length > 0
               && results[0].alternatives
               && results[0].alternatives.length> 0) {
               var bestTranscription = _.reduce(results[0].alternatives,
@@ -170,6 +170,8 @@ import _ from 'underscore';
                 state.onSuccess(bestTranscription);
                 console.log(bestTranscription);
             
+          } else {
+            state.transition(new Initial(state));
           }
         }}).fail(function (err) {
           state.onError(err);

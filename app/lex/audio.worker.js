@@ -6,7 +6,8 @@ var recLength = 0,
   startMeasureSilence,
   silenceLevel = 0.05,
   measureSilenceInterval = 500,
-  recordSampleRate;
+  recordSampleRate,
+  firstNonSilence = false;
 
 onmessage = function (e) {
   switch (e.data.command) {
@@ -27,6 +28,7 @@ onmessage = function (e) {
 
 function init(config) {
   recordSampleRate = config.sampleRate;
+  firstNonSilence = true;
 }
 
 function record(inputBuffer) {
@@ -36,26 +38,27 @@ function record(inputBuffer) {
 
   recBuffer.push(inputBuffer[0]);
   recLength += inputBuffer[0].length;
+  var sumSignal = 0;
+  var newtime = Date.now();
   for (var i = 0; i < inputBuffer[0].length; i++) {
-    var curr_value_time = inputBuffer[0][i];
-    //console.log(curr_value_time);
-    var newtime = Date.now();
-    /*if(newtime - startMeasureSilence<measureSilenceInterval){
-      if(Math.abs(curr_value_time)>silenceLevel){
-        silenceLevel = Math.abs(curr_value_time);
-      }
-    } */
-
-    //if(newtime - startMeasureSilence>measureSilenceInterval){
-      if (Math.abs(curr_value_time) > silenceLevel) {
-        start = Date.now();
-      }
-    //}
+    sumSignal+=Math.abs(inputBuffer[0][i]);
   }
+
+  var avgSignal = sumSignal/inputBuffer[0].length;
+  if (avgSignal > silenceLevel){
+     firstNonSilence = true;
+     console.log("First non silence");
+  }
+
+  if (firstNonSilence && avgSignal > silenceLevel) {
+    console.log("Went to silence");
+    start = Date.now();
+  }
+  console.log("Iaca:"+avgSignal+":"+silenceLevel);
   if (start) {
     newtime = Date.now();
     var elapsedTime = newtime - start;
-    console.log("elapsedTime: " + elapsedTime);
+    console.log("elapsedTime: " + elapsedTime/1000);
     
     if (elapsedTime > 1000) {
       postMessage({ silence: true });
@@ -76,7 +79,6 @@ function clear() {
   recBuffer = [];
   start = null;
   startMeasureSilence = null;
-  silenceLevel = 0.05;
 }
 
 function downsampleBuffer(buffer, exportSampleRate) {
@@ -114,7 +116,7 @@ function mergeBuffers(bufferArray, recLength) {
   max = result.reduce(function (max, value) {
     return max > Math.abs(value) ? max : Math.abs(value);
   }, max);
-  console.log(max);
+  //console.log(max);
   return result;
 }
 
