@@ -12,6 +12,7 @@ import { TabBar, Tab} from '@rmwc/Tabs';
 import { Typography } from '@rmwc/Typography';
 import { Theme } from '@rmwc/Theme';
 import { Link, Redirect } from 'react-router-dom';
+import foodImage from './fastfood-24px.svg';
 
 class TabsPageComponent extends Component {
     constructor(props) {
@@ -28,13 +29,13 @@ class TabsPageComponent extends Component {
     }
 
     onChange(event) {
-        if(event.detail.index===7){
+        if(event.detail.index===8){
             this.props.actions.signInOut(null);
             if(window.socket)
             window.socket.disconnect(); 
         }
 
-        if(event.detail.index===6){
+        if(event.detail.index===7){
             if(window.cordova && window.cordova.InAppBrowser){
                 window.cordova.InAppBrowser.open("https://app.trichromehealth.com/#/patient/patient.devices/patient.devices.buy?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InZjcnVkdUBob3RtYWlsLmNvbSIsImlhdCI6MTUyMDU1MTI5OX0.CepkyHlhAqGTi9JdYzfFbH64ztmvZS9xq5xjQRLwEuU", "_blank", 'location=no');
             }
@@ -50,7 +51,10 @@ class TabsPageComponent extends Component {
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/appointments'><Tab stacked restrictIndicator icon='event'>Doctors</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/symptoms'>   <Tab stacked restrictIndicator icon='playlist_add_check'>Symptoms</Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/records'>   <Tab stacked restrictIndicator icon='view_list'>Records</Tab></Link>
-                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/food'>   <Tab stacked restrictIndicator icon='utensils'>Food</Tab></Link>
+                <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/food'>   <Tab stacked restrictIndicator>
+                    <img src={foodImage} style={{marginTop:'10px'}} />
+                    <div style={{marginTop:'10px'}}>Food</div>
+                    </Tab></Link>
                 <Link style={{textDecoration:'none currentcolor solid'}} to='/stage/chatList'><Tab stacked restrictIndicator icon='list'>History</Tab></Link>
                  <Tab stacked restrictIndicator icon='add_shopping_cart'>Shop</Tab>
                     <Tab stacked restrictIndicator icon='exit_to_app'>Sign Out</Tab>

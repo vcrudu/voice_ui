@@ -1,0 +1,77 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-audioinput": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-ble-central": {
+      "BLUETOOTH_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-device-motion": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-ios-microphone-permissions": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-keyboard": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-media": {
+      "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO",
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-nativeaudio": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-secure-storage": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova.plugin.nativealert": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-health": {
+      "HEALTH_READ_PERMISSION": "App needs read access",
+      "HEALTH_WRITE_PERMISSION": "App needs write access",
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-bluetoothle": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-support-google-services": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "phonegap-plugin-multidex": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "_from": "cordova-plugin-ios-microphone-permissions",
+  "_id": "cordova-plugin-ios-microphone-permissions@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha1-mbHSAUZZyRGOxxz6564EjnDM83E=",
+  "_location": "/cordova-plugin-ios-microphone-permissions",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-ios-microphone-permissions",
+    "name": "cordova-plugin-ios-microphone-permissions",
+    "escapedName": "cordova-plugin-ios-microphone-permissions",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-ios-microphone-permissions/-/cordova-plugin-ios-microphone-permissions-1.0.0.tgz",
+  "_shasum": "99b1d2014659c9118ec71cfae7ae048e70ccf371",
+  "_spec": "cordova-plugin-ios-microphone-permissions",
+  "_where": "/Users/victorcrudu/Code/bp/bp.member",
+  "author": {
+    "name": "pinchnzoom"
+  },
+  "bugs": {
+    "url": "https://github.com/pinchnzoom/cordova-plugin-ios-microphone-permissions/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-ios-microphone-permissions",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova / PhoneGap Plugin Permission Settings for NSMicrophoneUsageDescription in iOS 10 by adding a declaration to the Info.plist file",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "homepage": "https://github.com/pinchnzoom/cordova-plugin-ios-microphone-permissions/#readme",
+  "keywords": [
+    "cordova",
+    "ios",
+    "app",
+    "security",
+    "permissions",
+    "nsmicrophoneusagedescription",
+    "ecosystem:cordova",
+    "cordova-ios"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-ios-microphone-permissions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinchnzoom/cordova-plugin-ios-microphone-permissions.git"
+  },
+  "version": "1.0.0"
+}

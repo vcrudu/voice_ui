@@ -18,6 +18,7 @@ import MedicationHistory from './components/vital-signs/medicationHistory';
 import GuestSymptomateWithHeader from './components/symptoms/guestSymptomateWithHeader';
 import Distance from './components/vital-signs/distance';
 import RecordDetails from './components/records/recordDetails';
+import AddFood from './components/food/addFood';
 
 const RoutesComponent = (props) => {
     return (<div style={{height:'100vh', overflow:'hidden'}}>
@@ -27,6 +28,7 @@ const RoutesComponent = (props) => {
     }}/>
         <Route path='/terms' component={MainTerms}  />
         <Route path='/stage' component={Stage}  />
+        <Route path='/add_food' component={AddFood} />
         <Route path='/chat/:backScreen/:scenarioId/:dateTime/:scenarioTitle' component={Chat}  />
         <Route path='/voice/:backScreen/:scenarioId/:dateTime/:scenarioTitle' component={Voice}  />
         <Route path='/bp' component={Bp}  />

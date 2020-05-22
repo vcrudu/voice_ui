@@ -23,6 +23,8 @@ export const UPDATE_MENU_HEIGHT = 'UPDATE_MENU_HEIGHT';
 export const UPDATE_TOOLBAR_HEIGHT = 'UPDATE_TOOLBAR_HEIGHT';
 export const UPDATE_VIEW_HEIGHT = 'UPDATE_VIEW_HEIGHT';
 export const UPDATE_CURRENT_RECORD_DETAILS = 'UPDATE_CURRENT_RECORD_DETAILS';
+export const ADD_MEAL = 'ADD_MEAL';
+
 
 export const toggleSound = (onOff) => ({
     type: TOGGLE_SOUND,
@@ -136,6 +138,11 @@ export const updateViewHeight = (data) => ({
 export const updateCurrentRecordDetails = (recordDetails) => ({
     type: UPDATE_CURRENT_RECORD_DETAILS,
     data: recordDetails
+});
+
+export const addMeal = (food) => ({
+    type: ADD_MEAL,
+    data: food
 });
 
 

@@ -1,0 +1,185 @@
+{
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@5.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-audioinput": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-audioinput@^0.3.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-compat": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-compat@^1.0.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-ios-microphone-permissions": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-ios-microphone-permissions"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-file": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-file@^6.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-nativeaudio": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-nativeaudio@^3.0.9"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-media": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-media@^5.0.2"
+    },
+    "is_top_level": true,
+    "variables": {
+      "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO"
+    }
+  },
+  "cordova-plugin-ble-central": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-ble-central"
+    },
+    "is_top_level": true,
+    "variables": {
+      "BLUETOOTH_USAGE_DESCRIPTION": " "
+    }
+  },
+  "cordova-plugin-keyboard": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-keyboard"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova.plugin.nativealert": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/vigneshuvi/cordova-plugin-nativealert.git"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-secure-storage": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-secure-storage"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-badge": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-badge@>=0.8.5"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-device-motion": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device-motion@1.2.5"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-app-event": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-app-event"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "phonegap-plugin-multidex": {
+    "source": {
+      "type": "registry",
+      "id": "phonegap-plugin-multidex@~1.0.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-inappbrowser": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-inappbrowser@3.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-health": {
+    "source": {
+      "type": "registry",
+      "id": "git+https://github.com/dariosalvi78/cordova-plugin-health.git"
+    },
+    "is_top_level": true,
+    "variables": {
+      "HEALTH_READ_PERMISSION": "App needs read access",
+      "HEALTH_WRITE_PERMISSION": "App needs write access"
+    }
+  },
+  "cordova-custom-config": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-custom-config@5.1.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-support-google-services": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-support-google-services@~1.1.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-bluetoothle": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-bluetoothle@4.5.5"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

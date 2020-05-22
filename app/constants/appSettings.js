@@ -1,7 +1,7 @@
 //const host = 'http://192.168.1.218';
-const host = 'http://localhost';
+//const host = 'http://localhost';
 //const host = 'http://172.20.10.3';
-//const host = 'https://app.trichromehealth.com';
+const host = 'https://app.trichromehealth.com';
 const port = '8081';
 const APP_SETTINGS = {
     serverUrl:"https://app.trichromehealth.com/",

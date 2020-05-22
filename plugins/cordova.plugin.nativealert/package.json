@@ -1,0 +1,64 @@
+{
+  "_from": "git+https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+  "_id": "cordova.plugin.nativealert@0.6.4",
+  "_inBundle": false,
+  "_location": "/cordova.plugin.nativealert",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+    "rawSpec": "https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+    "saveSpec": "git+https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+    "fetchSpec": "https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/vigneshuvi/cordova-plugin-nativealert.git#d9e1d523a79dc92d03cf250c1adf30f20015bb13",
+  "_spec": "https://github.com/vigneshuvi/cordova-plugin-nativealert.git",
+  "_where": "/Users/victorcrudu/Code/bp/bp.member",
+  "author": {
+    "name": "Vignesh"
+  },
+  "bugs": {
+    "url": "https://github.com/vigneshuvi/cordova-plugin-nativealert/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova.plugin.nativealert",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Simple 'Cordova Native Alert(Dialog) Plugin' is Helps to use native dialog views and it will support both iOS and Android platforms.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "homepage": "https://github.com/vigneshuvi/cordova-plugin-nativealert#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-plugin",
+    "cordova-ios",
+    "cordova-android",
+    "android-platform",
+    "android-dialog",
+    "android-dialog-view",
+    "cordova-plugin-dialogs",
+    "cordova-plugin-alert",
+    "UIAlertViewController"
+  ],
+  "license": "MIT",
+  "name": "cordova.plugin.nativealert",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vigneshuvi/cordova-plugin-nativealert.git"
+  },
+  "version": "0.6.4"
+}

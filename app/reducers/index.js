@@ -22,6 +22,7 @@ import { UPDATE_MENU_HEIGHT } from '../actions';
 import { UPDATE_TOOLBAR_HEIGHT } from '../actions';
 import { UPDATE_VIEW_HEIGHT } from '../actions';
 import { UPDATE_CURRENT_RECORD_DETAILS } from '../actions';
+import { ADD_MEAL } from '../actions';
 
 export const measureCount = (state = { count: 0 }, action) => {
     switch (action.type) {
@@ -167,6 +168,17 @@ export const currentRecordDetails = (state = {}, action) => {
     }
 }
 
+export const meals = (state = {meals:[]}, action) => {
+    switch (action.type) {
+        case ADD_MEAL:
+                let newState = {...state};
+                newState[moment().format('DDMMYYYYHHmmss')]=action.data;
+            return newState;
+        default:
+            return state;
+    }
+}
+
 const bloodPressureAssistant = combineReducers({
     voiceState, 
     devices, measures, 
@@ -183,7 +195,8 @@ const bloodPressureAssistant = combineReducers({
     patientCards,
     healthKitSyncDate,
     layoutHeight,
-    currentRecordDetails
+    currentRecordDetails,
+    meals
 });
 
 export default bloodPressureAssistant;

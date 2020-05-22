@@ -1,0 +1,63 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-custom-config": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-audioinput": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-ble-central": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-device-motion": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-health": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-ios-microphone-permissions": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-keyboard": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-media": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-nativeaudio": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-secure-storage": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova.plugin.nativealert": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    },
+    "cordova-plugin-bluetoothle": {
+      "PACKAGE_NAME": "com.trichromehealth.member.bp"
+    }
+  },
+  "dependent_plugins": {}
+}

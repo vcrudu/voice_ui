@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="cordova.plugin.nativealert"
+        version="0.6.4">
+
+  <name>NativeAlert</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/nativealert.js" target="js/nativealert.js"/>
+
+  <js-module src="www/nativealert.js" name="nativealert">
+    <clobbers target="nativealert" />
+  </js-module>
+
+  <platform name="ios">
+    
+    <config-file target="config.xml" parent="/widget">
+      <feature name="NativeAlert">
+        <param name="ios-package" value="NativeAlert" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/NativeAlert.h" target-dir="NativeAlert"/>
+    <source-file src="src/ios/NativeAlert.m" target-dir="NativeAlert"/>
+  </platform>
+
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="NativeAlert">
+        <param name="android-package" value="cordova.plugin.nativealert.NativeAlert"/>
+        <param name="onload" value="true" />
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/NativeAlert.java" target-dir="src/cordova/plugin/nativealert"/>
+  </platform>
+
+
+</plugin>

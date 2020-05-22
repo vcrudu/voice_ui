@@ -55,7 +55,6 @@ class RecordsComponent extends React.Component {
     }
 
     updateCurrentRecordDetails(details){
-        debugger;
         this.props.actions.updateCurrentRecordDetails(details);
     }
 

@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions';
 import bleService from '../../model/bleService';
+import fatSecretService from '../../model/fatSecretService';
+import Food from '../food/component';
 
 import {
     Toolbar,
@@ -108,8 +110,9 @@ class StageComponent extends React.Component {
     }
 
     clickTitle(){
-        qriskService.getTownScore('TN48JX',this.props.userData.token);
+        //qriskService.getTownScore('TN48JX',this.props.userData.token);
         //bleService.getBP();
+        fatSecretService.search('Pasta', this.props.userData.token);
     }
 
     render() {
@@ -147,6 +150,7 @@ class StageComponent extends React.Component {
                         {<Route path={this.props.match.url + '/chatList'} render={() => <ChatList />} />}
                         {<Route path={this.props.match.url + '/appointments'} render={() => <Appointments />} />}
                         {<Route path={this.props.match.url + '/symptoms'} render={() => <Symptomate />} />}
+                        {<Route path={this.props.match.url + '/food'} render={() => <Food />} />}
                         {<Route path={this.props.match.url + '/records'} render={() => <Records />} />}
                         {<Route path={this.props.match.url + '/shop'} render={() => <Shop />} />}
                     </div>
